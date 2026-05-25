@@ -384,10 +384,13 @@
     </h2>
     <div class="form-group"><label>Family Name</label><input type="text" id="edit-family-name" placeholder="e.g. Santos Family"></div>
     <div style="height:1px;background:var(--border-neu);margin:4px 0 14px"></div>
-    <div class="form-group"><label>Member</label><select id="edit-member-sel" onchange="onEditMemberChange()"><option value="">— Select member to edit savings —</option></select></div>
-    <div class="form-row">
-      <div class="form-group"><label>Amount Saved (₱)</label><input type="number" id="edit-saved" min="0" step="0.01"></div>
-      <div class="form-group"><label>Target (₱)</label><input type="number" id="edit-target-val" min="0" step="100"></div>
+    <div class="form-group"><label>Member</label><select id="edit-member-sel" onchange="onEditMemberChange()"><option value="">— Select member to edit —</option></select></div>
+    <div id="edit-member-fields" style="display:none">
+      <div class="form-group"><label>Member Name</label><input type="text" id="edit-member-name" placeholder="Full name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Amount Saved (₱)</label><input type="number" id="edit-saved" min="0" step="0.01"></div>
+        <div class="form-group"><label>Target (₱)</label><input type="number" id="edit-target-val" min="0" step="100"></div>
+      </div>
     </div>
     <input type="hidden" id="edit-fid">
     <input type="hidden" id="edit-mid">
@@ -631,17 +634,27 @@ function onEditMemberChange(){
   const fid=document.getElementById('edit-fid').value,mid=document.getElementById('edit-member-sel').value;
   const member=data.families.find(f=>f.id===fid)?.members.find(m=>m.id===mid);
   document.getElementById('edit-mid').value=mid;
-  if(member){document.getElementById('edit-saved').value=member.saved;document.getElementById('edit-target-val').value=member.target;}
+  const fields=document.getElementById('edit-member-fields');
+  if(member){
+    fields.style.display='block';
+    document.getElementById('edit-member-name').value=member.name;
+    document.getElementById('edit-saved').value=member.saved;
+    document.getElementById('edit-target-val').value=member.target;
+  } else {
+    fields.style.display='none';
+  }
 }
 function saveEdit(){
   const fid=document.getElementById('edit-fid').value;
   const family=data.families.find(f=>f.id===fid);if(!family)return;
-  const newName=document.getElementById('edit-family-name').value.trim();
-  if(newName) family.name=newName;
+  const newFamName=document.getElementById('edit-family-name').value.trim();
+  if(newFamName) family.name=newFamName;
   const mid=document.getElementById('edit-mid').value;
   if(mid){
     const member=family.members.find(m=>m.id===mid);
     if(member){
+      const mName=document.getElementById('edit-member-name').value.trim();
+      if(mName) member.name=mName;
       const s=parseFloat(document.getElementById('edit-saved').value),t=parseFloat(document.getElementById('edit-target-val').value);
       if(!isNaN(s))member.saved=s;
       if(!isNaN(t)&&t>0)member.target=t;
