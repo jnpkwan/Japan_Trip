@@ -225,8 +225,9 @@
   /* ── FAMILY CARDS ── */
   .families-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+    align-items: start;
   }
 
   .family-card {
@@ -296,10 +297,10 @@
 
   .member-row {
     display: grid;
-    grid-template-columns: 52px 1fr auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
     gap: 14px;
-    padding: 14px 8px;
+    padding: 10px 8px;
     border-radius: 16px;
     border-bottom: 1px solid rgba(220,170,130,0.15);
     transition: background 0.2s;
@@ -307,49 +308,14 @@
   .member-row:last-child { border-bottom: none; }
   .member-row:hover { background: #FEF6EC; }
 
-  /* Avatar — photo or initials fallback */
-  .member-avatar {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    overflow: hidden;
-    border: 2.5px solid #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 800;
-    position: relative;
-  }
-  .member-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .member-avatar .avatar-initials {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 800;
-  }
-
   /* Name — large and prominent */
   .member-info { min-width: 0; }
   .member-name {
     font-family: 'Playfair Display', serif;
-    font-size: 17px;
+    font-size: 19px;
     font-weight: 800;
     color: var(--text);
     margin-bottom: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     letter-spacing: -0.01em;
   }
 
@@ -436,7 +402,7 @@
   }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
+  @media (max-width: 700px) {
     .families-grid { grid-template-columns: 1fr; }
     .grand-banner { grid-template-columns: 1fr 1fr; }
     .hero { flex-direction: column; align-items: flex-start; }
@@ -644,18 +610,6 @@ function barColor(p, familyColor) {
 
 // ── Build avatar HTML ─────────────────────────────────────────────────
 // Shows photo if available, initials as fallback (the img onerror handles missing files gracefully)
-function avatarHTML(m, size, av) {
-  const ini = initials(m.name);
-  if (m.photo) {
-    return `
-      <div class="member-avatar" style="background:${av.bg}; color:${av.text}; width:${size}px; height:${size}px;">
-        <span class="avatar-initials">${ini}</span>
-        <img src="${m.photo}" alt="${m.name}" onerror="this.style.display='none'">
-      </div>`;
-  }
-  return `<div class="member-avatar" style="background:${av.bg}; color:${av.text}; width:${size}px; height:${size}px;"><span class="avatar-initials">${ini}</span></div>`;
-}
-
 // ── Build photo marker HTML for bar tip ───────────────────────────────
 function markerHTML(m, av) {
   const ini = initials(m.name);
@@ -720,7 +674,6 @@ function render() {
 
           return `
           <div class="member-row">
-            ${avatarHTML(m, 52, av)}
             <div class="member-info">
               <div class="member-name">${m.name}</div>
               <div class="member-bar-wrap">
