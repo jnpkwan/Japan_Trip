@@ -34,8 +34,8 @@
       "name": "Kwan Family",
       "color": "#5BBF4E",
       "members": [
-        { "id": "k1", "name": "Toto",   "saved": 0,    "photo": "photos/toto.jpg"   },
-        { "id": "k2", "name": "Me'an",  "saved": 0,    "photo": "photos/mean.jpg"   },
+        { "id": "k1", "name": "Toto",   "saved": 100000,    "photo": "photos/toto.jpg"   },
+        { "id": "k2", "name": "Me'an",  "saved": 100000,    "photo": "photos/mean.jpg"   },
         { "id": "k3", "name": "Bop",    "saved": 1000, "photo": "photos/bop.jpg"    },
         { "id": "k4", "name": "Johann", "saved": 0,    "photo": "photos/johann.jpg" },
         { "id": "k5", "name": "Bren",   "saved": 0,    "photo": "photos/bren.jpg"   },
