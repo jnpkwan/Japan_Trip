@@ -377,12 +377,6 @@
     font-weight: 800;
     line-height: 1.2;
   }
-  .member-pct {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-dim);
-    margin-top: 2px;
-  }
   .member-remaining {
     font-size: 11px;
     color: var(--text-dim);
@@ -688,7 +682,6 @@ function render() {
             </div>
             <div class="member-right">
               <div class="member-saved" style="color:${col2}">${fmt(m.saved)}</div>
-              <div class="member-pct">${p}%</div>
               <div class="member-remaining">${reached ? '🎉 Goal reached!' : fmt(rem) + ' to go'}</div>
             </div>
           </div>`;
