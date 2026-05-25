@@ -9,7 +9,7 @@
   "families": [
     {
       "id": "family-1",
-      "name": "Bustamante Family",
+      "name": "B Family",
       "color": "#F04E37",
       "members": [
         { "id": "b1", "name": "Benjo",  "saved": 0, "photo": "photos/benjo.jpg"  },
@@ -20,7 +20,7 @@
     },
     {
       "id": "family-2",
-      "name": "Chua Family",
+      "name": "C Family",
       "color": "#1AAFD0",
       "members": [
         { "id": "c1", "name": "Nono",   "saved": 0, "photo": "photos/nono.jpg"   },
@@ -31,7 +31,7 @@
     },
     {
       "id": "family-3",
-      "name": "Kwan Family",
+      "name": "K Family",
       "color": "#5BBF4E",
       "members": [
         { "id": "k1", "name": "Toto",   "saved": 100000,    "photo": "photos/toto.jpg"   },
@@ -45,7 +45,7 @@
     },
     {
       "id": "family-4",
-      "name": "Romero Family",
+      "name": "R Family",
       "color": "#F0B429",
       "members": [
         { "id": "r1", "name": "Thelma", "saved": 0, "photo": "photos/thelma.jpg" },
