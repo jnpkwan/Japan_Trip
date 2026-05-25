@@ -6,32 +6,30 @@
 <title>Japan Trip 2027 — Savings Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Summer Japan palette */
-    --bg:           #FFF8F2;           /* warm rice-paper white */
-    --bg2:          #FFFFFF;           /* pure card white */
-    --bg3:          #FFF0E8;           /* peach tint for inputs */
-    --border:       rgba(220,170,140,0.25);
-    --border-hover: rgba(220,100,80,0.35);
-    --text:         #2A1A0F;           /* deep sumi ink */
-    --text-muted:   #7A5848;           /* warm cedar */
-    --text-dim:     #B89080;           /* soft clay */
+    --bg:           #FEF6EC;
+    --card:         #FFFFFF;
+    --border:       rgba(230,180,130,0.28);
+    --border-hover: rgba(230,120,60,0.4);
+    --text:         #1E1208;
+    --text-muted:   #7A5030;
+    --text-dim:     #C0956A;
 
-    /* Summer Japan accent colors */
-    --sakura:       #F2637A;           /* natsuzakura pink */
-    --sakura-light: #FFD6E0;
-    --matcha:       #5B9E6A;           /* summer bamboo green */
-    --matcha-light: #D4EDDA;
-    --natsu:        #F5832A;           /* natsu orange — yukata coral */
-    --natsu-light:  #FFE0C7;
-    --asagi:        #3A9DC2;           /* asagi sky blue */
-    --asagi-light:  #C8E8F5;
-    --kiniro:       #E8A820;           /* kiniro summer gold */
-    --kiniro-light: #FFF0C0;
-    --fuji:         #8B63C7;           /* wisteria purple */
-    --fuji-light:   #EAD9FF;
+    /* Vivid summer Japan */
+    --coral:        #F04E37;   /* torii gate red-orange */
+    --coral-light:  #FFE5E0;
+    --sky:          #1AAFD0;   /* summer sky blue */
+    --sky-light:    #D6F2FA;
+    --lime:         #5BBF4E;   /* fresh bamboo green */
+    --lime-light:   #E0F5DC;
+    --gold:         #F0B429;   /* sunflower yellow */
+    --gold-light:   #FFF4CC;
+    --peach:        #F97044;   /* summer peach */
+    --peach-light:  #FFE8DA;
+    --plum:         #C0527A;   /* ume plum blossom */
+    --plum-light:   #FFD6E8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,577 +37,695 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* Airy summer background */
-  body::before {
-    content: '';
+  /* ── BACKGROUND SCENE ── */
+  .bg-scene {
     position: fixed;
     inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(242,99,122,0.08)  0%, transparent 55%),
-      radial-gradient(ellipse 60% 50% at 100% 0%,  rgba(58,157,194,0.07)  0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(232,168,32,0.06)  0%, transparent 55%);
     pointer-events: none;
     z-index: 0;
+    overflow: hidden;
   }
 
+  /* ── PAGE ── */
   .page-wrapper {
     position: relative;
     z-index: 1;
-    max-width: 1100px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 0 24px 80px;
+    padding: 0 24px 100px;
   }
 
-  /* ── HEADER ── */
-  header {
-    padding: 56px 0 44px;
+  /* ── HERO HEADER ── */
+  .hero {
+    position: relative;
+    padding: 52px 0 44px;
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: space-between;
-    gap: 32px;
+    gap: 24px;
   }
 
-  .header-left { flex: 1; }
+  .hero-text { flex: 1; }
 
-  .jp-label {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 13px;
-    color: var(--sakura);
-    letter-spacing: 0.2em;
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    color: var(--coral);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 20px; height: 2.5px;
+    background: var(--coral);
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 5.5vw, 64px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  h1 .accent {
+    color: var(--coral);
+    display: block;
+  }
+
+  .hero-meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .countdown-badge {
+    background: var(--coral);
+    border-radius: 20px;
+    padding: 14px 22px;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(240,78,55,0.35);
+    flex-shrink: 0;
+    min-width: 130px;
+  }
+  .countdown-badge .cd-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    display: block;
+  }
+  .countdown-badge .cd-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  /* ── GRAND TOTAL BANNER ── */
+  .grand-banner {
+    background: var(--coral);
+    border-radius: 24px;
+    padding: 28px 36px;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(240,78,55,0.25);
+  }
+  .grand-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 90% 50%, rgba(255,255,255,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 10% 50%, rgba(0,0,0,0.06) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .grand-stat { position: relative; z-index: 1; }
+  .grand-stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 6px;
+  }
+  .grand-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+  .grand-stat-value.big { font-size: 30px; }
+
+  .grand-progress-wrap {
+    grid-column: 1 / -1;
+    position: relative;
+    z-index: 1;
+    margin-top: 4px;
+  }
+  .grand-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .grand-bar-bg {
+    background: rgba(255,255,255,0.2);
+    border-radius: 100px;
+    height: 12px;
+    overflow: hidden;
+  }
+  .grand-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #FFE066, #fff);
+    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 12px rgba(255,255,255,0.5);
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .jp-label::before {
+  .section-label::after {
     content: '';
-    display: inline-block;
-    width: 28px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--sakura), var(--natsu));
-    border-radius: 2px;
+    flex: 1;
+    height: 1px;
+    background: var(--border);
   }
 
-  h1 {
-    font-family: 'Shippori Mincho', serif;
-    font-size: clamp(36px, 5vw, 58px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-  h1 em {
-    font-style: normal;
-    background: linear-gradient(120deg, var(--sakura), var(--natsu));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .header-meta {
-    margin-top: 16px;
-    font-size: 14px;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .header-meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .countdown-chip {
-    background: linear-gradient(135deg, var(--sakura), var(--natsu));
-    border-radius: 100px;
-    padding: 7px 18px;
-    font-size: 13px;
-    color: #fff;
-    font-weight: 600;
-    white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(242,99,122,0.3);
-    animation: pulse-sakura 3s ease-in-out infinite;
-  }
-  @keyframes pulse-sakura {
-    0%, 100% { box-shadow: 0 4px 16px rgba(242,99,122,0.3); }
-    50%       { box-shadow: 0 4px 24px rgba(242,99,122,0.5); }
-  }
-
-  /* ── GRAND TOTAL BANNER ── */
-  .grand-total {
-    background: linear-gradient(135deg, #fff 60%, #FFF5F8 100%);
-    border: 1.5px solid rgba(242,99,122,0.18);
-    border-radius: 24px;
-    padding: 32px 36px;
-    margin-bottom: 40px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
-    gap: 24px;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 32px rgba(242,99,122,0.07), 0 1px 4px rgba(0,0,0,0.04);
-  }
-  .grand-total::before {
-    content: '日本';
-    position: absolute;
-    right: 32px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Shippori Mincho', serif;
-    font-size: 80px;
-    color: rgba(242,99,122,0.06);
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .stat-block { }
-  .stat-label {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-  .stat-value {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1;
-  }
-  .stat-value.highlight { color: var(--natsu); }
-  .stat-value.green     { color: var(--matcha); }
-
-  .grand-progress-wrap {
-    grid-column: 1 / -1;
-    margin-top: 4px;
-  }
-  .progress-bar-bg {
-    background: rgba(200,150,130,0.15);
-    border-radius: 100px;
-    height: 10px;
-    overflow: hidden;
-    position: relative;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    background: linear-gradient(90deg, var(--sakura), var(--natsu), var(--kiniro));
-    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-  }
-  .progress-bar-fill::after {
-    content: '';
-    position: absolute;
-    right: -1px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 14px;
-    height: 14px;
-    background: var(--natsu);
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 0 8px rgba(245,131,42,0.6);
-  }
-
-  /* ── FAMILY CARDS ── */
+  /* ── FAMILIES GRID ── */
   .families-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 20px;
-  }
-
-  @media (max-width: 600px) {
-    .families-grid { grid-template-columns: 1fr; }
-    .grand-total { grid-template-columns: 1fr 1fr; }
-    header { flex-direction: column; }
   }
 
   .family-card {
-    background: #fff;
+    background: var(--card);
     border: 1.5px solid var(--border);
     border-radius: 24px;
     overflow: hidden;
-    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
-    box-shadow: 0 2px 12px rgba(180,120,100,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 16px rgba(180,110,60,0.07);
   }
   .family-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(180,100,80,0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(180,100,50,0.13);
   }
 
+  /* Colored top strip + header */
   .family-header {
-    padding: 22px 26px 18px;
-    border-bottom: 1.5px solid var(--border);
+    padding: 20px 24px 18px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
   }
-  .family-color-pill {
-    padding: 4px 12px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: #fff;
+  .family-header-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+  }
+  .family-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
+    position: relative;
+    z-index: 1;
   }
-  .family-title { flex: 1; }
+  .family-icon svg { width: 26px; height: 26px; }
+
+  .family-title-block { flex: 1; position: relative; z-index: 1; }
   .family-name {
-    font-family: 'Shippori Mincho', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text);
     line-height: 1.2;
   }
-  .family-subtitle {
+  .family-sub {
     font-size: 12px;
     color: var(--text-dim);
-    margin-top: 3px;
-  }
-  .family-pct {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 1;
+    margin-top: 2px;
+    font-weight: 500;
   }
 
-  .members-list { padding: 10px 16px 16px; }
+  .family-pct-badge {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Members */
+  .members-list {
+    padding: 4px 16px 16px;
+  }
 
   .member-row {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 36px 1fr auto;
     align-items: center;
-    gap: 14px;
-    padding: 14px 10px;
+    gap: 12px;
+    padding: 12px 8px;
     border-radius: 14px;
+    border-bottom: 1px solid rgba(220,170,130,0.15);
     transition: background 0.2s;
-    border-bottom: 1px solid var(--border);
   }
   .member-row:last-child { border-bottom: none; }
-  .member-row:hover { background: var(--bg); }
+  .member-row:hover { background: #FEF6EC; }
+
+  .member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
 
   .member-info { min-width: 0; }
   .member-name {
     font-size: 14px;
     font-weight: 600;
     color: var(--text);
-    line-height: 1.3;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .member-bar-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .member-mini-bar {
-    flex: 1;
+  .member-bar-track {
     height: 10px;
-    background: rgba(180,130,110,0.13);
+    background: rgba(200,150,100,0.13);
     border-radius: 100px;
     overflow: hidden;
   }
-  .member-mini-fill {
+  .member-bar-fill {
     height: 100%;
     border-radius: 100px;
-    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-  }
-  .member-pct-small {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 700;
-    min-width: 36px;
-    text-align: right;
+    transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .member-amounts {
-    text-align: right;
-    flex-shrink: 0;
-  }
+  .member-right { text-align: right; flex-shrink: 0; }
   .member-saved {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 18px;
-    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 800;
     line-height: 1.2;
+  }
+  .member-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin-top: 2px;
   }
   .member-remaining {
     font-size: 11px;
     color: var(--text-dim);
-    text-align: right;
-    margin-top: 3px;
+    margin-top: 1px;
   }
 
-  .member-status {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    flex-shrink: 0;
-    font-weight: 700;
-  }
-  .member-status.done  { background: var(--matcha-light);  color: var(--matcha); }
-  .member-status.near  { background: var(--kiniro-light);  color: var(--kiniro); }
-  .member-status.early { background: var(--sakura-light);  color: var(--sakura); }
-
-  /* Floating sakura SVG */
-  .sakura-deco {
-    position: fixed;
-    top: 0; right: 0;
-    width: 240px;
-    height: 240px;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.55;
-  }
-
-  .last-updated {
+  /* ── FOOTER ── */
+  .footer {
     text-align: center;
     font-size: 12px;
     color: var(--text-dim);
-    margin-top: 48px;
+    margin-top: 56px;
     padding-top: 24px;
     border-top: 1.5px solid var(--border);
+    font-weight: 500;
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .grand-total { grid-template-columns: 1fr 1fr; }
-    .grand-total::before { display: none; }
-    header { padding: 40px 0 32px; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .families-grid { grid-template-columns: 1fr; }
+    .grand-banner { grid-template-columns: 1fr 1fr; }
+    .hero { flex-direction: column; align-items: flex-start; }
+    h1 { font-size: 36px; }
   }
 </style>
 </head>
 <body>
 
-<svg class="sakura-deco" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="180" cy="60" r="80" fill="rgba(242,99,122,0.08)"/>
-  <circle cx="210" cy="30" r="40" fill="rgba(245,131,42,0.07)"/>
-  <!-- Big sakura bloom -->
-  <g opacity="0.75" transform="translate(180,55)">
-    <ellipse rx="11" ry="22" fill="#F2637A" transform="rotate(0)"/>
-    <ellipse rx="11" ry="22" fill="#F5832A" transform="rotate(72)"/>
-    <ellipse rx="11" ry="22" fill="#F2637A" transform="rotate(144)"/>
-    <ellipse rx="11" ry="22" fill="#F5832A" transform="rotate(216)"/>
-    <ellipse rx="11" ry="22" fill="#F2637A" transform="rotate(288)"/>
-    <circle r="6" fill="#fff" opacity="0.9"/>
-  </g>
-  <!-- Small sakura bloom -->
-  <g opacity="0.5" transform="translate(210,20)">
-    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(0)"/>
-    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(72)"/>
-    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(144)"/>
-    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(216)"/>
-    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(288)"/>
-    <circle r="3" fill="#fff" opacity="0.9"/>
-  </g>
-  <!-- Petal scatter -->
-  <ellipse cx="140" cy="100" rx="5" ry="9" fill="#F2637A" opacity="0.3" transform="rotate(30 140 100)"/>
-  <ellipse cx="220" cy="80" rx="4" ry="7" fill="#F5832A" opacity="0.25" transform="rotate(-20 220 80)"/>
-  <ellipse cx="160" cy="130" rx="3" ry="6" fill="#F2637A" opacity="0.2" transform="rotate(15 160 130)"/>
-</svg>
+<!-- ── BACKGROUND SCENE ── -->
+<div class="bg-scene">
+  <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sky gradient wash -->
+    <defs>
+      <radialGradient id="skyGrad" cx="70%" cy="0%" r="60%">
+        <stop offset="0%" stop-color="#C8EEFF" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="#FEF6EC" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFD966" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#FFD966" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="peachGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFB38A" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#FFB38A" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Sky wash -->
+    <ellipse cx="1100" cy="-60" rx="700" ry="500" fill="url(#skyGrad)"/>
+    <!-- Sun glow -->
+    <ellipse cx="1320" cy="80" rx="220" ry="220" fill="url(#sunGrad)"/>
+    <!-- Bottom peach warmth -->
+    <ellipse cx="200" cy="950" rx="500" ry="300" fill="url(#peachGrad)"/>
+
+    <!-- Mt Fuji silhouette (right side, subtle) -->
+    <g opacity="0.07">
+      <polygon points="1200,600 1320,200 1440,600" fill="#1AAFD0"/>
+      <polygon points="1240,600 1320,260 1400,600" fill="#fff"/>
+      <!-- Snow cap -->
+      <polygon points="1295,270 1320,200 1345,270 1330,255 1310,255" fill="#fff" opacity="3"/>
+    </g>
+
+    <!-- Torii gate silhouette (left, subtle) -->
+    <g opacity="0.055" fill="#F04E37">
+      <!-- pillars -->
+      <rect x="60" y="300" width="14" height="320" rx="4"/>
+      <rect x="160" y="300" width="14" height="320" rx="4"/>
+      <!-- top beam -->
+      <rect x="30" y="295" width="174" height="18" rx="5"/>
+      <!-- second beam -->
+      <rect x="48" y="330" width="138" height="12" rx="4"/>
+    </g>
+
+    <!-- Scattered sakura petals (top right) -->
+    <g opacity="0.18">
+      <!-- petal shape helper: 5-petal using ellipses -->
+      <g transform="translate(980, 120) rotate(15)">
+        <ellipse rx="9" ry="18" fill="#F2637A" transform="rotate(0)"/>
+        <ellipse rx="9" ry="18" fill="#F2637A" transform="rotate(72)"/>
+        <ellipse rx="9" ry="18" fill="#F2637A" transform="rotate(144)"/>
+        <ellipse rx="9" ry="18" fill="#F2637A" transform="rotate(216)"/>
+        <ellipse rx="9" ry="18" fill="#F2637A" transform="rotate(288)"/>
+        <circle r="5" fill="#FFD6E0"/>
+      </g>
+      <g transform="translate(1080, 60) rotate(-20)" opacity="0.7">
+        <ellipse rx="6" ry="12" fill="#F04E37" transform="rotate(0)"/>
+        <ellipse rx="6" ry="12" fill="#F04E37" transform="rotate(72)"/>
+        <ellipse rx="6" ry="12" fill="#F04E37" transform="rotate(144)"/>
+        <ellipse rx="6" ry="12" fill="#F04E37" transform="rotate(216)"/>
+        <ellipse rx="6" ry="12" fill="#F04E37" transform="rotate(288)"/>
+        <circle r="3" fill="#FFE0D0"/>
+      </g>
+      <g transform="translate(1180, 150) rotate(35)" opacity="0.55">
+        <ellipse rx="7" ry="14" fill="#C0527A" transform="rotate(0)"/>
+        <ellipse rx="7" ry="14" fill="#C0527A" transform="rotate(72)"/>
+        <ellipse rx="7" ry="14" fill="#C0527A" transform="rotate(144)"/>
+        <ellipse rx="7" ry="14" fill="#C0527A" transform="rotate(216)"/>
+        <ellipse rx="7" ry="14" fill="#C0527A" transform="rotate(288)"/>
+        <circle r="4" fill="#FFD6E8"/>
+      </g>
+      <!-- Floating single petals -->
+      <ellipse cx="900" cy="80" rx="5" ry="10" fill="#F2637A" opacity="0.5" transform="rotate(20 900 80)"/>
+      <ellipse cx="1140" cy="200" rx="4" ry="8" fill="#F04E37" opacity="0.4" transform="rotate(-10 1140 200)"/>
+      <ellipse cx="1050" cy="170" rx="3" ry="7" fill="#C0527A" opacity="0.35" transform="rotate(45 1050 170)"/>
+      <ellipse cx="1260" cy="100" rx="4" ry="9" fill="#F2637A" opacity="0.3" transform="rotate(-30 1260 100)"/>
+      <ellipse cx="850" cy="160" rx="3" ry="6" fill="#F04E37" opacity="0.3" transform="rotate(10 850 160)"/>
+    </g>
+
+    <!-- Sunflower (top right corner) -->
+    <g transform="translate(1390, 30)" opacity="0.13">
+      <!-- petals -->
+      <ellipse rx="8" ry="22" fill="#F0B429" transform="rotate(0)"/>
+      <ellipse rx="8" ry="22" fill="#F0B429" transform="rotate(30)"/>
+      <ellipse rx="8" ry="22" fill="#F0B429" transform="rotate(60)"/>
+      <ellipse rx="8" ry="22" fill="#F0B429" transform="rotate(90)"/>
+      <ellipse rx="8" ry="22" fill="#F0B429" transform="rotate(120)"/>
+      <ellipse rx="8" ry="22" fill="#F0B429" transform="rotate(150)"/>
+      <circle r="12" fill="#7A4010"/>
+    </g>
+
+    <!-- Wave at the bottom -->
+    <g opacity="0.06">
+      <path d="M0,820 Q180,780 360,820 Q540,860 720,820 Q900,780 1080,820 Q1260,860 1440,820 L1440,900 L0,900 Z" fill="#1AAFD0"/>
+      <path d="M0,850 Q180,820 360,850 Q540,880 720,850 Q900,820 1080,850 Q1260,880 1440,850 L1440,900 L0,900 Z" fill="#1AAFD0" opacity="0.6"/>
+    </g>
+
+    <!-- Bamboo left edge -->
+    <g opacity="0.06" fill="#5BBF4E">
+      <rect x="0" y="400" width="8" height="500" rx="4"/>
+      <rect x="22" y="350" width="8" height="550" rx="4"/>
+      <rect x="44" y="420" width="6" height="480" rx="3"/>
+      <!-- leaves -->
+      <ellipse cx="4" cy="430" rx="3" ry="14" fill="#5BBF4E" transform="rotate(-30 4 430)"/>
+      <ellipse cx="4" cy="510" rx="3" ry="14" fill="#5BBF4E" transform="rotate(25 4 510)"/>
+      <ellipse cx="26" cy="400" rx="3" ry="14" fill="#5BBF4E" transform="rotate(-20 26 400)"/>
+      <ellipse cx="26" cy="480" rx="3" ry="14" fill="#5BBF4E" transform="rotate(30 26 480)"/>
+      <ellipse cx="47" cy="450" rx="3" ry="12" fill="#5BBF4E" transform="rotate(-25 47 450)"/>
+    </g>
+  </svg>
+</div>
 
 <div class="page-wrapper">
 
-  <header>
-    <div class="header-left">
-      <div class="jp-label">桜の旅 · Japan Trip</div>
-      <h1>Japan Trip<br><em>2027</em></h1>
-      <div class="header-meta">
-        <span>🗓 July 2027</span>
-        <span>👨‍👩‍👧‍👦 4 Families · <span id="totalMembers">16</span> Travelers</span>
-        <span>🎯 ₱100,000 / person</span>
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Japan Trip · Savings Tracker</div>
+      <h1>
+        Summer in Japan
+        <span class="accent">2027</span>
+      </h1>
+      <div class="hero-meta">
+        <div class="meta-pill">🗓 July 2027</div>
+        <div class="meta-pill">👨‍👩‍👧‍👦 4 Families · <span id="totalMembers">—</span> Travelers</div>
+        <div class="meta-pill">🎯 ₱100,000 per person</div>
       </div>
     </div>
-    <div class="countdown-chip" id="countdownChip">⏳ Loading...</div>
-  </header>
+    <div class="countdown-badge" id="countdownBadge">
+      <span class="cd-num" id="cdDays">—</span>
+      <div class="cd-label">Days to Go</div>
+    </div>
+  </div>
 
-  <!-- GRAND TOTAL -->
-  <div class="grand-total" id="grandTotal">
-    <div class="stat-block">
-      <div class="stat-label">Total Saved</div>
-      <div class="stat-value highlight" id="grandSaved">₱0</div>
+  <!-- ── GRAND TOTAL BANNER ── -->
+  <div class="grand-banner">
+    <div class="grand-stat">
+      <div class="grand-stat-label">Total Saved</div>
+      <div class="grand-stat-value big" id="grandSaved">₱0</div>
     </div>
-    <div class="stat-block">
-      <div class="stat-label">Grand Target</div>
-      <div class="stat-value" id="grandTarget">₱0</div>
+    <div class="grand-stat">
+      <div class="grand-stat-label">Grand Target</div>
+      <div class="grand-stat-value" id="grandTarget">₱0</div>
     </div>
-    <div class="stat-block">
-      <div class="stat-label">Still Needed</div>
-      <div class="stat-value" id="grandRemaining">₱0</div>
+    <div class="grand-stat">
+      <div class="grand-stat-label">Still Needed</div>
+      <div class="grand-stat-value" id="grandRemaining">₱0</div>
     </div>
-    <div class="stat-block">
-      <div class="stat-label">Overall Progress</div>
-      <div class="stat-value green" id="grandPct">0%</div>
+    <div class="grand-stat">
+      <div class="grand-stat-label">Group Progress</div>
+      <div class="grand-stat-value big" id="grandPct">0%</div>
     </div>
     <div class="grand-progress-wrap">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="grandBar" style="width:0%"></div>
+      <div class="grand-progress-label">
+        <span>Group savings progress</span>
+        <span id="grandPctLabel">0%</span>
+      </div>
+      <div class="grand-bar-bg">
+        <div class="grand-bar-fill" id="grandBar" style="width:0%"></div>
       </div>
     </div>
   </div>
 
-  <!-- FAMILIES GRID -->
+  <!-- ── FAMILIES ── -->
+  <div class="section-label">Family Savings</div>
   <div class="families-grid" id="familiesGrid"></div>
 
-  <div class="last-updated">Last updated: <span id="lastUpdated">—</span></div>
+  <div class="footer">Last updated: <span id="lastUpdated">—</span></div>
 
 </div>
 
 <script>
 let DATA = null;
 
-// ─── Countdown ───────────────────────────────────────────────────────────
+// ── Family icons (SVG paths, one per family slot) ──────────────────────
+const FAMILY_ICONS = [
+  // House
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  // Sun
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
+  // Leaf
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.82a2 2 0 002.8 2.8C10.16 20.1 16.28 18 18 9"/><path d="M3.82 19.82A10 10 0 0017 8"/></svg>`,
+  // Star
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+];
+
+// Member avatar initials colors
+const AVATAR_PALETTES = [
+  { bg: '#FFE5E0', text: '#C0290A' },
+  { bg: '#D6F2FA', text: '#0A6E8A' },
+  { bg: '#E0F5DC', text: '#2A7020' },
+  { bg: '#FFF4CC', text: '#8A6000' },
+  { bg: '#FFD6E8', text: '#8A1A4A' },
+  { bg: '#E8E0FF', text: '#4A20A0' },
+];
+
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+// ── Countdown ─────────────────────────────────────────────────────────
 function updateCountdown() {
-  const target = new Date('2027-07-01T00:00:00');
+  const tripDate = new Date('2027-07-01T00:00:00');
   const now = new Date();
-  const diff = target - now;
-  if (diff <= 0) { document.getElementById('countdownChip').textContent = '🌸 Trip time!'; return; }
+  const diff = tripDate - now;
+  const el = document.getElementById('cdDays');
+  const badge = document.getElementById('countdownBadge');
+  if (diff <= 0) {
+    el.textContent = '0';
+    badge.querySelector('.cd-label').textContent = 'Trip time!';
+    return;
+  }
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const months = Math.floor(days / 30);
-  const remDays = days % 30;
-  document.getElementById('countdownChip').textContent =
-    `⏳ ${months}m ${remDays}d to go`;
+  el.textContent = days.toLocaleString();
 }
 updateCountdown();
 setInterval(updateCountdown, 60000);
 
-// ─── Formatting ──────────────────────────────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────────────────
 function fmt(n) {
-  return DATA.trip.currency + n.toLocaleString('en-PH');
+  return (DATA.trip.currency || '₱') + n.toLocaleString('en-PH');
 }
 function pct(saved, target) {
   return Math.min(100, Math.round((saved / target) * 100));
 }
-function statusIcon(p) {
-  if (p >= 100) return { icon: '✓', cls: 'done' };
-  if (p >= 70)  return { icon: '◐', cls: 'near' };
-  return { icon: '○', cls: 'early' };
-}
-function memberColor(p, familyColor) {
-  if (p >= 100) return '#5B9E6A';
-  if (p >= 70)  return '#E8A820';
+function barColor(p, familyColor) {
+  if (p >= 100) return '#5BBF4E';
+  if (p >= 70)  return '#F0B429';
   return familyColor;
 }
 
-// ─── Render ──────────────────────────────────────────────────────────────
+// ── Render ───────────────────────────────────────────────────────────
 function render() {
   const target = DATA.trip.targetPerPerson;
   let totalSaved = 0, totalTarget = 0, totalMembers = 0;
 
-  DATA.families.forEach(f => {
-    f.members.forEach(m => {
-      totalSaved += m.saved;
-      totalTarget += target;
-      totalMembers++;
-    });
-  });
+  DATA.families.forEach(f => f.members.forEach(m => {
+    totalSaved += m.saved;
+    totalTarget += target;
+    totalMembers++;
+  }));
 
-  const overallPct = pct(totalSaved, totalTarget);
-  document.getElementById('grandSaved').textContent = fmt(totalSaved);
-  document.getElementById('grandTarget').textContent = fmt(totalTarget);
+  const op = pct(totalSaved, totalTarget);
+  document.getElementById('grandSaved').textContent     = fmt(totalSaved);
+  document.getElementById('grandTarget').textContent    = fmt(totalTarget);
   document.getElementById('grandRemaining').textContent = fmt(Math.max(0, totalTarget - totalSaved));
-  document.getElementById('grandPct').textContent = overallPct + '%';
-  document.getElementById('totalMembers').textContent = totalMembers;
-  setTimeout(() => {
-    document.getElementById('grandBar').style.width = overallPct + '%';
-  }, 100);
+  document.getElementById('grandPct').textContent       = op + '%';
+  document.getElementById('grandPctLabel').textContent  = op + '%';
+  document.getElementById('totalMembers').textContent   = totalMembers;
+  setTimeout(() => { document.getElementById('grandBar').style.width = op + '%'; }, 120);
 
-  // Families grid
   const grid = document.getElementById('familiesGrid');
   grid.innerHTML = '';
-  DATA.families.forEach(family => {
+
+  DATA.families.forEach((family, fi) => {
     let famSaved = 0;
     family.members.forEach(m => famSaved += m.saved);
-    const famTarget = target * family.members.length;
-    const famPct = pct(famSaved, famTarget);
+    const famPct = pct(famSaved, target * family.members.length);
+    const icon = FAMILY_ICONS[fi % FAMILY_ICONS.length];
+    const col  = family.color;
 
     const card = document.createElement('div');
     card.className = 'family-card';
     card.innerHTML = `
       <div class="family-header">
-        <div class="family-title">
+        <div class="family-header-bg" style="background:${col}"></div>
+        <div class="family-icon" style="background:${col}20; color:${col}">${icon}</div>
+        <div class="family-title-block">
           <div class="family-name">${family.name}</div>
-          <div class="family-subtitle">${family.members.length} members · ${fmt(famSaved)} saved</div>
+          <div class="family-sub">${family.members.length} members &nbsp;·&nbsp; ${fmt(famSaved)} saved</div>
         </div>
-        <div class="family-pct" style="color:${family.color}">${famPct}%</div>
-        <div class="family-color-pill" style="background:${family.color}">${famPct >= 100 ? '🎉' : famPct >= 70 ? '◐' : '○'}</div>
+        <div class="family-pct-badge" style="color:${col}">${famPct}%</div>
       </div>
       <div class="members-list">
-        ${family.members.map(m => {
-          const p = pct(m.saved, target);
-          const remaining = Math.max(0, target - m.saved);
-          const st = statusIcon(p);
-          const col = memberColor(p, family.color);
+        ${family.members.map((m, mi) => {
+          const p   = pct(m.saved, target);
+          const rem = Math.max(0, target - m.saved);
+          const col2 = barColor(p, col);
+          const av  = AVATAR_PALETTES[(fi * 4 + mi) % AVATAR_PALETTES.length];
+          const reached = p >= 100;
           return `
           <div class="member-row">
-            <div class="member-status ${st.cls}">${st.icon}</div>
+            <div class="member-avatar" style="background:${av.bg}; color:${av.text}">${initials(m.name)}</div>
             <div class="member-info">
               <div class="member-name">${m.name}</div>
-              <div class="member-bar-wrap">
-                <div class="member-mini-bar">
-                  <div class="member-mini-fill mbf" data-pct="${p}" style="background:${col};width:0%"></div>
-                </div>
-                <span class="member-pct-small">${p}%</span>
+              <div class="member-bar-track">
+                <div class="member-bar-fill mbf" data-pct="${p}"
+                     style="background:${col2}; width:0%"></div>
               </div>
             </div>
-            <div class="member-amounts">
-              <div class="member-saved" style="color:${col}">${fmt(m.saved)}</div>
-              <div class="member-remaining">${remaining > 0 ? fmt(remaining) + ' to go' : '🎉 Reached!'}</div>
+            <div class="member-right">
+              <div class="member-saved" style="color:${col2}">${fmt(m.saved)}</div>
+              <div class="member-pct">${p}%</div>
+              <div class="member-remaining">${reached ? '🎉 Goal reached!' : fmt(rem) + ' to go'}</div>
             </div>
           </div>`;
         }).join('')}
-      </div>
-    `;
+      </div>`;
     grid.appendChild(card);
   });
 
-  // Animate bars
   setTimeout(() => {
     document.querySelectorAll('.mbf').forEach(el => {
       el.style.width = el.dataset.pct + '%';
     });
-  }, 150);
+  }, 160);
 
-  // Last updated
   const now = new Date();
   document.getElementById('lastUpdated').textContent =
     now.toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
 }
 
-// ─── Init — load from savings-data.json ─────────────────────────────────
+// ── Load data ────────────────────────────────────────────────────────
 fetch('savings-data.json')
-  .then(res => {
-    if (!res.ok) throw new Error('Could not load savings-data.json');
-    return res.json();
-  })
-  .then(json => {
-    DATA = json;
-    render();
-  })
-  .catch(err => {
+  .then(r => { if (!r.ok) throw new Error('Not found'); return r.json(); })
+  .then(json => { DATA = json; render(); })
+  .catch(() => {
     document.getElementById('familiesGrid').innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#B89080;">
-        <div style="font-size:40px;margin-bottom:16px;">⚠️</div>
-        <div style="font-family:'Shippori Mincho',serif;font-size:20px;color:#2A1A0F;margin-bottom:8px;">Could not load savings-data.json</div>
-        <div style="font-size:14px;line-height:1.6;">Make sure <strong>savings-data.json</strong> is in the same folder as this HTML file,<br>and open it via a local server or browser that allows local file access.</div>
+      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+        <div style="font-size:40px;margin-bottom:16px">⚠️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:#1E1208;margin-bottom:8px">Could not load savings-data.json</div>
+        <div style="font-size:14px;color:#7A5030;line-height:1.7">Make sure <strong>savings-data.json</strong> is in the same folder as this HTML file<br>and open it through a local server (e.g. <code>python3 -m http.server</code>).</div>
       </div>`;
-    console.error(err);
   });
 </script>
 </body>
