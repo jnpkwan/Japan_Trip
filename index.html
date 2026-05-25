@@ -4,676 +4,613 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Japan Trip 2027 — Savings Tracker</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23E8293B'/%3E%3Cg transform='translate(32,32)'%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(72)'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(144)'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(216)'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(288)'/%3E%3Ccircle r='5' fill='%23E8293B'/%3E%3Ccircle r='2.5' fill='%23F5C842'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23E8293B'/%3E%3Cg transform='translate(32,32)'%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(72)'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(144)'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(216)'/%3E%3Cellipse rx='7' ry='13' fill='%23FDE8F0' opacity='.95' transform='rotate(288)'/%3E%3Ccircle r='5' fill='%23E8293B'/%3E%3Ccircle r='2.5' fill='%23F5C842'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
-
   :root {
-    --torii:     #E8293B;
-    --torii-dk:  #c01f2c;
-    --sakura:    #F7A8C0;
-    --sakura-lt: #FDE8F0;
-    --matcha:    #4E7C59;
-    --matcha-lt: #72B083;
-    --indigo:    #1B3A8C;
-    --indigo-lt: #3A5FCC;
-    --kiku:      #E8A020;
-    --kiku-lt:   #F5C842;
-    --plum:      #8B2FC9;
-    --plum-lt:   #B56CE0;
-    --ink:       #1C1226;
-    --paper:     #FFF6F8;
-    --card:      #FFFFFF;
-    --muted:     #9A8FA0;
-    --border-neu:rgba(28,18,38,0.09);
+    /* Summer Japan palette */
+    --bg:           #FFF8F2;           /* warm rice-paper white */
+    --bg2:          #FFFFFF;           /* pure card white */
+    --bg3:          #FFF0E8;           /* peach tint for inputs */
+    --border:       rgba(220,170,140,0.25);
+    --border-hover: rgba(220,100,80,0.35);
+    --text:         #2A1A0F;           /* deep sumi ink */
+    --text-muted:   #7A5848;           /* warm cedar */
+    --text-dim:     #B89080;           /* soft clay */
+
+    /* Summer Japan accent colors */
+    --sakura:       #F2637A;           /* natsuzakura pink */
+    --sakura-light: #FFD6E0;
+    --matcha:       #5B9E6A;           /* summer bamboo green */
+    --matcha-light: #D4EDDA;
+    --natsu:        #F5832A;           /* natsu orange — yukata coral */
+    --natsu-light:  #FFE0C7;
+    --asagi:        #3A9DC2;           /* asagi sky blue */
+    --asagi-light:  #C8E8F5;
+    --kiniro:       #E8A820;           /* kiniro summer gold */
+    --kiniro-light: #FFF0C0;
+    --fuji:         #8B63C7;           /* wisteria purple */
+    --fuji-light:   #EAD9FF;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
+    background: var(--bg);
+    color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* gradient backdrop */
+  /* Airy summer background */
   body::before {
     content: '';
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    position: fixed;
+    inset: 0;
     background:
-      radial-gradient(ellipse at 10% 0%,   rgba(247,168,192,0.38) 0%, transparent 50%),
-      radial-gradient(ellipse at 92% 8%,   rgba(232,41,59,0.09)  0%, transparent 42%),
-      radial-gradient(ellipse at 80% 100%, rgba(78,124,89,0.11)  0%, transparent 42%),
-      radial-gradient(ellipse at 5%  92%,  rgba(27,58,140,0.09)  0%, transparent 42%);
+      radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(242,99,122,0.08)  0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 100% 0%,  rgba(58,157,194,0.07)  0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(232,168,32,0.06)  0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
   }
 
-  /* SVG sakura tile */
-  body::after {
-    content: '';
-    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.45;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg opacity='.9'%3E%3Cellipse cx='30' cy='25' rx='9' ry='5.5' fill='%23F7A8C0' opacity='.45' transform='rotate(-30 30 25)'/%3E%3Cellipse cx='140' cy='75' rx='8' ry='5' fill='%23F7A8C0' opacity='.35' transform='rotate(20 140 75)'/%3E%3Cellipse cx='85' cy='160' rx='10' ry='6' fill='%23FBC5D8' opacity='.4' transform='rotate(-15 85 160)'/%3E%3Cellipse cx='180' cy='148' rx='7' ry='4.5' fill='%23F7A8C0' opacity='.35' transform='rotate(40 180 148)'/%3E%3Cellipse cx='58' cy='100' rx='6' ry='3.5' fill='%23FBC5D8' opacity='.3' transform='rotate(10 58 100)'/%3E%3Cellipse cx='170' cy='32' rx='9' ry='5' fill='%23F7A8C0' opacity='.25' transform='rotate(-45 170 32)'/%3E%3Cellipse cx='205' cy='110' rx='7' ry='4' fill='%23FBC5D8' opacity='.2' transform='rotate(25 205 110)'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 220px 220px;
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
   }
-
-  .wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
 
   /* ── HEADER ── */
   header {
-    padding: 48px 0 36px; text-align: center; position: relative; overflow: visible;
+    padding: 56px 0 44px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
   }
 
-  /* Mount Fuji SVG background illustration */
-  .header-fuji {
-    position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-    width: min(600px, 90vw); opacity: 0.07; pointer-events: none; z-index: 0;
+  .header-left { flex: 1; }
+
+  .jp-label {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: var(--sakura);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .jp-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--sakura), var(--natsu));
+    border-radius: 2px;
   }
 
-  /* Torii gate SVG — left side decoration */
-  .deco-torii-left, .deco-torii-right {
-    position: absolute; top: 30px; opacity: 0.13; pointer-events: none; z-index: 0;
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
   }
-  .deco-torii-left  { left: 0; }
-  .deco-torii-right { right: 0; transform: scaleX(-1); }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(120deg, var(--sakura), var(--natsu));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-  .header-eyebrow {
-    position: relative; z-index: 1;
-    font-size: 11px; letter-spacing: 0.38em; text-transform: uppercase;
-    color: var(--torii); font-weight: 600; margin-bottom: 14px;
-    display: flex; align-items: center; justify-content: center; gap: 12px;
+  .header-meta {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
   }
-  .header-eyebrow svg { flex-shrink: 0; }
+  .header-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-  header h1 {
-    position: relative; z-index: 1;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 6vw, 60px); font-weight: 900;
-    letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 10px; color: var(--ink);
+  .countdown-chip {
+    background: linear-gradient(135deg, var(--sakura), var(--natsu));
+    border-radius: 100px;
+    padding: 7px 18px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(242,99,122,0.3);
+    animation: pulse-sakura 3s ease-in-out infinite;
   }
-  header h1 span { color: var(--torii); }
-  .header-sub {
-    position: relative; z-index: 1;
-    color: var(--muted); font-size: 14px; font-weight: 400; letter-spacing: 0.04em;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
+  @keyframes pulse-sakura {
+    0%, 100% { box-shadow: 0 4px 16px rgba(242,99,122,0.3); }
+    50%       { box-shadow: 0 4px 24px rgba(242,99,122,0.5); }
   }
-  .header-sub svg { opacity: 0.5; }
 
-  .countdown-strip {
-    position: relative; z-index: 1;
-    display: inline-flex; align-items: center; gap: 14px; margin-top: 24px;
-    background: linear-gradient(135deg, var(--torii) 0%, #FF5570 100%);
-    color: white; border-radius: 100px; padding: 11px 28px;
-    font-size: 13px; letter-spacing: 0.04em;
-    box-shadow: 0 6px 24px rgba(232,41,59,0.35);
-  }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.7); display: inline-block; animation: pulse 2s infinite; flex-shrink:0; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
-  .countdown-strip strong { color: var(--kiku-lt); font-size: 15px; font-weight: 600; }
-
-  /* ── GRAND TOTAL ── */
+  /* ── GRAND TOTAL BANNER ── */
   .grand-total {
-    background: linear-gradient(135deg, #1C1226 0%, #2B1640 100%);
-    color: white; border-radius: 24px; padding: 30px 36px; margin-bottom: 36px;
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
-    position: relative; overflow: hidden;
-    box-shadow: 0 12px 40px rgba(28,18,38,0.25);
+    background: linear-gradient(135deg, #fff 60%, #FFF5F8 100%);
+    border: 1.5px solid rgba(242,99,122,0.18);
+    border-radius: 24px;
+    padding: 32px 36px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 24px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(242,99,122,0.07), 0 1px 4px rgba(0,0,0,0.04);
   }
-  .grand-total-svg-deco {
-    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-    opacity: 0.07; pointer-events: none;
+  .grand-total::before {
+    content: '日本';
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 80px;
+    color: rgba(242,99,122,0.06);
+    line-height: 1;
+    pointer-events: none;
   }
-  .grand-total::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, var(--torii), var(--sakura), var(--kiku-lt), var(--matcha-lt), var(--indigo-lt));
-    border-radius: 24px 24px 0 0;
-  }
-  .gt-item { text-align: center; }
-  .gt-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.45; margin-bottom: 8px; }
-  .gt-value { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3.5vw, 40px); font-weight: 700; }
-  .gt-value.accent { color: var(--kiku-lt); }
-  .grand-bar-wrap { grid-column: 1/-1; margin-top: 4px; }
-  .grand-bar-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
-  .grand-bar-fill { height: 100%; background: linear-gradient(90deg,var(--torii),var(--sakura),var(--kiku-lt)); border-radius:4px; transition:width 1.2s cubic-bezier(.4,0,.2,1); }
-  .grand-bar-label { display:flex; justify-content:space-between; font-size:11px; opacity:0.35; margin-top:6px; }
 
-  /* ── TOOLBAR ── */
-  .toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
-  .toolbar-left { font-family:'Playfair Display',serif; font-size:20px; color:var(--ink); display:flex; align-items:center; gap:10px; }
-  .btn { display:inline-flex; align-items:center; gap:7px; padding:10px 22px; border-radius:100px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; transition:all 0.18s; }
-  .btn-primary { background:linear-gradient(135deg,var(--torii) 0%,#FF5570 100%); color:white; box-shadow:0 4px 14px rgba(232,41,59,0.35); }
-  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(232,41,59,0.45); }
-  .btn-ghost { background:white; color:var(--ink); border:1.5px solid var(--border-neu); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-  .btn-ghost:hover { background:var(--sakura-lt); border-color:var(--sakura); }
+  .stat-block { }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .stat-value {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-value.highlight { color: var(--natsu); }
+  .stat-value.green     { color: var(--matcha); }
+
+  .grand-progress-wrap {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+  }
+  .progress-bar-bg {
+    background: rgba(200,150,130,0.15);
+    border-radius: 100px;
+    height: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--sakura), var(--natsu), var(--kiniro));
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background: var(--natsu);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 8px rgba(245,131,42,0.6);
+  }
 
   /* ── FAMILY CARDS ── */
-  .families { display:grid; grid-template-columns:repeat(auto-fit,minmax(480px,1fr)); gap:24px; }
-  @media(max-width:560px){ .families{grid-template-columns:1fr;} }
+  .families-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .families-grid { grid-template-columns: 1fr; }
+    .grand-total { grid-template-columns: 1fr 1fr; }
+    header { flex-direction: column; }
+  }
 
   .family-card {
-    background:var(--card); border-radius:22px; overflow:hidden;
-    box-shadow:0 4px 24px rgba(28,18,38,0.08); border:1px solid var(--border-neu);
-    animation:fadeUp 0.5s ease both;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+    box-shadow: 0 2px 12px rgba(180,120,100,0.07);
   }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-
-  .family-top-bar { height:5px; width:100%; }
+  .family-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(180,100,80,0.12);
+  }
 
   .family-header {
-    padding:18px 22px 14px; display:flex; align-items:center;
-    justify-content:space-between; position:relative; gap:12px;
+    padding: 22px 26px 18px;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
   }
-  .family-icon { flex-shrink:0; width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; }
-  .family-name-wrap { flex:1; }
-  .family-tag { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.45; display:block; margin-bottom:3px; font-weight:500; }
-  .family-name { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; }
-  .family-stats { text-align:right; }
-  .family-pct { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; }
-  .family-saved-lbl { font-size:11px; color:var(--muted); margin-top:1px; }
-  .family-divider { height:1px; background:var(--border-neu); margin:0 22px; }
+  .family-color-pill {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .family-title { flex: 1; }
+  .family-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .family-subtitle {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+  .family-pct {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+  }
 
-  /* ── FACE BARS ── */
-  .member-section { padding:18px 22px 6px; }
-  .face-bar-row { margin-bottom:24px; }
-  .face-bar-meta { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; }
-  .face-bar-name { font-size:13px; font-weight:500; }
-  .face-bar-role { font-size:10px; color:white; margin-left:7px; padding:2px 8px; border-radius:20px; font-weight:500; display:inline-block; vertical-align:middle; }
-  .face-bar-amounts { font-size:12px; color:var(--muted); }
-  .face-bar-amounts strong { font-family:'Playfair Display',serif; font-size:15px; color:var(--ink); }
+  .members-list { padding: 10px 16px 16px; }
 
-  .face-bar-track-wrap { position:relative; height:52px; display:flex; align-items:center; }
-  .face-bar-track { position:absolute; left:0; right:0; height:12px; border-radius:6px; overflow:visible; top:50%; transform:translateY(-50%); background:#F0EEF5; }
-  .face-bar-fill { height:100%; border-radius:6px; transition:width 1s cubic-bezier(.4,0,.2,1); }
-  .face-bar-goal { position:absolute; right:0; top:50%; transform:translate(50%,-50%); width:30px; height:30px; border-radius:50%; background:white; border:2px solid #E0DCE8; display:flex; align-items:center; justify-content:center; font-size:16px; z-index:1; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+  .member-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 10px;
+    border-radius: 14px;
+    transition: background 0.2s;
+    border-bottom: 1px solid var(--border);
+  }
+  .member-row:last-child { border-bottom: none; }
+  .member-row:hover { background: var(--bg); }
 
-  .face-thumb { position:absolute; top:50%; transform:translate(-50%,-50%); transition:left 1s cubic-bezier(.4,0,.2,1); z-index:5; cursor:pointer; }
-  .face-thumb-inner { width:46px; height:46px; border-radius:50%; border:3px solid white; box-shadow:0 4px 14px rgba(0,0,0,0.18); overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:white; position:relative; transition:transform 0.2s,box-shadow 0.2s; }
-  .face-thumb:hover .face-thumb-inner { transform:scale(1.12); box-shadow:0 8px 22px rgba(0,0,0,0.22); }
-  .face-thumb-inner img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
-  .face-thumb-tip { position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%); background:var(--ink); color:white; font-size:11px; white-space:nowrap; padding:5px 10px; border-radius:8px; opacity:0; pointer-events:none; transition:opacity 0.15s; }
-  .face-thumb-tip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:var(--ink); }
-  .face-thumb:hover .face-thumb-tip { opacity:1; }
-  .face-thumb-inner.no-photo { border:2.5px dashed rgba(255,255,255,0.65); }
-  .upload-hint { position:absolute; bottom:-3px; right:-3px; width:18px; height:18px; border-radius:50%; background:white; border:1.5px solid #ddd; display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--muted); box-shadow:0 1px 4px rgba(0,0,0,0.15); cursor:pointer; }
-  .upload-hint:hover { background:var(--sakura-lt); }
-  .photo-input { display:none; }
-  .pct-badge { position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:700; color:white; border-radius:6px; padding:2px 6px; white-space:nowrap; box-shadow:0 2px 6px rgba(0,0,0,0.15); }
+  .member-info { min-width: 0; }
+  .member-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .member-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .member-mini-bar {
+    flex: 1;
+    height: 10px;
+    background: rgba(180,130,110,0.13);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .member-mini-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .member-pct-small {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 700;
+    min-width: 36px;
+    text-align: right;
+  }
 
-  /* ── FAMILY FOOTER ── */
-  .family-footer { display:flex; align-items:center; justify-content:space-between; padding:12px 22px 18px; border-top:1px solid var(--border-neu); margin-top:4px; }
-  .family-total-label { font-size:11px; color:var(--muted); margin-bottom:2px; }
-  .family-total-val { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; }
-  .family-remaining { font-size:12px; color:var(--muted); text-align:right; }
-  .btn-sm { padding:6px 16px; font-size:12px; border-radius:100px; border:1.5px solid var(--border-neu); background:transparent; cursor:pointer; font-family:'DM Sans'; font-weight:500; color:var(--ink); transition:all 0.15s; }
-  .btn-sm:hover { background:var(--sakura-lt); border-color:var(--sakura); }
+  .member-amounts {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .member-saved {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .member-remaining {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: right;
+    margin-top: 3px;
+  }
 
-  /* ── MODALS ── */
-  .modal-backdrop { position:fixed; inset:0; background:rgba(28,18,38,0.5); backdrop-filter:blur(6px); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.2s; }
-  .modal-backdrop.open { opacity:1; pointer-events:all; }
-  .modal { background:#FFFBFD; border-radius:22px; padding:30px; width:100%; max-width:480px; transform:scale(0.96) translateY(10px); transition:transform 0.25s cubic-bezier(.4,0,.2,1); box-shadow:0 24px 60px rgba(28,18,38,0.2); max-height:90vh; overflow-y:auto; border-top:4px solid var(--torii); }
-  .modal-backdrop.open .modal { transform:scale(1) translateY(0); }
-  .modal h2 { font-family:'Playfair Display',serif; font-size:21px; margin-bottom:20px; color:var(--ink); display:flex; align-items:center; gap:10px; }
-  .form-group { margin-bottom:14px; }
-  .form-group label { display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; font-weight:500; }
-  .form-group input,.form-group select { width:100%; padding:10px 13px; border:1.5px solid #E8E0EE; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:14px; background:white; color:var(--ink); outline:none; transition:border 0.15s; }
-  .form-group input:focus,.form-group select:focus { border-color:var(--torii); box-shadow:0 0 0 3px rgba(232,41,59,0.08); }
-  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:22px; }
-  .btn-cancel { background:transparent; color:var(--muted); border:1.5px solid #E0D8E8; }
-  .btn-cancel:hover { background:var(--sakura-lt); color:var(--ink); }
+  .member-status {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .member-status.done  { background: var(--matcha-light);  color: var(--matcha); }
+  .member-status.near  { background: var(--kiniro-light);  color: var(--kiniro); }
+  .member-status.early { background: var(--sakura-light);  color: var(--sakura); }
 
-  /* ── TOAST ── */
-  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,var(--torii),#FF5570); color:white; padding:11px 24px; border-radius:100px; font-size:13px; opacity:0; transition:all 0.3s; pointer-events:none; z-index:200; white-space:nowrap; box-shadow:0 6px 20px rgba(232,41,59,0.4); }
-  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  /* Floating sakura SVG */
+  .sakura-deco {
+    position: fixed;
+    top: 0; right: 0;
+    width: 240px;
+    height: 240px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+  }
 
-  @media(max-width:480px){ .grand-total{grid-template-columns:1fr 1fr;padding:22px;} .grand-bar-wrap{grid-column:1/-1;} }
+  .last-updated {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1.5px solid var(--border);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .grand-total { grid-template-columns: 1fr 1fr; }
+    .grand-total::before { display: none; }
+    header { padding: 40px 0 32px; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <!-- HEADER -->
+<svg class="sakura-deco" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="180" cy="60" r="80" fill="rgba(242,99,122,0.08)"/>
+  <circle cx="210" cy="30" r="40" fill="rgba(245,131,42,0.07)"/>
+  <!-- Big sakura bloom -->
+  <g opacity="0.75" transform="translate(180,55)">
+    <ellipse rx="11" ry="22" fill="#F2637A" transform="rotate(0)"/>
+    <ellipse rx="11" ry="22" fill="#F5832A" transform="rotate(72)"/>
+    <ellipse rx="11" ry="22" fill="#F2637A" transform="rotate(144)"/>
+    <ellipse rx="11" ry="22" fill="#F5832A" transform="rotate(216)"/>
+    <ellipse rx="11" ry="22" fill="#F2637A" transform="rotate(288)"/>
+    <circle r="6" fill="#fff" opacity="0.9"/>
+  </g>
+  <!-- Small sakura bloom -->
+  <g opacity="0.5" transform="translate(210,20)">
+    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(0)"/>
+    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(72)"/>
+    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(144)"/>
+    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(216)"/>
+    <ellipse rx="6" ry="12" fill="#FFB6C1" transform="rotate(288)"/>
+    <circle r="3" fill="#fff" opacity="0.9"/>
+  </g>
+  <!-- Petal scatter -->
+  <ellipse cx="140" cy="100" rx="5" ry="9" fill="#F2637A" opacity="0.3" transform="rotate(30 140 100)"/>
+  <ellipse cx="220" cy="80" rx="4" ry="7" fill="#F5832A" opacity="0.25" transform="rotate(-20 220 80)"/>
+  <ellipse cx="160" cy="130" rx="3" ry="6" fill="#F2637A" opacity="0.2" transform="rotate(15 160 130)"/>
+</svg>
+
+<div class="page-wrapper">
+
   <header>
-    <!-- Mount Fuji SVG watermark -->
-    <svg class="header-fuji" viewBox="0 0 600 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M300 20 L480 180 H120 Z" fill="#1C1226"/>
-      <path d="M300 20 L340 70 L300 60 L260 70 Z" fill="white"/>
-      <path d="M0 180 Q150 160 300 180 Q450 200 600 180 L600 220 H0Z" fill="#FDE8F0" opacity="0.6"/>
-      <circle cx="80" cy="80" r="28" fill="#FFF6F8" opacity="0.7"/>
-      <circle cx="520" cy="60" r="20" fill="#FFF6F8" opacity="0.5"/>
-      <circle cx="560" cy="90" r="14" fill="#FFF6F8" opacity="0.4"/>
-      <circle cx="40" cy="110" r="16" fill="#FFF6F8" opacity="0.4"/>
-    </svg>
-
-    <!-- Torii left -->
-    <svg class="deco-torii-left" width="70" height="120" viewBox="0 0 70 120" aria-hidden="true">
-      <rect x="5"  y="20" width="8"  height="90" fill="#E8293B" rx="2"/>
-      <rect x="57" y="20" width="8"  height="90" fill="#E8293B" rx="2"/>
-      <rect x="0"  y="18" width="70" height="10" fill="#E8293B" rx="3"/>
-      <rect x="5"  y="32" width="60" height="7"  fill="#E8293B" rx="2"/>
-      <rect x="2"  y="15" width="66" height="6"  fill="#c01f2c" rx="2"/>
-    </svg>
-    <svg class="deco-torii-right" width="70" height="120" viewBox="0 0 70 120" aria-hidden="true">
-      <rect x="5"  y="20" width="8"  height="90" fill="#E8293B" rx="2"/>
-      <rect x="57" y="20" width="8"  height="90" fill="#E8293B" rx="2"/>
-      <rect x="0"  y="18" width="70" height="10" fill="#E8293B" rx="3"/>
-      <rect x="5"  y="32" width="60" height="7"  fill="#E8293B" rx="2"/>
-      <rect x="2"  y="15" width="66" height="6"  fill="#c01f2c" rx="2"/>
-    </svg>
-
-    <div class="header-eyebrow">
-      <!-- sakura blossom -->
-      <svg width="16" height="16" viewBox="0 0 16 16"><g transform="translate(8,8)"><ellipse rx="3" ry="5.5" fill="#F7A8C0"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(72)"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(144)"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(216)"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(288)"/><circle r="2" fill="#E8293B"/></g></svg>
-      Group Savings Tracker
-      <svg width="16" height="16" viewBox="0 0 16 16"><g transform="translate(8,8)"><ellipse rx="3" ry="5.5" fill="#F7A8C0"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(72)"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(144)"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(216)"/><ellipse rx="3" ry="5.5" fill="#F7A8C0" transform="rotate(288)"/><circle r="2" fill="#E8293B"/></g></svg>
+    <div class="header-left">
+      <div class="jp-label">桜の旅 · Japan Trip</div>
+      <h1>Japan Trip<br><em>2027</em></h1>
+      <div class="header-meta">
+        <span>🗓 July 2027</span>
+        <span>👨‍👩‍👧‍👦 4 Families · <span id="totalMembers">16</span> Travelers</span>
+        <span>🎯 ₱100,000 / person</span>
+      </div>
     </div>
-
-    <h1>Japan Trip <span>2027</span></h1>
-
-    <div class="header-sub">
-      <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1L8.5 5h4L9.5 7.5l1.5 4L7 9l-4 2.5 1.5-4L1.5 5h4Z" fill="#F7A8C0"/></svg>
-      July 2027 &nbsp;·&nbsp; Four Families &nbsp;·&nbsp; One Dream
-      <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1L8.5 5h4L9.5 7.5l1.5 4L7 9l-4 2.5 1.5-4L1.5 5h4Z" fill="#F7A8C0"/></svg>
-    </div>
-
-    <div class="countdown-strip">
-      <span class="dot"></span>
-      <span id="countdown-text">Loading…</span>
-      <span style="opacity:.4">·</span>
-      <span><strong id="months-left">—</strong> months to go</span>
-      <!-- plane icon -->
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
-    </div>
+    <div class="countdown-chip" id="countdownChip">⏳ Loading...</div>
   </header>
 
   <!-- GRAND TOTAL -->
-  <div class="grand-total">
-    <!-- torii gate SVG inside card -->
-    <svg class="grand-total-svg-deco" width="120" height="130" viewBox="0 0 70 120" aria-hidden="true">
-      <rect x="5"  y="20" width="8"  height="90" fill="white" rx="2"/>
-      <rect x="57" y="20" width="8"  height="90" fill="white" rx="2"/>
-      <rect x="0"  y="18" width="70" height="10" fill="white" rx="3"/>
-      <rect x="5"  y="32" width="60" height="7"  fill="white" rx="2"/>
-      <rect x="2"  y="15" width="66" height="6"  fill="#ddd" rx="2"/>
-    </svg>
-    <div class="gt-item">
-      <div class="gt-label">Total Saved</div>
-      <div class="gt-value accent" id="g-saved">₱0</div>
+  <div class="grand-total" id="grandTotal">
+    <div class="stat-block">
+      <div class="stat-label">Total Saved</div>
+      <div class="stat-value highlight" id="grandSaved">₱0</div>
     </div>
-    <div class="gt-item">
-      <div class="gt-label">Total Target</div>
-      <div class="gt-value" id="g-target">₱0</div>
+    <div class="stat-block">
+      <div class="stat-label">Grand Target</div>
+      <div class="stat-value" id="grandTarget">₱0</div>
     </div>
-    <div class="gt-item">
-      <div class="gt-label">Overall Progress</div>
-      <div class="gt-value accent" id="g-pct">0%</div>
+    <div class="stat-block">
+      <div class="stat-label">Still Needed</div>
+      <div class="stat-value" id="grandRemaining">₱0</div>
     </div>
-    <div class="grand-bar-wrap">
-      <div class="grand-bar-track"><div class="grand-bar-fill" id="g-bar" style="width:0%"></div></div>
-      <div class="grand-bar-label"><span>₱0</span><span id="g-target-lbl">₱0 goal</span></div>
+    <div class="stat-block">
+      <div class="stat-label">Overall Progress</div>
+      <div class="stat-value green" id="grandPct">0%</div>
     </div>
-  </div>
-
-  <!-- TOOLBAR -->
-  <div class="toolbar">
-    <div class="toolbar-left">
-      <svg width="22" height="22" viewBox="0 0 22 22"><g transform="translate(11,11)"><ellipse rx="4" ry="7" fill="#F7A8C0"/><ellipse rx="4" ry="7" fill="#F7A8C0" transform="rotate(72)"/><ellipse rx="4" ry="7" fill="#F7A8C0" transform="rotate(144)"/><ellipse rx="4" ry="7" fill="#F7A8C0" transform="rotate(216)"/><ellipse rx="4" ry="7" fill="#F7A8C0" transform="rotate(288)"/><circle r="2.5" fill="#E8293B"/></g></svg>
-      Family Savings
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn btn-ghost" onclick="openAddMemberModal()">＋ Add Member</button>
-      <button class="btn btn-primary" onclick="openLogModal()">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><circle cx="7" cy="7" r="6" stroke="white" stroke-width="1.5" fill="none"/><path d="M7 4v6M4 7h6" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Log a Payment
-      </button>
-    </div>
-  </div>
-
-  <div class="families" id="families-container"></div>
-</div>
-
-<!-- LOG MODAL -->
-<div class="modal-backdrop" id="logModal">
-  <div class="modal">
-    <h2>
-      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" stroke="#E8293B" stroke-width="2" fill="none"/><path d="M11 7v8M7 11h8" stroke="#E8293B" stroke-width="2" stroke-linecap="round"/></svg>
-      Log a Payment
-    </h2>
-    <div class="form-group"><label>Family</label><select id="log-family" onchange="populateMembers()"><option value="">— Select family —</option></select></div>
-    <div class="form-group"><label>Member</label><select id="log-member"><option value="">— Select member —</option></select></div>
-    <div class="form-row">
-      <div class="form-group"><label>Amount (₱)</label><input type="number" id="log-amount" placeholder="0.00" min="0" step="0.01"></div>
-      <div class="form-group"><label>Date</label><input type="date" id="log-date"></div>
-    </div>
-    <div class="form-group"><label>Note (optional)</label><input type="text" id="log-note" placeholder="e.g. Monthly contribution"></div>
-    <div class="modal-actions">
-      <button class="btn btn-cancel" onclick="closeModal('logModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="logPayment()">Save Payment</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD MEMBER MODAL -->
-<div class="modal-backdrop" id="addMemberModal">
-  <div class="modal">
-    <h2>
-      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="9" cy="7" r="4" stroke="#E8293B" stroke-width="2" fill="none"/><path d="M2 19c0-4 3-6 7-6s7 2 7 6" stroke="#E8293B" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M17 9v6M14 12h6" stroke="#E8293B" stroke-width="2" stroke-linecap="round"/></svg>
-      Add Member
-    </h2>
-    <div class="form-row">
-      <div class="form-group"><label>First Name</label><input type="text" id="new-fname" placeholder="Kenji"></div>
-      <div class="form-group"><label>Last Name</label><input type="text" id="new-lname" placeholder=""></div>
-    </div>
-    <div class="form-group"><label>Family</label><select id="new-family"><option value="">— Select family —</option></select></div>
-    <div class="form-row">
-      <div class="form-group"><label>Role</label><input type="text" id="new-role" placeholder="Adult / Child"></div>
-      <div class="form-group"><label>Savings Target (₱)</label><input type="number" id="new-target" placeholder="3000" min="0" step="100"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-cancel" onclick="closeModal('addMemberModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="addMember()">Add Member</button>
-    </div>
-  </div>
-</div>
-
-<!-- EDIT MEMBER MODAL -->
-<div class="modal-backdrop" id="editMemberModal">
-  <div class="modal">
-    <h2>
-      <svg width="22" height="22" viewBox="0 0 22 22"><path d="M15 3l4 4-10 10H5v-4L15 3z" stroke="#E8293B" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
-      Edit Member
-    </h2>
-    <div class="form-group"><label>Family Name</label><input type="text" id="edit-family-name" placeholder="e.g. Santos Family"></div>
-    <div style="height:1px;background:var(--border-neu);margin:4px 0 14px"></div>
-    <div class="form-group"><label>Member</label><select id="edit-member-sel" onchange="onEditMemberChange()"><option value="">— Select member to edit —</option></select></div>
-    <div id="edit-member-fields" style="display:none">
-      <div class="form-group"><label>Member Name</label><input type="text" id="edit-member-name" placeholder="Full name"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Amount Saved (₱)</label><input type="number" id="edit-saved" min="0" step="0.01"></div>
-        <div class="form-group"><label>Target (₱)</label><input type="number" id="edit-target-val" min="0" step="100"></div>
+    <div class="grand-progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="grandBar" style="width:0%"></div>
       </div>
     </div>
-    <input type="hidden" id="edit-fid">
-    <input type="hidden" id="edit-mid">
-    <div class="modal-actions">
-      <button class="btn btn-cancel" onclick="closeModal('editMemberModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveEdit()">Save Changes</button>
-    </div>
   </div>
-</div>
 
-<div class="toast" id="toast"></div>
-<input type="file" id="globalPhotoInput" accept="image/*" style="display:none">
+  <!-- FAMILIES GRID -->
+  <div class="families-grid" id="familiesGrid"></div>
+
+  <div class="last-updated">Last updated: <span id="lastUpdated">—</span></div>
+
+</div>
 
 <script>
-// ── FAMILY PALETTE ──
-// SVG icons: cherry branch, wave, bamboo/leaf, lantern
-const FAMILY_SVG = [
-  // Torii family — cherry blossom branch
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20 C12 20 5 14 5 9 a7 7 0 0 1 14 0 C19 14 12 20 12 20Z" fill="#E8293B" opacity=".15"/><path d="M12 20 V8" stroke="#E8293B" stroke-width="1.5"/><circle cx="8" cy="9" r="2.5" fill="#F7A8C0"/><circle cx="16" cy="9" r="2.5" fill="#F7A8C0"/><circle cx="12" cy="7" r="2.5" fill="#E8293B" opacity=".7"/></svg>`,
-  // Indigo family — wave
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 12 Q5 8 8 12 Q11 16 14 12 Q17 8 20 12 Q22 14 22 14" stroke="#1B3A8C" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M2 17 Q5 13 8 17 Q11 21 14 17 Q17 13 20 17" stroke="#3A5FCC" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/></svg>`,
-  // Matcha family — bamboo leaf
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20 V4" stroke="#4E7C59" stroke-width="2" stroke-linecap="round"/><path d="M12 10 Q7 8 6 4 Q10 5 12 10Z" fill="#72B083"/><path d="M12 15 Q17 13 18 9 Q14 10 12 15Z" fill="#4E7C59"/></svg>`,
-  // Plum family — lantern
-  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3 V5" stroke="#8B2FC9" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="5" width="10" height="13" rx="5" fill="#B56CE0" opacity=".3"/><rect x="7" y="5" width="10" height="13" rx="5" stroke="#8B2FC9" stroke-width="1.5"/><line x1="9" y1="9" x2="15" y2="9" stroke="#8B2FC9" stroke-width="1"/><line x1="9" y1="12" x2="15" y2="12" stroke="#8B2FC9" stroke-width="1"/><path d="M10 18 L12 21 L14 18" stroke="#8B2FC9" stroke-width="1.2" fill="none"/></svg>`,
-];
+let DATA = null;
 
-const PALETTE = [
-  { topBar:'linear-gradient(90deg,#E8293B,#FF6B7A)', bar:'linear-gradient(90deg,#E8293B,#FF6B7A)', accent:'#E8293B', roleColor:'#E8293B', roleBg:'rgba(232,41,59,0.12)', avatarBg:'#E8293B', pctBadgeBg:'#E8293B', tag:'Family · Torii' },
-  { topBar:'linear-gradient(90deg,#1B3A8C,#3A5FCC)', bar:'linear-gradient(90deg,#1B3A8C,#3A5FCC)', accent:'#1B3A8C', roleColor:'#1B3A8C', roleBg:'rgba(27,58,140,0.1)',  avatarBg:'#1B3A8C', pctBadgeBg:'#2B4DAA', tag:'Family · Aizome' },
-  { topBar:'linear-gradient(90deg,#3D6B47,#72B083)', bar:'linear-gradient(90deg,#3D6B47,#72B083)', accent:'#3D6B47', roleColor:'#3D6B47', roleBg:'rgba(61,107,71,0.1)',   avatarBg:'#3D6B47', pctBadgeBg:'#4E7C59', tag:'Family · Matcha' },
-  { topBar:'linear-gradient(90deg,#7A28B8,#B56CE0)', bar:'linear-gradient(90deg,#7A28B8,#B56CE0)', accent:'#7A28B8', roleColor:'#7A28B8', roleBg:'rgba(122,40,184,0.1)', avatarBg:'#7A28B8', pctBadgeBg:'#8B35CC', tag:'Family · Wisteria' },
-];
-const SHADE_OFFSETS=[0,30,-15,45];
+// ─── Countdown ───────────────────────────────────────────────────────────
+function updateCountdown() {
+  const target = new Date('2027-07-01T00:00:00');
+  const now = new Date();
+  const diff = target - now;
+  if (diff <= 0) { document.getElementById('countdownChip').textContent = '🌸 Trip time!'; return; }
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const months = Math.floor(days / 30);
+  const remDays = days % 30;
+  document.getElementById('countdownChip').textContent =
+    `⏳ ${months}m ${remDays}d to go`;
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
 
-// ── DATA ──
-let data=loadData(), photos=loadPhotos();
-function defaultData(){return{families:[
-  {id:'f1',name:'Tanaka Family',members:[
-    {id:'m1',name:'Hiroshi Tanaka',role:'Adult',target:4000,saved:1200},
-    {id:'m2',name:'Yuki Tanaka',role:'Adult',target:3500,saved:800},
-    {id:'m3',name:'Ren Tanaka',role:'Child',target:1500,saved:550},
-    {id:'m4',name:'Mia Tanaka',role:'Child',target:1000,saved:200},
-  ]},
-  {id:'f2',name:'Yamada Family',members:[
-    {id:'m5',name:'Kenji Yamada',role:'Adult',target:4500,saved:2300},
-    {id:'m6',name:'Aiko Yamada',role:'Adult',target:3800,saved:1900},
-    {id:'m7',name:'Sota Yamada',role:'Child',target:2000,saved:400},
-    {id:'m8',name:'Hana Yamada',role:'Child',target:1500,saved:300},
-  ]},
-  {id:'f3',name:'Suzuki Family',members:[
-    {id:'m9',name:'Takeshi Suzuki',role:'Adult',target:3500,saved:700},
-    {id:'m10',name:'Emiko Suzuki',role:'Adult',target:3500,saved:500},
-    {id:'m11',name:'Kai Suzuki',role:'Child',target:1200,saved:180},
-    {id:'m12',name:'Saki Suzuki',role:'Child',target:1200,saved:120},
-  ]},
-  {id:'f4',name:'Nakamura Family',members:[
-    {id:'m13',name:'Ryo Nakamura',role:'Adult',target:4200,saved:2800},
-    {id:'m14',name:'Nana Nakamura',role:'Adult',target:3600,saved:2100},
-    {id:'m15',name:'Yui Nakamura',role:'Child',target:1800,saved:900},
-    {id:'m16',name:'Haru Nakamura',role:'Child',target:1200,saved:600},
-  ]},
-]}}
-function loadData(){try{const r=localStorage.getItem('japan2027');return r?JSON.parse(r):defaultData();}catch(e){return defaultData();}}
-function saveData(){localStorage.setItem('japan2027',JSON.stringify(data));}
-function loadPhotos(){try{const r=localStorage.getItem('japan2027_photos');return r?JSON.parse(r):{};}catch(e){return {};}}
-function savePhotos(){localStorage.setItem('japan2027_photos',JSON.stringify(photos));}
-
-function fmt(n){return '₱'+Math.round(n).toLocaleString('en-PH');}
-function pct(s,t){return t>0?Math.min(100,Math.round(s/t*100)):0;}
-function initials(nm){return nm.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
-function uid(){return 'm'+Date.now()+Math.random().toString(36).slice(2,5);}
-function familyTotals(f){return{saved:f.members.reduce((a,m)=>a+m.saved,0),target:f.members.reduce((a,m)=>a+m.target,0)};}
-function grandTotals(){let s=0,t=0;data.families.forEach(f=>{const x=familyTotals(f);s+=x.saved;t+=x.target;});return{saved:s,target:t};}
-function lighten(hex,amt){const n=parseInt(hex.replace('#',''),16);const r=Math.min(255,(n>>16)+amt),g=Math.min(255,((n>>8)&0xff)+amt),b=Math.min(255,(n&0xff)+amt);return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
-
-function updateCountdown(){
-  const diff=new Date('2027-07-01')-new Date();
-  if(diff<=0){document.getElementById('countdown-text').textContent='Trip time! ✈️';return;}
-  const days=Math.floor(diff/86400000),months=Math.round(diff/(30.44*86400000));
-  document.getElementById('countdown-text').textContent=`${days.toLocaleString()} days until departure`;
-  document.getElementById('months-left').textContent=months;
+// ─── Formatting ──────────────────────────────────────────────────────────
+function fmt(n) {
+  return DATA.trip.currency + n.toLocaleString('en-PH');
+}
+function pct(saved, target) {
+  return Math.min(100, Math.round((saved / target) * 100));
+}
+function statusIcon(p) {
+  if (p >= 100) return { icon: '✓', cls: 'done' };
+  if (p >= 70)  return { icon: '◐', cls: 'near' };
+  return { icon: '○', cls: 'early' };
+}
+function memberColor(p, familyColor) {
+  if (p >= 100) return '#5B9E6A';
+  if (p >= 70)  return '#E8A820';
+  return familyColor;
 }
 
-function render(){
-  const gt=grandTotals();
-  document.getElementById('g-saved').textContent=fmt(gt.saved);
-  document.getElementById('g-target').textContent=fmt(gt.target);
-  const gp=pct(gt.saved,gt.target);
-  document.getElementById('g-pct').textContent=gp+'%';
-  document.getElementById('g-bar').style.width=gp+'%';
-  document.getElementById('g-target-lbl').textContent=fmt(gt.target)+' goal';
+// ─── Render ──────────────────────────────────────────────────────────────
+function render() {
+  const target = DATA.trip.targetPerPerson;
+  let totalSaved = 0, totalTarget = 0, totalMembers = 0;
 
-  const container=document.getElementById('families-container');
-  container.innerHTML='';
+  DATA.families.forEach(f => {
+    f.members.forEach(m => {
+      totalSaved += m.saved;
+      totalTarget += target;
+      totalMembers++;
+    });
+  });
 
-  data.families.forEach((family,fi)=>{
-    const col=PALETTE[fi%PALETTE.length];
-    const icon=FAMILY_SVG[fi%FAMILY_SVG.length];
-    const {saved,target}=familyTotals(family);
-    const fp=pct(saved,target);
-    const remaining=Math.max(0,target-saved);
+  const overallPct = pct(totalSaved, totalTarget);
+  document.getElementById('grandSaved').textContent = fmt(totalSaved);
+  document.getElementById('grandTarget').textContent = fmt(totalTarget);
+  document.getElementById('grandRemaining').textContent = fmt(Math.max(0, totalTarget - totalSaved));
+  document.getElementById('grandPct').textContent = overallPct + '%';
+  document.getElementById('totalMembers').textContent = totalMembers;
+  setTimeout(() => {
+    document.getElementById('grandBar').style.width = overallPct + '%';
+  }, 100);
 
-    const card=document.createElement('div');
-    card.className='family-card';
-    card.style.animationDelay=(fi*0.09)+'s';
+  // Families grid
+  const grid = document.getElementById('familiesGrid');
+  grid.innerHTML = '';
+  DATA.families.forEach(family => {
+    let famSaved = 0;
+    family.members.forEach(m => famSaved += m.saved);
+    const famTarget = target * family.members.length;
+    const famPct = pct(famSaved, famTarget);
 
-    const membersHTML=family.members.map((m,mi)=>{
-      const mp=pct(m.saved,m.target);
-      const hasPhoto=!!photos[m.id];
-      const ini=initials(m.name);
-      const avBg=lighten(col.avatarBg,SHADE_OFFSETS[mi%4]);
-      const photoContent=hasPhoto?`<img src="${photos[m.id]}" alt="${ini}">`:`${ini}`;
-      const rolePill=`<span class="face-bar-role" style="background:${col.roleBg};color:${col.roleColor}">${m.role}</span>`;
-      return `
-        <div class="face-bar-row">
-          <div class="face-bar-meta">
-            <div><span class="face-bar-name">${m.name}</span>${rolePill}</div>
-            <div class="face-bar-amounts"><strong>${fmt(m.saved)}</strong> / ${fmt(m.target)}</div>
-          </div>
-          <div class="face-bar-track-wrap">
-            <div class="face-bar-track">
-              <div class="face-bar-fill" style="background:${col.bar};width:${mp}%"></div>
-              <div class="face-bar-goal">🇯🇵</div>
-            </div>
-            <div class="face-thumb" id="thumb-${m.id}" onclick="triggerPhotoUpload('${m.id}')">
-              <div class="face-thumb-tip">${fmt(m.saved)} saved · ${mp}%</div>
-              <div class="face-thumb-inner ${hasPhoto?'':'no-photo'}" style="${hasPhoto?'':'background:'+avBg}">${photoContent}</div>
-              <div class="upload-hint" title="Upload photo">📷</div>
-              <div class="pct-badge" style="background:${col.pctBadgeBg}">${mp}%</div>
-            </div>
-          </div>
-        </div>`;
-    }).join('');
-
-    card.innerHTML=`
-      <div class="family-top-bar" style="background:${col.topBar}"></div>
+    const card = document.createElement('div');
+    card.className = 'family-card';
+    card.innerHTML = `
       <div class="family-header">
-        <div class="family-icon" style="background:${col.roleBg}">${icon}</div>
-        <div class="family-name-wrap">
-          <span class="family-tag" style="color:${col.accent}">${col.tag}</span>
+        <div class="family-title">
           <div class="family-name">${family.name}</div>
+          <div class="family-subtitle">${family.members.length} members · ${fmt(famSaved)} saved</div>
         </div>
-        <div class="family-stats">
-          <div class="family-pct" style="color:${col.accent}">${fp}%</div>
-          <div class="family-saved-lbl">${fmt(saved)} saved</div>
-        </div>
+        <div class="family-pct" style="color:${family.color}">${famPct}%</div>
+        <div class="family-color-pill" style="background:${family.color}">${famPct >= 100 ? '🎉' : famPct >= 70 ? '◐' : '○'}</div>
       </div>
-      <div class="family-divider"></div>
-      <div class="member-section">${membersHTML}</div>
-      <div class="family-footer">
-        <div>
-          <div class="family-total-label">Total saved</div>
-          <div class="family-total-val">${fmt(saved)} <span style="color:var(--muted);font-size:13px;font-weight:400">/ ${fmt(target)}</span></div>
-        </div>
-        <div class="family-remaining">${fmt(remaining)} remaining</div>
-        <button class="btn-sm" onclick="openEditFamilyModal('${family.id}')">Edit</button>
+      <div class="members-list">
+        ${family.members.map(m => {
+          const p = pct(m.saved, target);
+          const remaining = Math.max(0, target - m.saved);
+          const st = statusIcon(p);
+          const col = memberColor(p, family.color);
+          return `
+          <div class="member-row">
+            <div class="member-status ${st.cls}">${st.icon}</div>
+            <div class="member-info">
+              <div class="member-name">${m.name}</div>
+              <div class="member-bar-wrap">
+                <div class="member-mini-bar">
+                  <div class="member-mini-fill mbf" data-pct="${p}" style="background:${col};width:0%"></div>
+                </div>
+                <span class="member-pct-small">${p}%</span>
+              </div>
+            </div>
+            <div class="member-amounts">
+              <div class="member-saved" style="color:${col}">${fmt(m.saved)}</div>
+              <div class="member-remaining">${remaining > 0 ? fmt(remaining) + ' to go' : '🎉 Reached!'}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.mbf').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 150);
+
+  // Last updated
+  const now = new Date();
+  document.getElementById('lastUpdated').textContent =
+    now.toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+// ─── Init — load from savings-data.json ─────────────────────────────────
+fetch('savings-data.json')
+  .then(res => {
+    if (!res.ok) throw new Error('Could not load savings-data.json');
+    return res.json();
+  })
+  .then(json => {
+    DATA = json;
+    render();
+  })
+  .catch(err => {
+    document.getElementById('familiesGrid').innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#B89080;">
+        <div style="font-size:40px;margin-bottom:16px;">⚠️</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:20px;color:#2A1A0F;margin-bottom:8px;">Could not load savings-data.json</div>
+        <div style="font-size:14px;line-height:1.6;">Make sure <strong>savings-data.json</strong> is in the same folder as this HTML file,<br>and open it via a local server or browser that allows local file access.</div>
       </div>`;
-    container.appendChild(card);
+    console.error(err);
   });
-
-  requestAnimationFrame(()=>positionAllThumbs());
-  populateFamilyDropdowns();
-}
-
-function positionAllThumbs(){
-  data.families.forEach(family=>family.members.forEach(m=>{
-    const thumb=document.getElementById('thumb-'+m.id);
-    if(!thumb)return;
-    const usable=thumb.parentElement.offsetWidth-30;
-    thumb.style.left=(pct(m.saved,m.target)/100*usable)+'px';
-    thumb.style.transition='left 1s cubic-bezier(.4,0,.2,1)';
-  }));
-}
-
-let _photoTargetId=null;
-function triggerPhotoUpload(mid){_photoTargetId=mid;document.getElementById('globalPhotoInput').click();}
-document.getElementById('globalPhotoInput').addEventListener('change',function(e){
-  const file=e.target.files[0];if(!file||!_photoTargetId)return;
-  const reader=new FileReader();
-  reader.onload=ev=>{photos[_photoTargetId]=ev.target.result;savePhotos();render();showToast('✓ Photo saved!');};
-  reader.readAsDataURL(file);this.value='';
-});
-
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-backdrop').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');}));
-
-function populateFamilyDropdowns(){
-  ['log-family','new-family'].forEach(id=>{
-    const sel=document.getElementById(id),val=sel.value;
-    sel.innerHTML='<option value="">— Select family —</option>'+data.families.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
-    sel.value=val;
-  });
-}
-function openLogModal(){document.getElementById('log-date').value=new Date().toISOString().slice(0,10);openModal('logModal');}
-function populateMembers(){
-  const fid=document.getElementById('log-family').value;
-  const sel=document.getElementById('log-member');
-  const family=data.families.find(f=>f.id===fid);
-  if(!family){sel.innerHTML='<option value="">— Select member —</option>';return;}
-  sel.innerHTML='<option value="">— Select member —</option>'+family.members.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-}
-function logPayment(){
-  const fid=document.getElementById('log-family').value,mid=document.getElementById('log-member').value;
-  const amount=parseFloat(document.getElementById('log-amount').value)||0;
-  if(!fid||!mid||amount<=0){showToast('Please fill in all fields.');return;}
-  const member=data.families.find(f=>f.id===fid)?.members.find(m=>m.id===mid);
-  if(!member)return;
-  member.saved+=amount;saveData();render();closeModal('logModal');
-  document.getElementById('log-amount').value='';
-  showToast(`✓ ${fmt(amount)} added for ${member.name}`);
-}
-function openAddMemberModal(){openModal('addMemberModal');}
-function addMember(){
-  const fname=document.getElementById('new-fname').value.trim(),lname=document.getElementById('new-lname').value.trim();
-  const fid=document.getElementById('new-family').value,role=document.getElementById('new-role').value.trim()||'Adult';
-  const target=parseFloat(document.getElementById('new-target').value)||2000;
-  if(!fname||!fid){showToast('Name and family are required.');return;}
-  const family=data.families.find(f=>f.id===fid);if(!family)return;
-  const name=lname?`${fname} ${lname}`:fname;
-  family.members.push({id:uid(),name,role,target,saved:0});
-  saveData();render();closeModal('addMemberModal');
-  ['new-fname','new-lname','new-target'].forEach(id=>document.getElementById(id).value='');
-  showToast(`✓ ${name} added to ${family.name}`);
-}
-let _editFid=null;
-function openEditFamilyModal(fid){
-  _editFid=fid;
-  const family=data.families.find(f=>f.id===fid);if(!family)return;
-  const sel=document.getElementById('edit-member-sel');
-  sel.innerHTML='<option value="">— Select member to edit savings —</option>'+family.members.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-  document.getElementById('edit-fid').value=fid;
-  document.getElementById('edit-family-name').value=family.name;
-  document.getElementById('edit-mid').value='';
-  document.getElementById('edit-saved').value='';
-  document.getElementById('edit-target-val').value='';
-  openModal('editMemberModal');
-}
-function onEditMemberChange(){
-  const fid=document.getElementById('edit-fid').value,mid=document.getElementById('edit-member-sel').value;
-  const member=data.families.find(f=>f.id===fid)?.members.find(m=>m.id===mid);
-  document.getElementById('edit-mid').value=mid;
-  const fields=document.getElementById('edit-member-fields');
-  if(member){
-    fields.style.display='block';
-    document.getElementById('edit-member-name').value=member.name;
-    document.getElementById('edit-saved').value=member.saved;
-    document.getElementById('edit-target-val').value=member.target;
-  } else {
-    fields.style.display='none';
-  }
-}
-function saveEdit(){
-  const fid=document.getElementById('edit-fid').value;
-  const family=data.families.find(f=>f.id===fid);if(!family)return;
-  const newFamName=document.getElementById('edit-family-name').value.trim();
-  if(newFamName) family.name=newFamName;
-  const mid=document.getElementById('edit-mid').value;
-  if(mid){
-    const member=family.members.find(m=>m.id===mid);
-    if(member){
-      const mName=document.getElementById('edit-member-name').value.trim();
-      if(mName) member.name=mName;
-      const s=parseFloat(document.getElementById('edit-saved').value),t=parseFloat(document.getElementById('edit-target-val').value);
-      if(!isNaN(s))member.saved=s;
-      if(!isNaN(t)&&t>0)member.target=t;
-    }
-  }
-  saveData();render();closeModal('editMemberModal');
-  showToast(`✓ ${family.name} updated`);
-}
-let toastTimer;
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-updateCountdown();setInterval(updateCountdown,60000);
-render();
-window.addEventListener('resize',positionAllThumbs);
 </script>
 </body>
 </html>
