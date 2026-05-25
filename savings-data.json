@@ -10,51 +10,50 @@
     {
       "id": "family-1",
       "name": "Bustamante Family",
-      "color": "#E8472A",
+      "color": "#F04E37",
       "members": [
-        { "id": "s1", "name": "Benjo", "saved": 0 },
-        { "id": "s2", "name": "Kitan", "saved": 0 },
-        { "id": "s3", "name": "Oshie", "saved": 0 },
-        { "id": "s4", "name": "Yzzie", "saved": 0 }
+        { "id": "b1", "name": "Benjo",  "saved": 0, "photo": "photos/benjo.jpg"  },
+        { "id": "b2", "name": "Kitan",  "saved": 0, "photo": "photos/kitan.jpg"  },
+        { "id": "b3", "name": "Oshie",  "saved": 0, "photo": "photos/oshie.jpg"  },
+        { "id": "b4", "name": "Yzzie",  "saved": 0, "photo": "photos/yzzie.jpg"  }
       ]
     },
     {
       "id": "family-2",
       "name": "Chua Family",
-      "color": "#2A7BE8",
+      "color": "#1AAFD0",
       "members": [
-        { "id": "r1", "name": "Nono", "saved": 0 },
-        { "id": "r2", "name": "Debbie", "saved": 0 },
-        { "id": "r3", "name": "Nico", "saved": 0 },
-        { "id": "r4", "name": "Nia", "saved": 0 }
+        { "id": "c1", "name": "Nono",   "saved": 0, "photo": "photos/nono.jpg"   },
+        { "id": "c2", "name": "Debbie", "saved": 0, "photo": "photos/debbie.jpg" },
+        { "id": "c3", "name": "Nico",   "saved": 0, "photo": "photos/nico.jpg"   },
+        { "id": "c4", "name": "Nia",    "saved": 0, "photo": "photos/nia.jpg"    }
       ]
     },
     {
       "id": "family-3",
       "name": "Kwan Family",
-      "color": "#27A96C",
+      "color": "#5BBF4E",
       "members": [
-        { "id": "c1", "name": "Toto", "saved": 0 },
-        { "id": "c2", "name": "Me'an", "saved": 0 },
-        { "id": "c3", "name": "Bop", "saved": 1000 },
-        { "id": "c4", "name": "Johann", "saved": 0 },
-        { "id": "c4", "name": "Bren", "saved": 0 },
-        { "id": "c4", "name": "Joelle", "saved": 0 },
-        { "id": "c4", "name": "CJ", "saved": 0 }
+        { "id": "k1", "name": "Toto",   "saved": 0,    "photo": "photos/toto.jpg"   },
+        { "id": "k2", "name": "Me'an",  "saved": 0,    "photo": "photos/mean.jpg"   },
+        { "id": "k3", "name": "Bop",    "saved": 1000, "photo": "photos/bop.jpg"    },
+        { "id": "k4", "name": "Johann", "saved": 0,    "photo": "photos/johann.jpg" },
+        { "id": "k5", "name": "Bren",   "saved": 0,    "photo": "photos/bren.jpg"   },
+        { "id": "k6", "name": "Joelle", "saved": 0,    "photo": "photos/joelle.jpg" },
+        { "id": "k7", "name": "CJ",     "saved": 0,    "photo": "photos/cj.jpg"     }
       ]
     },
     {
       "id": "family-4",
       "name": "Romero Family",
-      "color": "#9B27A9",
+      "color": "#F0B429",
       "members": [
-        { "id": "l1", "name": "Thelma", "saved": 0 },
-        { "id": "l2", "name": "Joseph", "saved": 0 },
-        { "id": "l3", "name": "Paula", "saved": 0 },
-        { "id": "l4", "name": "Paul", "saved": 0 },
-        { "id": "l4", "name": "Keila", "saved": 0 },
-        { "id": "l4", "name": "Lucas", "saved": 0 }
-        
+        { "id": "r1", "name": "Thelma", "saved": 0, "photo": "photos/thelma.jpg" },
+        { "id": "r2", "name": "Joseph", "saved": 0, "photo": "photos/joseph.jpg" },
+        { "id": "r3", "name": "Paula",  "saved": 0, "photo": "photos/paula.jpg"  },
+        { "id": "r4", "name": "Paul",   "saved": 0, "photo": "photos/paul.jpg"   },
+        { "id": "r5", "name": "Keila",  "saved": 0, "photo": "photos/keila.jpg"  },
+        { "id": "r6", "name": "Lucas",  "saved": 0, "photo": "photos/lucas.jpg"  }
       ]
     }
   ]
