@@ -135,72 +135,77 @@
     margin-top: 4px;
   }
 
-  /* ── GRAND BANNER ── */
-  .grand-banner {
-    background: var(--coral);
-    border-radius: 24px;
-    padding: 28px 36px;
-    margin-bottom: 36px;
+  /* ── STAT CARDS ── */
+  .stat-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
-    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .stat-card {
+    border-radius: 20px;
+    padding: 24px 28px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 40px rgba(240,78,55,0.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
   }
-  .grand-banner::after {
+  .stat-card::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(circle at 90% 50%, rgba(255,255,255,0.12) 0%, transparent 50%),
-      radial-gradient(circle at 10% 50%, rgba(0,0,0,0.06) 0%, transparent 40%);
+    background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.18) 0%, transparent 55%);
     pointer-events: none;
   }
-  .grand-stat { position: relative; z-index: 1; }
-  .grand-stat-label {
+  .stat-card.card-saved    { background: var(--coral); }
+  .stat-card.card-needed   { background: var(--sky); }
+  .stat-card.card-target   { background: #fff; border: 1.5px solid var(--border); box-shadow: 0 2px 12px rgba(180,110,60,0.07); }
+
+  .stat-card-label {
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
-  .grand-stat-value {
+  .stat-card.card-saved .stat-card-label,
+  .stat-card.card-needed .stat-card-label { color: rgba(255,255,255,0.7); }
+  .stat-card.card-target .stat-card-label { color: var(--text-dim); }
+
+  .stat-card-value {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 800;
-    color: #fff;
+    font-size: 32px;
+    font-weight: 900;
     line-height: 1;
   }
-  .grand-stat-value.big { font-size: 30px; }
-  .grand-progress-wrap {
-    grid-column: 1 / -1;
+  .stat-card.card-saved .stat-card-value,
+  .stat-card.card-needed .stat-card-value { color: #fff; }
+  .stat-card.card-target .stat-card-value { color: var(--text); }
+
+  .stat-card-sub {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 8px;
+  }
+  .stat-card.card-saved .stat-card-sub,
+  .stat-card.card-needed .stat-card-sub { color: rgba(255,255,255,0.65); }
+  .stat-card.card-target .stat-card-sub { color: var(--text-dim); }
+
+  /* Progress bar inside saved card */
+  .stat-card-bar-bg {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 100px;
+    height: 8px;
+    overflow: hidden;
     position: relative;
     z-index: 1;
-    margin-top: 4px;
   }
-  .grand-progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: rgba(255,255,255,0.7);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .grand-bar-bg {
-    background: rgba(255,255,255,0.2);
-    border-radius: 100px;
-    height: 12px;
-    overflow: hidden;
-  }
-  .grand-bar-fill {
+  .stat-card-bar-fill {
     height: 100%;
     border-radius: 100px;
     background: linear-gradient(90deg, #FFE066, #fff);
     transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 12px rgba(255,255,255,0.5);
+    box-shadow: 0 0 8px rgba(255,255,255,0.5);
   }
 
   /* ── SECTION LABEL ── */
@@ -398,7 +403,7 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 700px) {
     .families-grid { grid-template-columns: 1fr; }
-    .grand-banner { grid-template-columns: 1fr 1fr; }
+    .stat-cards { grid-template-columns: 1fr; }
     .hero { flex-direction: column; align-items: flex-start; }
     h1 { font-size: 36px; }
     .member-name { font-size: 15px; }
@@ -521,32 +526,25 @@
     </div>
   </div>
 
-  <!-- GRAND TOTAL -->
-  <div class="grand-banner">
-    <div class="grand-stat">
-      <div class="grand-stat-label">Total Saved</div>
-      <div class="grand-stat-value big" id="grandSaved">₱0</div>
-    </div>
-    <div class="grand-stat">
-      <div class="grand-stat-label">Grand Target</div>
-      <div class="grand-stat-value" id="grandTarget">₱0</div>
-    </div>
-    <div class="grand-stat">
-      <div class="grand-stat-label">Still Needed</div>
-      <div class="grand-stat-value" id="grandRemaining">₱0</div>
-    </div>
-    <div class="grand-stat">
-      <div class="grand-stat-label">Group Progress</div>
-      <div class="grand-stat-value big" id="grandPct">0%</div>
-    </div>
-    <div class="grand-progress-wrap">
-      <div class="grand-progress-label">
-        <span>Group savings progress</span>
-        <span id="grandPctLabel">0%</span>
+  <!-- STAT CARDS -->
+  <div class="stat-cards">
+    <div class="stat-card card-saved">
+      <div class="stat-card-label">Total Saved</div>
+      <div class="stat-card-value" id="grandSaved">₱0</div>
+      <div class="stat-card-sub" id="grandPctSub">0% of group target</div>
+      <div class="stat-card-bar-bg">
+        <div class="stat-card-bar-fill" id="grandBar" style="width:0%"></div>
       </div>
-      <div class="grand-bar-bg">
-        <div class="grand-bar-fill" id="grandBar" style="width:0%"></div>
-      </div>
+    </div>
+    <div class="stat-card card-needed">
+      <div class="stat-card-label">Still Needed</div>
+      <div class="stat-card-value" id="grandRemaining">₱0</div>
+      <div class="stat-card-sub" id="totalMembersSub">across <span id="totalMembers">—</span> travelers</div>
+    </div>
+    <div class="stat-card card-target">
+      <div class="stat-card-label">Grand Target</div>
+      <div class="stat-card-value" id="grandTarget">₱0</div>
+      <div class="stat-card-sub">₱100,000 per person</div>
     </div>
   </div>
 
@@ -631,8 +629,7 @@ function render() {
   document.getElementById('grandSaved').textContent     = fmt(totalSaved);
   document.getElementById('grandTarget').textContent    = fmt(totalTarget);
   document.getElementById('grandRemaining').textContent = fmt(Math.max(0, totalTarget - totalSaved));
-  document.getElementById('grandPct').textContent       = op + '%';
-  document.getElementById('grandPctLabel').textContent  = op + '%';
+  document.getElementById('grandPctSub').textContent    = op + '% of group target';
   document.getElementById('totalMembers').textContent   = totalMembers;
   setTimeout(() => { document.getElementById('grandBar').style.width = op + '%'; }, 120);
 
