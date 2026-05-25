@@ -49,7 +49,7 @@
       "color": "#F0B429",
       "members": [
         { "id": "r1", "name": "Thelma", "saved": 0, "photo": "photos/thelma.jpg" },
-        { "id": "r2", "name": "Joseph", "saved": 0, "photo": "photos/joseph.jpg" },
+        { "id": "r2", "name": "Joseph", "saved": 4000, "photo": "photos/joseph.jpg" },
         { "id": "r3", "name": "Paula",  "saved": 0, "photo": "photos/paula.jpg"  },
         { "id": "r4", "name": "Paul",   "saved": 0, "photo": "photos/paul.jpg"   },
         { "id": "r5", "name": "Keila",  "saved": 0, "photo": "photos/keila.jpg"  },
