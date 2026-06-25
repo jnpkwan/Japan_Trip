@@ -12,10 +12,10 @@
       "name": "B Family",
       "color": "#F04E37",
       "members": [
-        { "id": "b1", "name": "Benjo",  "saved": 1000, "photo": "photos/benjo.jpg"  },
-        { "id": "b2", "name": "Kitan",  "saved": 1000, "photo": "photos/kitan.jpg"  },
-        { "id": "b3", "name": "Oshie",  "saved": 1000, "photo": "photos/oshie.jpg"  },
-        { "id": "b4", "name": "Yzzie",  "saved": 2000, "photo": "photos/yzzie.jpg"  }
+        { "id": "b1", "name": "Benjo",  "saved": 2000, "photo": "photos/benjo.jpg"  },
+        { "id": "b2", "name": "Kitan",  "saved": 2500, "photo": "photos/kitan.jpg"  },
+        { "id": "b3", "name": "Oshie",  "saved": 2000, "photo": "photos/oshie.jpg"  },
+        { "id": "b4", "name": "Yzzie",  "saved": 3000, "photo": "photos/yzzie.jpg"  }
       ]
     },
     {
