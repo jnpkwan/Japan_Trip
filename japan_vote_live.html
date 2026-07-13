@@ -98,6 +98,7 @@
   <div class="pill"><span class="dot" id="connDot"></span><span id="connText">connecting…</span></div>
   <div class="pill" id="votersPill" style="display:none">Voters&nbsp;&nbsp;<b id="voterCount">0</b></div>
   <button class="pill" id="manualBtn" style="display:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-family:var(--sans)" onclick="toggleManual()">Manual entry</button>
+  <button class="pill" id="qrBtn" style="display:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-family:var(--sans)" onclick="toggleQR(true)">Show QR</button>
   <div class="pill" id="totalPill" style="display:none">Votes&nbsp;&nbsp;<b id="totalVotes">0</b></div>
 </header>
 
@@ -118,10 +119,11 @@
   <div id="board" class="boardwrap">
     <div class="boardgrid">
       <div id="ranking"></div>
-      <div class="qrbox">
+      <div class="qrbox" id="qrbox">
         <h3>Vote on your phone</h3>
         <p id="voteUrl"></p>
         <div id="qr"></div>
+        <button onclick="toggleQR(false)" style="margin-top:10px;border:none;background:transparent;color:var(--mut);font-size:11.5px;letter-spacing:.5px;cursor:pointer;text-decoration:underline">Hide QR</button>
       </div>
     </div>
   </div>
@@ -294,6 +296,11 @@ let manualCounts = new Array(SPOTS.length).fill(0);
 let lastDeviceCounts = new Array(SPOTS.length).fill(0);
 let lastVoters = 0;
 
+function toggleQR(show){
+  document.getElementById("qrbox").style.display = show ? "block" : "none";
+  document.getElementById("qrBtn").style.display = show ? "none" : "block";
+  document.querySelector(".boardgrid").style.gridTemplateColumns = show ? "1fr 210px" : "1fr";
+}
 function toggleManual(){
   manualMode = !manualMode;
   const b = document.getElementById("manualBtn");
