@@ -40,7 +40,7 @@
         { "id": "k4", "name": "Johann", "saved": 0,    "photo": "photos/johann.jpg" },
         { "id": "k5", "name": "Bren",   "saved": 0,    "photo": "photos/bren.jpg"   },
         { "id": "k6", "name": "Joelle", "saved": 15000,    "photo": "photos/joelle.jpg" },
-        { "id": "k7", "name": "CJ",     "saved": 0,    "photo": "photos/cj.jpg"     }
+        { "id": "k7", "name": "CJ",     "saved": 100000,    "photo": "photos/cj.jpg"     }
       ]
     },
     {
