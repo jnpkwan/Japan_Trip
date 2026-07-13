@@ -721,19 +721,26 @@ function render() {
   const grid = document.getElementById('familiesGrid');
   grid.innerHTML = '';
 
+  // palette index per family (default: JSON order), with K↔R swap
+  const palIdx = DATA.families.map((_, i) => i % CITY_PALS.length);
+  const kI = DATA.families.findIndex(f => /^k/i.test(f.name.trim()));
+  const rI = DATA.families.findIndex(f => /^r/i.test(f.name.trim()));
+  if (kI > -1 && rI > -1) { const t = palIdx[kI]; palIdx[kI] = palIdx[rI]; palIdx[rI] = t; }
+
   DATA.families.forEach((family, fi) => {
     let famSaved = 0;
     family.members.forEach(m => famSaved += m.saved);
     const famPct = pct(famSaved, target * family.members.length);
-    const col    = CITY_PALS[fi % CITY_PALS.length].accent;
-    const icon   = FAMILY_ICONS[fi % FAMILY_ICONS.length];
+    const pi     = palIdx[fi];
+    const col    = CITY_PALS[pi].accent;
+    const icon   = FAMILY_ICONS[pi % FAMILY_ICONS.length];
 
     const card = document.createElement('div');
     card.className = 'family-card';
     card.innerHTML = `
       <div class="family-header">
         <div class="family-header-bg" style="background:${col}"></div>
-        <div class="family-icon" style="background:${CITY_PALS[fi % CITY_PALS.length].tint}; color:${col}">${icon}</div>
+        <div class="family-icon" style="background:${CITY_PALS[pi].tint}; color:${col}">${icon}</div>
         <div class="family-title-block">
           <div class="family-name">${family.name}</div>
           <div class="family-sub">${family.members.length} members &nbsp;·&nbsp; ${fmt(famSaved)} saved</div>
