@@ -34,13 +34,13 @@
       "name": "K Family",
       "color": "#5BBF4E",
       "members": [
-        { "id": "k1", "name": "Toto",   "saved": 100000, "photo": "photos/toto.jpg"   },
-        { "id": "k2", "name": "Me'an",  "saved": 100000, "photo": "photos/mean.jpg"   },
+        { "id": "k1", "name": "Toto",   "saved": 70000, "photo": "photos/toto.jpg"   },
+        { "id": "k2", "name": "Me'an",  "saved": 70000, "photo": "photos/mean.jpg"   },
         { "id": "k3", "name": "Bop",    "saved": 15000, "photo": "photos/bop.png"    },
         { "id": "k4", "name": "Johann", "saved": 0, "photo": "photos/johann.jpg" },
         { "id": "k5", "name": "Bren",   "saved": 0, "photo": "photos/bren.jpg"   },
         { "id": "k6", "name": "Joelle", "saved": 15000, "photo": "photos/joelle.jpg" },
-        { "id": "k7", "name": "CJ",     "saved": 100000, "photo": "photos/cj.jpg"     }
+        { "id": "k7", "name": "CJ",     "saved": 70000, "photo": "photos/cj.jpg"     }
       ]
     },
     {
