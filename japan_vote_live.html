@@ -259,11 +259,35 @@ function paintSel(i){
   tick.style.background = on ? p.accent : "transparent";
   document.getElementById("myCount").textContent = Object.keys(mine).length;
 }
+let votingClosed = false;
+function markClosed(){
+  if(votingClosed) return;
+  votingClosed = true;
+  const lbl = document.getElementById("modeLabel");
+  if(lbl) lbl.textContent = isBoard ? "— final results" : "— voting closed";
+  const foot = document.getElementById("ballotFoot");
+  if(foot && !isBoard){
+    foot.innerHTML = "🔒 <b>Voting is closed — results are final.</b> Your picks below are read-only.";
+    foot.style.background = "#231a16"; foot.style.color = "#fff"; foot.style.borderTop = "none";
+  }
+  const mb = document.getElementById("manualBtn");
+  if(mb) mb.style.display = "none";
+}
+function watchClosedFlag(){
+  db.ref("closed").on("value", s => { if(s.val() === true) markClosed(); });
+}
+
 function toggleVote(i){
-  if(!db) return;
+  if(!db || votingClosed) return;
   const uid = deviceId();
-  if(mine[i]){ delete mine[i]; db.ref("votes/"+uid+"/"+i).remove(); }
-  else { mine[i] = true; db.ref("votes/"+uid+"/"+i).set(true); }
+  const revert = (wasOn) => { if(wasOn) mine[i] = true; else delete mine[i]; paintSel(i); markClosed(); };
+  if(mine[i]){
+    delete mine[i];
+    db.ref("votes/"+uid+"/"+i).remove().catch(()=>revert(true));
+  } else {
+    mine[i] = true;
+    db.ref("votes/"+uid+"/"+i).set(true).catch(()=>revert(false));
+  }
   paintSel(i);
 }
 function subscribeMine(){
@@ -310,8 +334,9 @@ function toggleManual(){
   repaintBoard();
 }
 function manualAdjust(i, d){
+  if(votingClosed) return;
   const v = Math.max(0, manualCounts[i] + d);
-  db.ref("manual/"+i).set(v || null);   // null deletes the node at zero
+  db.ref("manual/"+i).set(v || null).catch(()=>markClosed());   // null deletes the node at zero
 }
 function stepper(i, accent){
   return `<span style="display:inline-flex;align-items:center;gap:7px">
@@ -407,6 +432,7 @@ function boot(){
     document.getElementById("totalPill").style.display = "block";
     document.getElementById("manualBtn").style.display = "block";
     drawQR();
+    watchClosedFlag();
     db.ref("votes").on("value", snap=>{
       const {counts, voters} = aggregate(snap.val());
       renderBoard(counts, voters);
@@ -425,6 +451,7 @@ function boot(){
     document.getElementById("ballotFoot").style.display = "block";
     buildBallot();
     subscribeMine();
+    watchClosedFlag();
   }
 }
 boot();
