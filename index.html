@@ -385,6 +385,56 @@
     animation: bar-glow 3s ease-in-out infinite;
   }
 
+  /* Milestone ticks on the track */
+  .ms-tick {
+    position: absolute;
+    top: -4px;
+    width: 2px;
+    height: 20px;
+    background: #9A928A;
+    opacity: 0.55;
+    border-radius: 1px;
+    transform: translateX(-50%);
+  }
+  .ms-tick::after {
+    content: attr(data-ms);
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #9A928A;
+  }
+  .ms-chips { display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: 1px; }
+  .ms-chip {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    border: 1px solid #D9D2C7;
+    color: #9A928A;
+    background: #fff;
+  }
+  .ms-chip.hit { background: #B28E2B; border-color: #B28E2B; color: #fff; }
+
+  .ms-legend {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: -8px 0 18px;
+    font-size: 12.5px;
+    color: #6E655C;
+  }
+  .ms-legend b { color: #231A16; }
+  .ms-legend .ms-key {
+    font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px;
+    background: #B28E2B; color: #fff; margin-right: 5px; vertical-align: 1px;
+  }
+
   /* Photo marker — floats gently at bar tip */
   .bar-photo-marker {
     position: absolute;
@@ -623,6 +673,7 @@
   </div>
 
   <div class="section-label">Family Savings</div>
+  <div class="ms-legend" id="msLegend"></div>
   <div class="families-grid" id="familiesGrid"></div>
 
   <div class="footer">Last updated: <span id="lastUpdated">—</span></div>
@@ -680,6 +731,10 @@ function pct(saved, target) {
 function barColor(p, familyColor) {
   return familyColor;   /* color = family, always; completion shown by badge */
 }
+const MILESTONES = [
+  { label: "M1", amt: 15000, due: "end of September" },
+  { label: "M2", amt: 50500, due: "end of December" },
+];
 const STAR = `<svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;fill:#B28E2B;vertical-align:-1px;margin-right:3px"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>`;
 
 // ── Build avatar HTML ─────────────────────────────────────────────────
@@ -721,6 +776,10 @@ function render() {
   const grid = document.getElementById('familiesGrid');
   grid.innerHTML = '';
 
+  document.getElementById('msLegend').innerHTML = MILESTONES.map(ms =>
+    `<span><span class="ms-key">${ms.label}</span><b>${fmt(ms.amt)}</b> by ${ms.due}</span>`
+  ).join('') + `<span style="color:#9A928A">— per traveler, of the ${fmt(target)} goal</span>`;
+
   // palette index per family (default: JSON order), with K↔R swap
   const palIdx = DATA.families.map((_, i) => i % CITY_PALS.length);
   const kI = DATA.families.findIndex(f => /^k/i.test(f.name.trim()));
@@ -754,6 +813,10 @@ function render() {
           const col2 = barColor(p, col);
           const av   = AVATAR_PALETTES[(fi * 4 + mi) % AVATAR_PALETTES.length];
           const reached = p >= 100;
+          const ticks = MILESTONES.map(ms =>
+            `<div class="ms-tick" data-ms="${ms.label}" style="left:${Math.min(100, ms.amt / target * 100)}%"></div>`).join('');
+          const chips = `<span class="ms-chips">${MILESTONES.map(ms =>
+            `<span class="ms-chip${m.saved >= ms.amt ? ' hit' : ''}">${ms.label}${m.saved >= ms.amt ? ' ✓' : ''}</span>`).join('')}</span>`;
 
           return `
           <div class="member-row">
@@ -761,6 +824,7 @@ function render() {
               <div class="member-name">${m.name}</div>
               <div class="member-bar-wrap">
                 <div class="member-bar-track">
+                  ${ticks}
                   <div class="member-bar-inner">
                     <div class="member-bar-fill mbf" data-pct="${p}"
                          style="background:${col2}; width:0%"></div>
@@ -770,7 +834,7 @@ function render() {
               </div>
             </div>
             <div class="member-right">
-              <div class="member-saved" style="color:${col2}">${fmt(m.saved)}</div>
+              <div class="member-saved" style="color:${col2}">${fmt(m.saved)}${chips}</div>
               <div class="member-remaining">${reached ? STAR + '<span style="color:#B28E2B;font-weight:700">Goal reached!</span>' : fmt(rem) + ' to go'}</div>
             </div>
           </div>`;
