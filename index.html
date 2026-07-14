@@ -680,6 +680,13 @@
 </div>
 
 <script>
+
+const MILESTONES = [
+  { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
+  { label: "M2", amt: 50500,  due: "end of December",  date: "2026-12-31" },
+  { label: "M3", amt: 70000,  due: "end of March",     date: "2027-03-31" },
+  { label: "M4", amt: 100000, due: "mid-May",          date: "2027-05-15" },
+];
 let DATA = null;
 
 // deck icons: Osaka castle · Kyoto torii · Tokyo city · Nara deer
@@ -711,12 +718,18 @@ function initials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 }
 
-// ── Countdown ────────────────────────────────────────────────────────
+// ── Countdown — next milestone deadline, then the trip ───────────────
 function updateCountdown() {
-  const tripDate = new Date('2027-05-28T00:00:00');
-  const diff = tripDate - new Date();
+  const now = new Date();
+  const targets = MILESTONES
+    .map(ms => ({ label: "to " + ms.label + " · " + ms.due, date: new Date(ms.date + "T23:59:59") }))
+    .concat([{ label: "to the trip!", date: new Date('2027-05-29T00:00:00') }])
+    .sort((a, b) => a.date - b.date);
+  const next = targets.find(t => t.date > now) || targets[targets.length - 1];
+  const diff = next.date - now;
   document.getElementById('cdDays').textContent =
     diff <= 0 ? '0' : Math.floor(diff / 86400000).toLocaleString();
+  document.querySelector('.countdown-badge .cd-label').textContent = "days " + next.label;
 }
 updateCountdown();
 setInterval(updateCountdown, 60000);
@@ -731,10 +744,6 @@ function pct(saved, target) {
 function barColor(p, familyColor) {
   return familyColor;   /* color = family, always; completion shown by badge */
 }
-const MILESTONES = [
-  { label: "M1", amt: 15000, due: "end of September" },
-  { label: "M2", amt: 50500, due: "end of December" },
-];
 const STAR = `<svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;fill:#B28E2B;vertical-align:-1px;margin-right:3px"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>`;
 
 // ── Build avatar HTML ─────────────────────────────────────────────────
