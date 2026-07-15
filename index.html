@@ -125,6 +125,24 @@
   footer a{color:var(--osaka);text-decoration:none;font-weight:600;border-bottom:1px solid var(--osaka-t)}
   footer a:hover{border-bottom-color:var(--osaka)}
 
+  .inline-link{color:var(--osaka);text-decoration:none;font-weight:600;white-space:nowrap;border-bottom:1px solid var(--osaka-t)}
+  .inline-link:hover{border-bottom-color:var(--osaka)}
+
+  .vote-banner{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;
+    background:linear-gradient(100deg,var(--osaka-t) 0%,#fff 70%);border:1.5px solid var(--osaka);
+    border-radius:14px;padding:16px 20px;margin-bottom:24px;transition:transform .15s,box-shadow .15s}
+  .vote-banner:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(218,83,39,.18)}
+  .vb-mark{flex-shrink:0;width:44px;height:44px;border-radius:11px;background:var(--osaka);
+    display:flex;align-items:center;justify-content:center}
+  .vb-mark svg{width:24px;height:24px;stroke:#fff}
+  .vb-text{flex:1;line-height:1.35}
+  .vb-text strong{display:block;font-family:var(--serif);font-size:17px;color:var(--osaka-d)}
+  .vb-text span{font-size:13px;color:var(--mut)}
+  .vb-go{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;background:var(--osaka);color:#fff;
+    font-size:13px;font-weight:700;padding:9px 15px;border-radius:999px;white-space:nowrap}
+  .vb-go svg{width:15px;height:15px;stroke:#fff}
+  @media(max-width:560px){.vote-banner{flex-wrap:wrap}.vb-text{flex-basis:calc(100% - 60px)}.vb-go{margin-left:60px}}
+
   .cta{text-align:center;margin-top:34px}
   .cta a{display:inline-flex;align-items:center;gap:11px;background:var(--ink);color:#fff;text-decoration:none;
     font-size:15px;font-weight:600;padding:16px 30px;border-radius:999px;transition:transform .15s,box-shadow .15s;
@@ -188,6 +206,17 @@
   <div class="wrap">
     <div class="sec-head"><h2>Day by Day</h2><span class="num">every stop on the trip</span></div>
     <div class="sec-sub">Green means the whole day is free. The few peso figures are the only admissions we pay all trip.</div>
+
+    <a class="vote-banner" href="https://jnpkwan.github.io/Japan_Trip/japan_vote_live.html#board">
+      <div class="vb-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div class="vb-text">
+        <strong>Every stop here won a family vote.</strong>
+        <span>This itinerary is the tally — see the full ranking that decided it.</span>
+      </div>
+      <div class="vb-go">View results <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+    </a>
 
     <div class="day x">
       <div class="day-top">
