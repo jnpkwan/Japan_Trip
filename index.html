@@ -122,6 +122,16 @@
 
   footer{text-align:center;padding:40px 24px 56px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
   footer .serif{font-size:19px;color:var(--ink);display:block;margin-bottom:6px}
+  footer a{color:var(--osaka);text-decoration:none;font-weight:600;border-bottom:1px solid var(--osaka-t)}
+  footer a:hover{border-bottom-color:var(--osaka)}
+
+  .cta{text-align:center;margin-top:34px}
+  .cta a{display:inline-flex;align-items:center;gap:11px;background:var(--ink);color:#fff;text-decoration:none;
+    font-size:15px;font-weight:600;padding:16px 30px;border-radius:999px;transition:transform .15s,box-shadow .15s;
+    box-shadow:0 6px 22px rgba(35,26,22,.18)}
+  .cta a:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(35,26,22,.26)}
+  .cta a svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .cta .sub{font-size:12.5px;color:var(--dim);margin-top:11px}
 </style>
 </head>
 <body>
@@ -350,13 +360,20 @@
         <div class="un"><b>Fully funded + pocket money.</b> Every ticket paid, with ~₱17,000 left for shopping &amp; food.</div>
       </div>
     </div>
+    <div class="cta">
+      <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+        See how everyone's saving
+      </a>
+      <div class="sub">Live progress toward each milestone, family by family.</div>
+    </div>
   </div>
 </section>
 
 <footer>
   <span class="serif">Japan, Together</span>
   20 travelers · 4 families · one unforgettable trip · May 2027<br>
-  Costs are per person and estimated. Track our progress on the savings board.
+  Costs are per person and estimated. <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">Track our progress on the savings board →</a>
 </footer>
 
 </body>
