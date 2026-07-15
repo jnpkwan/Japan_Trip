@@ -38,12 +38,15 @@
   .sec-head h2{font-family:var(--serif);font-size:27px;font-weight:700}
   .sec-head .num{font-family:var(--serif);font-size:15px;color:var(--dim);font-weight:400}
   .sec-sub{color:var(--mut);font-size:14.5px;margin-bottom:26px;max-width:640px}
+  .sec-sub em{font-style:italic;color:var(--osaka);font-weight:600}
 
   /* pitch band */
   .pitch{background:var(--matcha-d);color:#fff;text-align:center;padding:40px 24px;border-radius:16px}
   .pitch .big{font-family:var(--serif);font-size:34px;font-weight:700;line-height:1.15}
   .pitch .big em{color:#CFE0B8;font-style:normal}
   .pitch p{color:#D8E4CC;font-size:14.5px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto}
+  .pitch p em{color:#fff;font-style:italic}
+  .pitch p strong{color:#fff;font-weight:700}
 
   /* route */
   .route{display:flex;gap:14px;flex-wrap:wrap}
@@ -98,6 +101,10 @@
   .total-card .big{font-family:var(--serif);font-size:42px;font-weight:700;line-height:1;margin:6px 0 2px}
   .total-card .alt{font-size:13px;color:#C9BFB4;margin-top:14px;padding-top:14px;border-top:1px solid #3a2f28}
   .total-card .alt b{color:#fff}
+  .goal-line{margin-top:16px;padding:14px 16px;background:var(--osaka);border-radius:11px;display:flex;flex-direction:column}
+  .goal-line .gl-lbl{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:#FBEAE1;font-weight:700}
+  .goal-line .gl-amt{font-family:var(--serif);font-size:32px;font-weight:700;line-height:1.05;color:#fff;margin:2px 0}
+  .goal-line .gl-sub{font-size:12px;color:#FBEAE1;line-height:1.4}
 
   /* decision */
   .decide{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -119,6 +126,10 @@
   .mile .by{font-size:12px;color:var(--dim);margin-bottom:12px}
   .mile .un{font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:12px}
   .mile .un b{color:var(--ink)}
+  .mile-goal{background:var(--osaka-t);border-color:var(--osaka)!important;position:relative;box-shadow:0 8px 26px rgba(218,83,39,.15)}
+  .mile-goal .amt{color:var(--osaka-d)}
+  .mile-goal .goal-badge{position:absolute;top:-11px;left:22px;background:var(--osaka);color:#fff;
+    font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;padding:4px 12px;border-radius:999px}
 
   footer{text-align:center;padding:40px 24px 56px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
   footer .serif{font-size:19px;color:var(--ink);display:block;margin-bottom:6px}
@@ -167,7 +178,7 @@
       <div class="hstat"><div class="n">7</div><div class="l">Nights</div></div>
       <div class="hstat"><div class="n">3</div><div class="l">Cities</div></div>
       <div class="hstat"><div class="n">27</div><div class="l">Stops</div></div>
-      <div class="hstat"><div class="n">₱52,773</div><div class="l">Per Person</div></div>
+      <div class="hstat"><div class="n">₱70,000</div><div class="l">Per Person</div></div>
     </div>
   </div>
 </header>
@@ -175,8 +186,8 @@
 <section>
   <div class="wrap">
     <div class="pitch">
-      <div class="big">27 experiences across three cities.<br><em>Only three charge admission.</em></div>
-      <p>Temples, markets, the world's busiest crossing, neon districts, a bamboo forest, a golden pavilion — nearly all of it is free to walk into. What we're saving for is mostly the flight over, a bed each night, and two unforgettable park days.</p>
+      <div class="big">₱52,773 gets you <em>there.</em><br>₱70,000 lets you <em>enjoy it.</em></div>
+      <p>The lower number is the floor — flights, a bed each night, food, and every park ticket, all paid. But it leaves no room for anything else. The extra ₱17,000 is the cushion that makes the trip real: travel insurance, a buffer in case hotel or park-ticket prices climb before 2027, any fees we haven't mapped yet — and then spending money for Shinsaibashi, Takeshita Street, and every market lane. <strong>₱70,000 is the real target.</strong></p>
     </div>
   </div>
 </section>
@@ -335,10 +346,15 @@
         <div class="brow"><div class="lbl">eSIM <small>data, 8 days</small></div><div class="bar"><i style="width:3%;background:var(--dim)"></i></div><div class="amt">₱722</div></div>
       </div>
       <div class="total-card">
-        <div class="lbl">Total per person · by bus</div>
+        <div class="lbl">The floor · by bus</div>
         <div class="big">₱52,773</div>
-        <div style="font-size:12.5px;color:#C9BFB4">Flights, beds, food, every ticket — all in.</div>
+        <div style="font-size:12.5px;color:#C9BFB4">Flights, beds, food, every ticket — all in. But ₱0 to spend.</div>
         <div class="alt">By bullet train instead: <b>₱57,923</b><br><span style="font-size:12px">The one upgrade decision — see below.</span></div>
+        <div class="goal-line">
+          <span class="gl-lbl">What we actually save toward</span>
+          <span class="gl-amt">₱70,000</span>
+          <span class="gl-sub">+ ₱17,000 buffer — insurance, price changes, and spending money</span>
+        </div>
       </div>
     </div>
   </div>
@@ -368,7 +384,7 @@
 <section style="padding-top:8px">
   <div class="wrap">
     <div class="sec-head"><h2>What We're Saving For</h2><span class="num">three milestones</span></div>
-    <div class="sec-sub">Each milestone isn't just a number — it pays for a real piece of the trip. Hit the third by April and you're fully covered, with spending money left over.</div>
+    <div class="sec-sub">Each milestone pays for a real piece of the trip. The first two get you <em>there</em>. The third — ₱70,000 — is the one that counts: it's the difference between watching from the sidelines and actually joining in.</div>
     <div class="miles">
       <div class="mile" style="border-top:4px solid var(--osaka)">
         <div class="step">Milestone 1 · by end of September</div>
@@ -382,11 +398,12 @@
         <div class="by">2026</div>
         <div class="un"><b>Wheels-up ready.</b> Flight, food, all transport and your eSIM — covered.</div>
       </div>
-      <div class="mile" style="border-top:4px solid var(--tokyo)">
+      <div class="mile mile-goal" style="border-top:4px solid var(--osaka)">
+        <div class="goal-badge">The real target</div>
         <div class="step">Milestone 3 · by end of April</div>
         <div class="amt">₱70,000</div>
         <div class="by">2027</div>
-        <div class="un"><b>Fully funded + pocket money.</b> Every ticket paid, with ~₱17,000 left for shopping &amp; food.</div>
+        <div class="un"><b>Fully funded — with a safety net.</b> Every ticket paid, plus ~₱17,000 for travel insurance, price changes we can't predict yet, and real spending money.</div>
       </div>
     </div>
     <div class="cta">
