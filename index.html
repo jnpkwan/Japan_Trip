@@ -817,7 +817,7 @@ function render() {
 
   document.getElementById('msLegend').innerHTML = MILESTONES.map(ms =>
     `<span><span class="ms-key">${ms.label}</span><b>${fmt(ms.amt)}</b> by ${ms.due}` +
-    (ms.prize ? ` <span class="ms-prize">🏆 ${fmt(ms.prize)}${ms.winner ? ' — ' + ms.winner : ' up for grabs'}</span>` : '') +
+    (ms.prize ? ` <span class="ms-prize">🏆 ${fmt(ms.prize)} ${ms.winner ? 'won by ' + ms.winner : 'reward — first to reach ' + fmt(ms.amt)}</span>` : '') +
     `</span>`
   ).join('') +
   FAMILY_OVERRIDES.map(o => {
