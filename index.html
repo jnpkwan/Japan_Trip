@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan, Together — What We're Saving For</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23DA5327'/%3E%3Crect x='7' y='10' width='18' height='2.6' rx='1' fill='%23fff'/%3E%3Crect x='9' y='14' width='14' height='2' rx='1' fill='%23fff'/%3E%3Crect x='11' y='16' width='2.4' height='9' fill='%23fff'/%3E%3Crect x='18.6' y='16' width='2.4' height='9' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#231a16; --paper:#faf6f0; --card:#fff; --line:#e6ded4; --mut:#6e655c; --dim:#9a928a;
+    --osaka:#DA5327; --osaka-d:#8C2318; --osaka-t:#FBEAE1;
+    --kyoto:#B28E2B; --kyoto-d:#6C4270; --kyoto-t:#F4EDDD;
+    --tokyo:#2E77A6; --tokyo-d:#1B3A5C; --tokyo-t:#E9EEF3;
+    --matcha:#6E9142; --matcha-d:#3B5A34; --matcha-t:#EBF0E6;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px}
+  .serif{font-family:var(--serif)}
+
+  /* hero */
+  header{position:relative;overflow:hidden;padding:64px 0 46px;text-align:center;
+    background:linear-gradient(180deg,#fff 0%,var(--paper) 100%);border-bottom:1px solid var(--line)}
+  .kicker{font-size:12px;letter-spacing:3.5px;text-transform:uppercase;color:var(--osaka);font-weight:700}
+  header h1{font-family:var(--serif);font-size:58px;font-weight:700;line-height:1.02;margin:14px 0 6px;letter-spacing:-.5px}
+  header .dates{font-size:15px;color:var(--mut);letter-spacing:.3px}
+  .hero-stats{display:flex;justify-content:center;gap:0;margin-top:34px;flex-wrap:wrap}
+  .hstat{padding:0 26px;border-right:1px solid var(--line)}
+  .hstat:last-child{border-right:none}
+  .hstat .n{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1}
+  .hstat .l{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim);margin-top:5px}
+  .torii-bg{position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:340px;opacity:.05;pointer-events:none}
+
+  section{padding:44px 0}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .sec-head h2{font-family:var(--serif);font-size:27px;font-weight:700}
+  .sec-head .num{font-family:var(--serif);font-size:15px;color:var(--dim);font-weight:400}
+  .sec-sub{color:var(--mut);font-size:14.5px;margin-bottom:26px;max-width:640px}
+
+  /* pitch band */
+  .pitch{background:var(--matcha-d);color:#fff;text-align:center;padding:40px 24px;border-radius:16px}
+  .pitch .big{font-family:var(--serif);font-size:34px;font-weight:700;line-height:1.15}
+  .pitch .big em{color:#CFE0B8;font-style:normal}
+  .pitch p{color:#D8E4CC;font-size:14.5px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto}
+
+  /* route */
+  .route{display:flex;gap:14px;flex-wrap:wrap}
+  .rcity{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;position:relative;overflow:hidden}
+  .rcity::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+  .rcity.k::before{background:var(--kyoto)} .rcity.o::before{background:var(--osaka)} .rcity.t::before{background:var(--tokyo)}
+  .rcity .jp{font-family:var(--serif);font-size:13px;letter-spacing:2px;font-weight:700}
+  .rcity.k .jp{color:var(--kyoto)} .rcity.o .jp{color:var(--osaka)} .rcity.t .jp{color:var(--tokyo)}
+  .rcity h3{font-family:var(--serif);font-size:22px;font-weight:700;margin:2px 0 4px}
+  .rcity .nights{font-size:12.5px;color:var(--mut)}
+  .rcity ul{list-style:none;margin-top:12px;font-size:13px;color:var(--mut)}
+  .rcity ul li{padding:2px 0}
+
+  /* day cards */
+  .day{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0;margin-bottom:14px;overflow:hidden}
+  .day-top{display:flex;align-items:center;gap:14px;padding:15px 22px;border-bottom:1px solid var(--line)}
+  .day-badge{flex-shrink:0;width:46px;height:46px;border-radius:11px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;color:#fff}
+  .day-badge .d{font-size:9px;letter-spacing:.5px;text-transform:uppercase;opacity:.85;line-height:1}
+  .day-badge .n{font-family:var(--serif);font-size:20px;font-weight:700;line-height:1;margin-top:1px}
+  .day-title{flex:1}
+  .day-title h3{font-family:var(--serif);font-size:18px;font-weight:700}
+  .day-title .place{font-size:12.5px;color:var(--mut)}
+  .day-cost{font-family:var(--serif);font-size:17px;font-weight:700;text-align:right}
+  .day-cost .free{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    color:var(--matcha-d);background:var(--matcha-t);padding:3px 9px;border-radius:999px}
+  .stops{display:flex;flex-wrap:wrap;gap:7px;padding:14px 22px}
+  .stop{font-size:12.5px;padding:4px 11px;background:var(--paper);border:1px solid var(--line);border-radius:999px;color:var(--ink)}
+  .stop.paid{border-color:currentColor;font-weight:600}
+  .stop .amt{font-weight:700;margin-left:5px}
+  .k .day-badge{background:var(--kyoto)} .k .stop.paid{color:var(--kyoto-d)}
+  .o .day-badge{background:var(--osaka)} .o .stop.paid{color:var(--osaka-d)}
+  .t .day-badge{background:var(--tokyo)} .t .stop.paid{color:var(--tokyo-d)}
+  .m .day-badge{background:var(--matcha)} .m .stop.paid{color:var(--matcha-d)}
+  .x .day-badge{background:var(--ink)}
+  .day-cost.kc{color:var(--kyoto-d)} .day-cost.oc{color:var(--osaka-d)} .day-cost.tc{color:var(--tokyo-d)} .day-cost.mc{color:var(--matcha-d)} .day-cost.xc{color:var(--ink)}
+
+  /* cost breakdown */
+  .cost-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:26px;align-items:start}
+  @media(max-width:720px){.cost-grid{grid-template-columns:1fr}}
+  .breakdown{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 22px}
+  .brow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .brow:last-child{border-bottom:none}
+  .brow .bar{flex:1;height:9px;background:var(--paper);border-radius:5px;overflow:hidden}
+  .brow .bar i{display:block;height:100%;border-radius:5px}
+  .brow .lbl{width:150px;font-size:13.5px}
+  .brow .lbl small{display:block;color:var(--dim);font-size:11px}
+  .brow .amt{width:78px;text-align:right;font-family:var(--serif);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+  .total-card{background:var(--ink);color:#fff;border-radius:14px;padding:24px 24px}
+  .total-card .lbl{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim)}
+  .total-card .big{font-family:var(--serif);font-size:42px;font-weight:700;line-height:1;margin:6px 0 2px}
+  .total-card .alt{font-size:13px;color:#C9BFB4;margin-top:14px;padding-top:14px;border-top:1px solid #3a2f28}
+  .total-card .alt b{color:#fff}
+
+  /* decision */
+  .decide{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:600px){.decide{grid-template-columns:1fr}}
+  .opt{border:1.5px solid var(--line);border-radius:14px;padding:20px 22px;background:var(--card)}
+  .opt.rec{border-color:var(--matcha);background:var(--matcha-t)}
+  .opt .tag{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--dim)}
+  .opt.rec .tag{color:var(--matcha-d)}
+  .opt h3{font-family:var(--serif);font-size:21px;font-weight:700;margin:4px 0 2px}
+  .opt .price{font-family:var(--serif);font-size:26px;font-weight:700}
+  .opt p{font-size:13px;color:var(--mut);margin-top:8px}
+
+  /* milestones */
+  .miles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.miles{grid-template-columns:1fr}}
+  .mile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative}
+  .mile .step{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--osaka)}
+  .mile .amt{font-family:var(--serif);font-size:32px;font-weight:700;line-height:1;margin:6px 0 2px}
+  .mile .by{font-size:12px;color:var(--dim);margin-bottom:12px}
+  .mile .un{font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:12px}
+  .mile .un b{color:var(--ink)}
+
+  footer{text-align:center;padding:40px 24px 56px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
+  footer .serif{font-size:19px;color:var(--ink);display:block;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="torii-bg" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" fill="#DA5327">
+    <rect x="6" y="14" width="88" height="7" rx="2"/><rect x="12" y="24" width="76" height="5" rx="1.5"/>
+    <rect x="20" y="27" width="8" height="30"/><rect x="72" y="27" width="8" height="30"/>
+  </svg>
+  <div class="wrap">
+    <div class="kicker">A Family Trip · 4 Families · 20 Travelers</div>
+    <h1>Japan, Together</h1>
+    <div class="dates">May 29 – June 5, 2027 · Kyoto · Osaka · Tokyo</div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">7</div><div class="l">Nights</div></div>
+      <div class="hstat"><div class="n">3</div><div class="l">Cities</div></div>
+      <div class="hstat"><div class="n">27</div><div class="l">Stops</div></div>
+      <div class="hstat"><div class="n">₱52,773</div><div class="l">Per Person</div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="pitch">
+      <div class="big">27 experiences across three cities.<br><em>Only three charge admission.</em></div>
+      <p>Temples, markets, the world's busiest crossing, neon districts, a bamboo forest, a golden pavilion — nearly all of it is free to walk into. What we're saving for is mostly the flight over, a bed each night, and two unforgettable park days.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>The Route</h2><span class="num">three cities, one loop</span></div>
+    <div class="sec-sub">We land in Osaka, head straight to Kyoto's old streets, work back through Osaka's neon, then finish with four days in Tokyo.</div>
+    <div class="route">
+      <div class="rcity k">
+        <div class="jp">京都 · KYOTO</div><h3>Old Japan on Foot</h3><div class="nights">3 nights</div>
+        <ul><li>Nishiki Market &amp; Gion streets</li><li>Fushimi Inari torii tunnels</li><li>Arashiyama bamboo &amp; the Golden Pavilion</li></ul>
+      </div>
+      <div class="rcity o">
+        <div class="jp">大阪 · OSAKA</div><h3>Neon &amp; Street Food</h3><div class="nights">1 night</div>
+        <ul><li>Shinsaibashi shopping arcade</li><li>Dotonbori canal &amp; the Glico sign</li><li>Takoyaki, everywhere</li></ul>
+      </div>
+      <div class="rcity t">
+        <div class="jp">東京 · TOKYO</div><h3>Shopping to DisneySea</h3><div class="nights">3 nights</div>
+        <ul><li>Ueno, Akihabara, Asakusa</li><li>Harajuku, Shibuya, Shinjuku</li><li>Tokyo DisneySea finale</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>Day by Day</h2><span class="num">every stop on the trip</span></div>
+    <div class="sec-sub">Green means the whole day is free. The few peso figures are the only admissions we pay all trip.</div>
+
+    <div class="day x">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Travel</span><span class="n">0</span></div>
+        <div class="day-title"><h3>Fly to Japan</h3><div class="place">General Santos → Osaka → Kyoto</div></div>
+        <div class="day-cost xc">₱25,553</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Flight to Osaka<span class="amt">₱25,000</span></span>
+        <span class="stop paid">Airport → Kyoto<span class="amt">₱553</span></span>
+      </div>
+    </div>
+
+    <div class="day k">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">1</span></div>
+        <div class="day-title"><h3>Kyoto — Old City on Foot</h3><div class="place">Gion &amp; the eastern temples</div></div>
+        <div class="day-cost"><span class="free">All free</span></div>
+      </div>
+      <div class="stops">
+        <span class="stop">Nishiki Market</span><span class="stop">Yasaka-dori</span>
+        <span class="stop">Sannenzaka / Ninenzaka</span><span class="stop">Fushimi Inari Taisha</span>
+        <span class="stop">Shirakawa Canal</span>
+      </div>
+    </div>
+
+    <div class="day m">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">2</span></div>
+        <div class="day-title"><h3>Arashiyama &amp; the Golden Pavilion</h3><div class="place">Kyoto's western hills</div></div>
+        <div class="day-cost mc">₱300</div>
+      </div>
+      <div class="stops">
+        <span class="stop">Bamboo Forest</span><span class="stop">Togetsukyō Bridge</span>
+        <span class="stop paid">Kinkaku-ji<span class="amt">₱200</span></span>
+        <span class="stop paid">Local bus<span class="amt">₱100</span></span>
+      </div>
+    </div>
+
+    <div class="day o">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">3</span></div>
+        <div class="day-title"><h3>Osaka — Neon Night</h3><div class="place">Kyoto → Osaka</div></div>
+        <div class="day-cost oc">₱163</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Kyoto → Osaka<span class="amt">₱163</span></span>
+        <span class="stop">Shinsaibashi</span><span class="stop">Dotonbori</span>
+      </div>
+    </div>
+
+    <div class="day t">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">4</span></div>
+        <div class="day-title"><h3>Tokyo — Ueno, Akihabara, Asakusa</h3><div class="place">Osaka → Tokyo, then old &amp; new</div></div>
+        <div class="day-cost tc">₱240<span style="font-size:11px;color:var(--dim);font-weight:400"> + transfer</span></div>
+      </div>
+      <div class="stops">
+        <span class="stop">Ameyoko Market</span><span class="stop">Ueno Park</span>
+        <span class="stop paid">Ueno Zoo<span class="amt">₱240</span></span>
+        <span class="stop">Akihabara</span><span class="stop">Nakamise-dori</span>
+        <span class="stop">Sensō-ji</span><span class="stop">Don Quijote</span>
+      </div>
+    </div>
+
+    <div class="day t">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">5</span></div>
+        <div class="day-title"><h3>Harajuku · Shibuya · Shinjuku</h3><div class="place">The flagship Tokyo day</div></div>
+        <div class="day-cost"><span class="free">All free</span></div>
+      </div>
+      <div class="stops">
+        <span class="stop">Takeshita Street</span><span class="stop">Shibuya Crossing</span>
+        <span class="stop">Shibuya 109</span><span class="stop">Hachikō Square</span>
+        <span class="stop">Yoyogi Park</span><span class="stop">Godzilla Head</span>
+        <span class="stop">Kabukichō</span><span class="stop">Cross Shinjuku Vision</span>
+        <span class="stop">Omoide Yokochō</span>
+      </div>
+    </div>
+
+    <div class="day t">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">6</span></div>
+        <div class="day-title"><h3>Tokyo DisneySea</h3><div class="place">The grand finale</div></div>
+        <div class="day-cost tc">₱2,725</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Tokyo DisneySea — full day<span class="amt">₱2,725</span></span>
+      </div>
+    </div>
+
+    <div class="day x">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Travel</span><span class="n">7</span></div>
+        <div class="day-title"><h3>Fly Home</h3><div class="place">Tokyo → airport → General Santos</div></div>
+        <div class="day-cost xc">₱345</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Tokyo → airport<span class="amt">₱345</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>Where Every Peso Goes</h2><span class="num">per person</span></div>
+    <div class="sec-sub">The big three — flight, hotel, food — are three-quarters of the cost. Everything you saw above adds up to less than you'd think.</div>
+    <div class="cost-grid">
+      <div class="breakdown">
+        <div class="brow"><div class="lbl">Flight <small>round trip</small></div><div class="bar"><i style="width:100%;background:var(--osaka)"></i></div><div class="amt">₱25,000</div></div>
+        <div class="brow"><div class="lbl">Hotels <small>₱2,500 × 6 nights</small></div><div class="bar"><i style="width:60%;background:var(--kyoto)"></i></div><div class="amt">₱15,000</div></div>
+        <div class="brow"><div class="lbl">Food <small>₱1,000 × 7 days</small></div><div class="bar"><i style="width:28%;background:var(--matcha)"></i></div><div class="amt">₱7,000</div></div>
+        <div class="brow"><div class="lbl">Tickets <small>Kinkaku-ji · Zoo · DisneySea</small></div><div class="bar"><i style="width:13%;background:var(--tokyo)"></i></div><div class="amt">₱3,165</div></div>
+        <div class="brow"><div class="lbl">Transport <small>trains, buses, transfers</small></div><div class="bar"><i style="width:7.5%;background:var(--osaka-d)"></i></div><div class="amt">₱1,886</div></div>
+        <div class="brow"><div class="lbl">eSIM <small>data, 8 days</small></div><div class="bar"><i style="width:3%;background:var(--dim)"></i></div><div class="amt">₱722</div></div>
+      </div>
+      <div class="total-card">
+        <div class="lbl">Total per person · by bus</div>
+        <div class="big">₱52,773</div>
+        <div style="font-size:12.5px;color:#C9BFB4">Flights, beds, food, every ticket — all in.</div>
+        <div class="alt">By bullet train instead: <b>₱57,923</b><br><span style="font-size:12px">The one upgrade decision — see below.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>The One Decision</h2><span class="num">Osaka → Tokyo</span></div>
+    <div class="sec-sub">The only real fork in the budget. The overnight bus doubles as a hotel night, which is why it's ₱5,150 cheaper per person.</div>
+    <div class="decide">
+      <div class="opt rec">
+        <div class="tag">Recommended · saves ₱5,150</div>
+        <h3>Overnight Bus 🚌</h3>
+        <div class="price">₱725</div>
+        <p>You sleep on the bus, so it replaces a hotel night. Cheapest by far — the whole trip lands at ₱52,773.</p>
+      </div>
+      <div class="opt">
+        <div class="tag">The comfort upgrade</div>
+        <h3>Bullet Train 🚄</h3>
+        <div class="price">₱3,375</div>
+        <p>Two hours, fifteen minutes in comfort — plus one more hotel night. Brings the trip to ₱57,923. Anyone can take the train and cover the difference themselves.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>What We're Saving For</h2><span class="num">three milestones</span></div>
+    <div class="sec-sub">Each milestone isn't just a number — it pays for a real piece of the trip. Hit the third by April and you're fully covered, with spending money left over.</div>
+    <div class="miles">
+      <div class="mile" style="border-top:4px solid var(--osaka)">
+        <div class="step">Milestone 1 · by end of September</div>
+        <div class="amt">₱15,000</div>
+        <div class="by">2026</div>
+        <div class="un"><b>Every hotel night is paid.</b> ₱2,500 a night × 6 nights, exactly.</div>
+      </div>
+      <div class="mile" style="border-top:4px solid var(--kyoto)">
+        <div class="step">Milestone 2 · by end of December</div>
+        <div class="amt">₱50,000</div>
+        <div class="by">2026</div>
+        <div class="un"><b>Wheels-up ready.</b> Flight, food, all transport and your eSIM — covered.</div>
+      </div>
+      <div class="mile" style="border-top:4px solid var(--tokyo)">
+        <div class="step">Milestone 3 · by end of April</div>
+        <div class="amt">₱70,000</div>
+        <div class="by">2027</div>
+        <div class="un"><b>Fully funded + pocket money.</b> Every ticket paid, with ~₱17,000 left for shopping &amp; food.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="serif">Japan, Together</span>
+  20 travelers · 4 families · one unforgettable trip · May 2027<br>
+  Costs are per person and estimated. Track our progress on the savings board.
+</footer>
+
+</body>
+</html>
