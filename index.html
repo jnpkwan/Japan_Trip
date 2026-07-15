@@ -419,6 +419,8 @@
     background: #fff;
   }
   .ms-chip.hit { background: #B28E2B; border-color: #B28E2B; color: #fff; }
+  .ms-chip.won { background: #8C2318; border-color: #8C2318; color: #fff; box-shadow: 0 0 0 2px #FBEAE1; }
+  .ms-prize { font-size: 10.5px; font-weight: 700; color: #8C2318; margin-left: 4px; }
 
   .ms-legend {
     display: flex;
@@ -686,10 +688,30 @@
 const TARGET_OVERRIDE = 70000;
 
 const MILESTONES = [
-  { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
-  { label: "M2", amt: 50500,  due: "end of December",  date: "2026-12-31" },
-  { label: "M3", amt: 70000,  due: "end of April",     date: "2027-04-30" },
+  { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30", prize: 1000, winner: "" },
+  { label: "M2", amt: 50500,  due: "end of December",  date: "2026-12-31", prize: 2000, winner: "" },
+  { label: "M3", amt: 70000,  due: "end of April",     date: "2027-04-30", prize: 2000, winner: "" },
 ];
+
+// Families whose target differs from the default (e.g. flying from abroad).
+// Keyed by how the family name STARTS in savings-data.json (case-insensitive).
+const FAMILY_OVERRIDES = [
+  {
+    match: "C",              // C Family — flying from the US, higher airfare
+    target: 100000,
+    milestones: [
+      { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
+      { label: "M2", amt: 75000,  due: "end of December",  date: "2026-12-31" },
+      { label: "M3", amt: 100000, due: "end of April",     date: "2027-04-30" },
+    ],
+  },
+];
+function famConfig(name) {
+  const o = FAMILY_OVERRIDES.find(o => name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
+  return o
+    ? { target: o.target, milestones: o.milestones.map((m, i) => ({ ...MILESTONES[i], ...m })) }
+    : { target: (TARGET_OVERRIDE ?? DATA.trip.targetPerPerson), milestones: MILESTONES };
+}
 let DATA = null;
 
 // deck icons: Osaka castle · Kyoto torii · Tokyo city · Nara deer
@@ -766,18 +788,21 @@ function markerHTML(m, av, idx) {
 
 // ── Render ────────────────────────────────────────────────────────────
 function render() {
-  const target = TARGET_OVERRIDE ?? DATA.trip.targetPerPerson;
+  const defaultTarget = TARGET_OVERRIDE ?? DATA.trip.targetPerPerson;
   let totalSaved = 0, totalTarget = 0, totalMembers = 0;
 
-  DATA.families.forEach(f => f.members.forEach(m => {
-    totalSaved  += m.saved;
-    totalTarget += target;
-    totalMembers++;
-  }));
+  DATA.families.forEach(f => {
+    const cfg = famConfig(f.name);
+    f.members.forEach(m => {
+      totalSaved  += m.saved;
+      totalTarget += cfg.target;
+      totalMembers++;
+    });
+  });
 
   const op = pct(totalSaved, totalTarget);
-  document.getElementById('pillTarget').textContent = fmt(target);
-  document.getElementById('subTarget').textContent  = fmt(target);
+  document.getElementById('pillTarget').textContent = fmt(defaultTarget);
+  document.getElementById('subTarget').textContent  = fmt(defaultTarget);
   document.getElementById('grandSaved').textContent     = fmt(totalSaved);
   document.getElementById('grandTarget').textContent    = fmt(totalTarget);
   document.getElementById('grandRemaining').textContent = fmt(Math.max(0, totalTarget - totalSaved));
@@ -791,8 +816,15 @@ function render() {
   grid.innerHTML = '';
 
   document.getElementById('msLegend').innerHTML = MILESTONES.map(ms =>
-    `<span><span class="ms-key">${ms.label}</span><b>${fmt(ms.amt)}</b> by ${ms.due}</span>`
-  ).join('') + `<span style="color:#9A928A">— per traveler, of the ${fmt(target)} goal</span>`;
+    `<span><span class="ms-key">${ms.label}</span><b>${fmt(ms.amt)}</b> by ${ms.due}` +
+    (ms.prize ? ` <span class="ms-prize">🏆 ${fmt(ms.prize)}${ms.winner ? ' — ' + ms.winner : ' up for grabs'}</span>` : '') +
+    `</span>`
+  ).join('') +
+  FAMILY_OVERRIDES.map(o => {
+    const fam = DATA.families.find(f => f.name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
+    return fam ? `<span style="color:#9A928A">— ${fam.name}: ${o.milestones.map(m => fmt(m.amt)).join(' / ')} (${fmt(o.target)} goal)</span>` : '';
+  }).join('') +
+  `<span style="color:#9A928A">— others per traveler, of the ${fmt(defaultTarget)} goal</span>`;
 
   // palette index per family (default: JSON order), with K↔R swap
   const palIdx = DATA.families.map((_, i) => i % CITY_PALS.length);
@@ -801,6 +833,9 @@ function render() {
   if (kI > -1 && rI > -1) { const t = palIdx[kI]; palIdx[kI] = palIdx[rI]; palIdx[rI] = t; }
 
   DATA.families.forEach((family, fi) => {
+    const cfg    = famConfig(family.name);
+    const target = cfg.target;
+    const msList = cfg.milestones;
     let famSaved = 0;
     family.members.forEach(m => famSaved += m.saved);
     const famPct = pct(famSaved, target * family.members.length);
@@ -827,10 +862,12 @@ function render() {
           const col2 = barColor(p, col);
           const av   = AVATAR_PALETTES[(fi * 4 + mi) % AVATAR_PALETTES.length];
           const reached = p >= 100;
-          const ticks = MILESTONES.map(ms =>
+          const ticks = msList.map(ms =>
             `<div class="ms-tick" data-ms="${ms.label}" style="left:${Math.min(100, ms.amt / target * 100)}%"></div>`).join('');
-          const chips = `<span class="ms-chips">${MILESTONES.map(ms =>
-            `<span class="ms-chip${m.saved >= ms.amt ? ' hit' : ''}">${ms.label}${m.saved >= ms.amt ? ' ✓' : ''}</span>`).join('')}</span>`;
+          const chips = `<span class="ms-chips">${msList.map(ms => {
+            const won = ms.winner && ms.winner === m.name;
+            return `<span class="ms-chip${m.saved >= ms.amt ? ' hit' : ''}${won ? ' won' : ''}">${won ? '🏆 ' : ''}${ms.label}${m.saved >= ms.amt ? ' ✓' : ''}</span>`;
+          }).join('')}</span>`;
 
           return `
           <div class="member-row">
