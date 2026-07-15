@@ -158,6 +158,11 @@
   .mile .amt{font-family:var(--serif);font-size:32px;font-weight:700;line-height:1;margin:6px 0 2px}
   .mile .by{font-size:12px;color:var(--dim);margin-bottom:12px}
   .mile .un{font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:12px}
+  .mile .do{font-size:13.5px;font-weight:700;color:var(--osaka-d);margin:2px 0 12px}
+  .mile-goal .do{color:var(--osaka-d)}
+  .mile-prize{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.3px;color:var(--kyoto-d);
+    background:var(--kyoto-t);border:1px solid var(--kyoto);border-radius:999px;padding:3px 10px;margin-bottom:12px}
+  .mile-goal .mile-prize{margin-top:4px}
   .mile .un b{color:var(--ink)}
   .mile-goal{background:var(--osaka-t);border-color:var(--osaka)!important;position:relative;box-shadow:0 8px 26px rgba(218,83,39,.15)}
   .mile-goal .amt{color:var(--osaka-d)}
@@ -492,22 +497,28 @@
     <div class="sec-sub">Each milestone pays for a real piece of the trip. The first two get you <em>there</em>. The third — ₱70,000 — is the one that counts: it's the difference between watching from the sidelines and actually joining in.</div>
     <div class="miles">
       <div class="mile" style="border-top:4px solid var(--osaka)">
+        <div class="mile-prize">🏆 ₱1,000 to the first to reach it</div>
         <div class="step">Milestone 1 · by end of September</div>
         <div class="amt">₱15,000</div>
         <div class="by">2026</div>
+        <div class="do">🏨 We start booking hotels</div>
         <div class="un"><b>Every hotel night is paid.</b> ₱2,500 a night × 6 nights, exactly.</div>
       </div>
       <div class="mile" style="border-top:4px solid var(--kyoto)">
+        <div class="mile-prize">🏆 ₱2,000 to the first to reach it</div>
         <div class="step">Milestone 2 · by end of December</div>
         <div class="amt">₱50,000</div>
         <div class="by">2026</div>
+        <div class="do">✈️ We start booking plane tickets</div>
         <div class="un"><b>Wheels-up ready.</b> Flight, food, all transport and your eSIM — covered.</div>
       </div>
       <div class="mile mile-goal" style="border-top:4px solid var(--osaka)">
         <div class="goal-badge">The real target</div>
+        <div class="mile-prize">🏆 ₱2,000 to the first to reach it</div>
         <div class="step">Milestone 3 · by end of April</div>
         <div class="amt">₱70,000</div>
         <div class="by">2027</div>
+        <div class="do">🎉 Everyone's fully funded</div>
         <div class="un"><b>Fully funded — with a safety net.</b> Every ticket paid, plus ~₱17,000 for travel insurance, price changes we can't predict yet, and real spending money.</div>
       </div>
     </div>
