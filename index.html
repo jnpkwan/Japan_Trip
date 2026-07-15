@@ -24,7 +24,40 @@
   header{position:relative;overflow:hidden;padding:64px 0 46px;text-align:center;
     background:linear-gradient(180deg,#fff 0%,var(--paper) 100%);border-bottom:1px solid var(--line)}
   .kicker{font-size:12px;letter-spacing:3.5px;text-transform:uppercase;color:var(--osaka);font-weight:700}
-  header h1{font-family:var(--serif);font-size:58px;font-weight:700;line-height:1.02;margin:14px 0 6px;letter-spacing:-.5px}
+  header h1{font-family:var(--serif);font-size:58px;font-weight:700;line-height:1.02;margin:14px 0 6px;letter-spacing:-.5px;
+    background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 38%,var(--osaka) 50%,var(--ink) 62%,var(--ink) 100%);
+    background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:shimmer 5s ease-in-out infinite}
+  @keyframes shimmer{0%,100%{background-position:150% 0}50%{background-position:-50% 0}}
+
+  /* countdown pill */
+  .countdown{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:10px 20px;
+    background:var(--osaka);color:#fff;border-radius:999px;box-shadow:0 8px 24px rgba(218,83,39,.28);
+    animation:cdpop .6s cubic-bezier(.34,1.56,.64,1) both .3s;opacity:0}
+  @keyframes cdpop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+  .cd-emoji{font-size:20px;animation:bob 2.6s ease-in-out infinite}
+  .cd-num{font-family:var(--serif);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+  .cd-word{font-size:13.5px;font-weight:600;letter-spacing:.2px}
+  .cd-flash{animation:cdflash .5s ease}
+  @keyframes cdflash{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+
+  /* hype ticker */
+  .ticker{margin-top:26px;overflow:hidden;position:relative;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .ticker-track{display:inline-flex;gap:0;white-space:nowrap;animation:marquee 22s linear infinite}
+  .ticker-track span{font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--osaka);padding:0 20px;
+    text-transform:uppercase;border-right:1px solid var(--line)}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* confetti */
+  .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+  .confetti{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:0;
+    animation:confetti-fall linear forwards}
+  @keyframes confetti-fall{
+    0%{opacity:1;transform:translateY(-10px) rotate(0)}
+    100%{opacity:.9;transform:translateY(104vh) rotate(720deg)}
+  }
   header .dates{font-size:15px;color:var(--mut);letter-spacing:.3px}
   .hero-stats{display:flex;justify-content:center;gap:0;margin-top:34px;flex-wrap:wrap}
   .hstat{padding:0 26px;border-right:1px solid var(--line)}
@@ -161,6 +194,67 @@
   .cta a:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(35,26,22,.26)}
   .cta a svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
   .cta .sub{font-size:12.5px;color:var(--dim);margin-top:11px}
+  /* ── Kid-fun layer ──────────────────────────────────────────── */
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+  .petal{position:absolute;top:-24px;font-size:16px;will-change:transform,opacity;opacity:0;
+    animation:fall linear infinite}
+  @keyframes fall{
+    0%{transform:translateY(-20px) translateX(0) rotate(0deg);opacity:0}
+    10%{opacity:.9}
+    90%{opacity:.9}
+    100%{transform:translateY(102vh) translateX(60px) rotate(420deg);opacity:0}
+  }
+  header,section,footer{position:relative;z-index:2}
+
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(32px) scale(.98);transition:opacity .55s cubic-bezier(.34,1.56,.64,1),transform .55s cubic-bezier(.34,1.56,.64,1)}
+  .reveal.in{opacity:1;transform:none}
+  .day.in .day-emoji{animation:emoji-burst .6s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes emoji-burst{0%{transform:scale(0) rotate(-40deg)}60%{transform:scale(1.4) rotate(12deg)}100%{transform:scale(1) rotate(0)}}
+
+  /* hero number pop-in */
+  .hstat .n{display:inline-block;animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+  .hstat:nth-child(2) .n{animation-delay:.08s}
+  .hstat:nth-child(3) .n{animation-delay:.16s}
+  .hstat:nth-child(4) .n{animation-delay:.24s}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+
+  /* playful hovers */
+  .stop{transition:transform .18s cubic-bezier(.34,1.56,.64,1),background .18s,color .18s,border-color .18s}
+  .stop:hover{transform:translateY(-3px) scale(1.06) rotate(-1.5deg)}
+  .k .stop:hover{background:var(--kyoto-t);border-color:var(--kyoto);color:var(--kyoto-d)}
+  .o .stop:hover{background:var(--osaka-t);border-color:var(--osaka);color:var(--osaka-d)}
+  .t .stop:hover{background:var(--tokyo-t);border-color:var(--tokyo);color:var(--tokyo-d)}
+  .m .stop:hover{background:var(--matcha-t);border-color:var(--matcha);color:var(--matcha-d)}
+  .day{transition:transform .2s,box-shadow .2s}
+  .day:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(35,26,22,.10)}
+  .day:hover .day-badge{animation:wiggle .5s ease}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+  .rcity{transition:transform .2s,box-shadow .2s}
+  .rcity:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(35,26,22,.10)}
+
+  /* day emoji — bobbing */
+  .day-emoji{display:inline-block;margin-right:8px;font-size:19px;vertical-align:-2px;animation:bob 2.6s ease-in-out infinite}
+  .day:nth-child(odd) .day-emoji{animation-delay:.5s}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(6deg)}}
+
+  /* goal number sparkle pulse */
+  .gl-amt{position:relative;animation:glow 2.4s ease-in-out infinite}
+  @keyframes glow{0%,100%{text-shadow:0 0 0 rgba(255,255,255,0)}50%{text-shadow:0 0 14px rgba(255,255,255,.5)}}
+
+  /* vote banner nudge to catch the eye */
+  .vote-banner .vb-go{animation:nudge 2.2s ease-in-out infinite}
+  @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+
+  @media(prefers-reduced-motion:reduce){
+    .petals,.confetti-wrap{display:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    .hstat .n,.day-emoji,.gl-amt,.vote-banner .vb-go,.day:hover .day-badge,
+    header h1,.countdown,.cd-emoji,.ticker-track,.day.in .day-emoji{animation:none}
+    header h1{-webkit-text-fill-color:var(--ink);color:var(--ink)}
+    .ticker{display:none}
+    .stop:hover,.day:hover,.rcity:hover{transform:none}
+  }
 </style>
 </head>
 <body>
@@ -174,6 +268,17 @@
     <div class="kicker">A Family Trip · 4 Families · 20 Travelers</div>
     <h1>Japan, Together</h1>
     <div class="dates">May 29 – June 5, 2027 · Kyoto · Osaka · Tokyo</div>
+    <div class="countdown" id="countdown">
+      <span class="cd-emoji">🗾</span>
+      <span class="cd-num" id="cdNum">—</span>
+      <span class="cd-word">days until we land in Japan!</span>
+    </div>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>⛩️ 27 STOPS</span><span>🐼 SEE THE PANDAS</span><span>🎡 TOKYO DISNEYSEA</span><span>🍜 REAL RAMEN</span><span>🌈 HARAJUKU CREPES</span><span>🎋 BAMBOO FOREST</span><span>🏯 GOLDEN PAVILION</span><span>🌃 OSAKA NEON</span><span>🎮 AKIHABARA</span>
+        <span>⛩️ 27 STOPS</span><span>🐼 SEE THE PANDAS</span><span>🎡 TOKYO DISNEYSEA</span><span>🍜 REAL RAMEN</span><span>🌈 HARAJUKU CREPES</span><span>🎋 BAMBOO FOREST</span><span>🏯 GOLDEN PAVILION</span><span>🌃 OSAKA NEON</span><span>🎮 AKIHABARA</span>
+      </div>
+    </div>
     <div class="hero-stats">
       <div class="hstat"><div class="n">7</div><div class="l">Nights</div></div>
       <div class="hstat"><div class="n">3</div><div class="l">Cities</div></div>
@@ -232,7 +337,7 @@
     <div class="day x">
       <div class="day-top">
         <div class="day-badge"><span class="d">Travel</span><span class="n">0</span></div>
-        <div class="day-title"><h3>Fly to Japan</h3><div class="place">General Santos → Osaka → Kyoto</div></div>
+        <div class="day-title"><h3><span class="day-emoji">✈️</span>Fly to Japan</h3><div class="place">General Santos → Osaka → Kyoto</div></div>
         <div class="day-cost xc">₱25,553</div>
       </div>
       <div class="stops">
@@ -244,7 +349,7 @@
     <div class="day k">
       <div class="day-top">
         <div class="day-badge"><span class="d">Day</span><span class="n">1</span></div>
-        <div class="day-title"><h3>Kyoto — Old City on Foot</h3><div class="place">Gion &amp; the eastern temples</div></div>
+        <div class="day-title"><h3><span class="day-emoji">⛩️</span>Kyoto — Old City on Foot</h3><div class="place">Gion &amp; the eastern temples</div></div>
         <div class="day-cost"><span class="free">All free</span></div>
       </div>
       <div class="stops">
@@ -257,7 +362,7 @@
     <div class="day m">
       <div class="day-top">
         <div class="day-badge"><span class="d">Day</span><span class="n">2</span></div>
-        <div class="day-title"><h3>Arashiyama &amp; the Golden Pavilion</h3><div class="place">Kyoto's western hills</div></div>
+        <div class="day-title"><h3><span class="day-emoji">🎋</span>Arashiyama &amp; the Golden Pavilion</h3><div class="place">Kyoto's western hills</div></div>
         <div class="day-cost mc">₱300</div>
       </div>
       <div class="stops">
@@ -270,7 +375,7 @@
     <div class="day o">
       <div class="day-top">
         <div class="day-badge"><span class="d">Day</span><span class="n">3</span></div>
-        <div class="day-title"><h3>Osaka — Neon Night</h3><div class="place">Kyoto → Osaka</div></div>
+        <div class="day-title"><h3><span class="day-emoji">🍜</span>Osaka — Neon Night</h3><div class="place">Kyoto → Osaka</div></div>
         <div class="day-cost oc">₱163</div>
       </div>
       <div class="stops">
@@ -282,7 +387,7 @@
     <div class="day t">
       <div class="day-top">
         <div class="day-badge"><span class="d">Day</span><span class="n">4</span></div>
-        <div class="day-title"><h3>Tokyo — Ueno, Akihabara, Asakusa</h3><div class="place">Osaka → Tokyo, then old &amp; new</div></div>
+        <div class="day-title"><h3><span class="day-emoji">🐼</span>Tokyo — Ueno, Akihabara, Asakusa</h3><div class="place">Osaka → Tokyo, then old &amp; new</div></div>
         <div class="day-cost tc">₱240<span style="font-size:11px;color:var(--dim);font-weight:400"> + transfer</span></div>
       </div>
       <div class="stops">
@@ -296,7 +401,7 @@
     <div class="day t">
       <div class="day-top">
         <div class="day-badge"><span class="d">Day</span><span class="n">5</span></div>
-        <div class="day-title"><h3>Harajuku · Shibuya · Shinjuku</h3><div class="place">The flagship Tokyo day</div></div>
+        <div class="day-title"><h3><span class="day-emoji">🌈</span>Harajuku · Shibuya · Shinjuku</h3><div class="place">The flagship Tokyo day</div></div>
         <div class="day-cost"><span class="free">All free</span></div>
       </div>
       <div class="stops">
@@ -311,7 +416,7 @@
     <div class="day t">
       <div class="day-top">
         <div class="day-badge"><span class="d">Day</span><span class="n">6</span></div>
-        <div class="day-title"><h3>Tokyo DisneySea</h3><div class="place">The grand finale</div></div>
+        <div class="day-title"><h3><span class="day-emoji">🎡</span>Tokyo DisneySea</h3><div class="place">The grand finale</div></div>
         <div class="day-cost tc">₱2,725</div>
       </div>
       <div class="stops">
@@ -322,7 +427,7 @@
     <div class="day x">
       <div class="day-top">
         <div class="day-badge"><span class="d">Travel</span><span class="n">7</span></div>
-        <div class="day-title"><h3>Fly Home</h3><div class="place">Tokyo → airport → General Santos</div></div>
+        <div class="day-title"><h3><span class="day-emoji">🛬</span>Fly Home</h3><div class="place">Tokyo → airport → General Santos</div></div>
         <div class="day-cost xc">₱345</div>
       </div>
       <div class="stops">
@@ -422,5 +527,126 @@
   Costs are per person and estimated. <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">Track our progress on the savings board →</a>
 </footer>
 
+<div class="petals" id="petals" aria-hidden="true"></div>
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ── drifting sakura petals ────────────────────────────────────
+  if(!reduce){
+    var box = document.getElementById("petals");
+    var glyphs = ["🌸","🌸","🌸","❀","✿"];
+    var N = 14;
+    for(var i=0;i<N;i++){
+      var p = document.createElement("div");
+      p.className = "petal";
+      p.textContent = glyphs[i % glyphs.length];
+      p.style.left = Math.random()*100 + "vw";
+      p.style.fontSize = (12 + Math.random()*10) + "px";
+      var dur = 9 + Math.random()*9;
+      p.style.animationDuration = dur + "s";
+      p.style.animationDelay = (-Math.random()*dur) + "s";
+      p.style.opacity = 0.5 + Math.random()*0.4;
+      box.appendChild(p);
+    }
+  }
+
+  // ── scroll reveal ─────────────────────────────────────────────
+  var targets = document.querySelectorAll("section, .day, .rcity, .mile, .vote-banner, .cta");
+  if(reduce || !("IntersectionObserver" in window)){
+    targets.forEach(function(t){ t.classList.add("in"); });
+  } else {
+    targets.forEach(function(t){ t.classList.add("reveal"); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    targets.forEach(function(t){ io.observe(t); });
+  }
+
+  // ── hero count-up ─────────────────────────────────────────────
+  function countUp(el){
+    var raw = el.textContent.trim();
+    var m = raw.match(/^(\D*)([\d,]+)(\D*)$/);
+    if(!m){ return; }
+    var pre = m[1], suf = m[3];
+    var target = parseInt(m[2].replace(/,/g,""), 10);
+    if(isNaN(target)){ return; }
+    var dur = 900, t0 = null;
+    function fmt(n){ return n.toLocaleString("en-US"); }
+    function step(ts){
+      if(t0===null) t0 = ts;
+      var k = Math.min((ts - t0)/dur, 1);
+      var eased = 1 - Math.pow(1-k, 3);
+      el.textContent = pre + fmt(Math.round(target*eased)) + suf;
+      if(k<1) requestAnimationFrame(step);
+      else el.textContent = pre + fmt(target) + suf;
+    }
+    requestAnimationFrame(step);
+  }
+  var stats = document.querySelectorAll(".hero-stats .n");
+  if(reduce){ /* leave as-is */ }
+  else { stats.forEach(function(el, i){ setTimeout(function(){ countUp(el); }, 120 + i*90); }); }
+
+  // ── live countdown to departure ───────────────────────────────
+  var cd = document.getElementById("cdNum");
+  if(cd){
+    var dep = new Date("2027-05-29T00:00:00");
+    var last = null;
+    function tickCountdown(){
+      var now = new Date();
+      var days = Math.max(0, Math.ceil((dep - now) / 86400000));
+      var txt = days.toLocaleString("en-US");
+      if(txt !== cd.textContent){
+        cd.textContent = txt;
+        if(last !== null && !reduce){
+          cd.classList.remove("cd-flash");
+          void cd.offsetWidth;      // restart animation
+          cd.classList.add("cd-flash");
+        }
+        last = txt;
+      }
+    }
+    tickCountdown();
+    setInterval(tickCountdown, 1000 * 60 * 30);   // refresh twice an hour
+  }
+
+  // ── confetti burst when the goal amount scrolls into view ──────
+  if(!reduce && ("IntersectionObserver" in window)){
+    var goalEl = document.querySelector(".goal-line") || document.querySelector(".mile-goal");
+    if(goalEl){
+      var fired = false;
+      var cols = ["#DA5327","#B28E2B","#2E77A6","#6E9142","#8C2318","#C97A8E"];
+      function burst(){
+        var wrap = document.createElement("div");
+        wrap.className = "confetti-wrap";
+        document.body.appendChild(wrap);
+        var n = 46;
+        for(var i=0;i<n;i++){
+          var c = document.createElement("div");
+          c.className = "confetti";
+          c.style.left = Math.random()*100 + "vw";
+          c.style.background = cols[i % cols.length];
+          var dur = 2.4 + Math.random()*1.8;
+          c.style.animationDuration = dur + "s";
+          c.style.animationDelay = (Math.random()*0.5) + "s";
+          if(Math.random() > 0.5) c.style.borderRadius = "50%";
+          c.style.width = (7 + Math.random()*6) + "px";
+          c.style.height = (10 + Math.random()*8) + "px";
+          wrap.appendChild(c);
+        }
+        setTimeout(function(){ wrap.remove(); }, 5200);
+      }
+      var gio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting && !fired){ fired = true; burst(); gio.disconnect(); }
+        });
+      }, { threshold: 0.5 });
+      gio.observe(goalEl);
+    }
+  }
+})();
+</script>
 </body>
 </html>
