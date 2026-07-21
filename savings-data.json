@@ -14,8 +14,8 @@
       "members": [
         { "id": "b1", "name": "Benjo",  "saved": 2250, "photo": "photos/benjo.jpg"  },
         { "id": "b2", "name": "Kitan",  "saved": 2760, "photo": "photos/kitan.jpg"  },
-        { "id": "b3", "name": "Oshie",  "saved": 2250, "photo": "photos/oshie.jpg"  },
-        { "id": "b4", "name": "Yzzie",  "saved": 5350, "photo": "photos/yzzie.jpg"  }
+        { "id": "b3", "name": "Oshie",  "saved": 4250, "photo": "photos/oshie.jpg"  },
+        { "id": "b4", "name": "Yzzie",  "saved": 5850, "photo": "photos/yzzie.jpg"  }
       ]
     },
     {
