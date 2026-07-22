@@ -23,10 +23,10 @@
       "name": "C Family",
       "color": "#1AAFD0",
       "members": [
-        { "id": "c1", "name": "Nono",   "saved": 0, "photo": "photos/nono.jpg"   },
-        { "id": "c2", "name": "Debbie", "saved": 0, "photo": "photos/debbie.jpg" },
-        { "id": "c3", "name": "Nico",   "saved": 0, "photo": "photos/nico.jpg"   },
-        { "id": "c4", "name": "Nia",    "saved": 0, "photo": "photos/nia.jpg"    }
+        { "id": "c1", "name": "Nono",   "saved": 50, "photo": "photos/nono.jpg"   },
+        { "id": "c2", "name": "Debbie", "saved": 50, "photo": "photos/debbie.jpg" },
+        { "id": "c3", "name": "Nico",   "saved": 50, "photo": "photos/nico.jpg"   },
+        { "id": "c4", "name": "Nia",    "saved": 50, "photo": "photos/nia.jpg"    }
       ]
     },
     {
@@ -48,7 +48,7 @@
       "name": "R Family",
       "color": "#F0B429",
       "members": [
-        { "id": "r1", "name": "Maw", "saved": 0, "photo": "photos/thelma.jpg" },
+        { "id": "r1", "name": "Maw", "saved": 70000, "photo": "photos/thelma.jpg" },
         { "id": "r2", "name": "Joseph", "saved": 5000, "photo": "photos/joseph.jpg" },
         { "id": "r3", "name": "Paula",  "saved": 1300, "photo": "photos/paula.jpg"  },
         { "id": "r4", "name": "Paul",   "saved": 2000, "photo": "photos/paul.jpg"   },
