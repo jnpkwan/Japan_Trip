@@ -1,949 +1,663 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Japan Trip 2027 — Savings Tracker</title>
+<title>Japan, Together — What We're Saving For</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23DA5327'/%3E%3Crect x='7' y='10' width='18' height='2.6' rx='1' fill='%23fff'/%3E%3Crect x='9' y='14' width='14' height='2' rx='1' fill='%23fff'/%3E%3Crect x='11' y='16' width='2.4' height='9' fill='%23fff'/%3E%3Crect x='18.6' y='16' width='2.4' height='9' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:           #FAF6F0;
-    --card:         #FFFFFF;
-    --border:       #E6DED4;
-    --border-hover: rgba(218,83,39,0.4);
-    --text:         #231A16;
-    --text-muted:   #6E655C;
-    --text-dim:     #9A928A;
+  :root{
+    --ink:#231a16; --paper:#faf6f0; --card:#fff; --line:#e6ded4; --mut:#6e655c; --dim:#9a928a;
+    --osaka:#DA5327; --osaka-d:#8C2318; --osaka-t:#FBEAE1;
+    --kyoto:#B28E2B; --kyoto-d:#6C4270; --kyoto-t:#F4EDDD;
+    --tokyo:#2E77A6; --tokyo-d:#1B3A5C; --tokyo-t:#E9EEF3;
+    --matcha:#6E9142; --matcha-d:#3B5A34; --matcha-t:#EBF0E6;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px}
+  .serif{font-family:var(--serif)}
 
-    /* wafū palette — matches the trip deck */
-    --coral:       #DA5327;   /* 朱 vermilion — Osaka */
-    --coral-light: #FBEAE1;
-    --sky:         #2E77A6;   /* 藍 indigo — Tokyo */
-    --sky-light:   #E9EEF3;
-    --lime:        #6E9142;   /* 抹茶 matcha — day trips */
-    --lime-light:  #EBF0E6;
-    --gold:        #B28E2B;   /* 金茶 kincha — Kyoto */
-    --gold-light:  #EFEAF0;
-  }
+  /* hero */
+  header{position:relative;overflow:hidden;padding:64px 0 46px;text-align:center;
+    background:linear-gradient(180deg,#fff 0%,var(--paper) 100%);border-bottom:1px solid var(--line)}
+  .kicker{font-size:12px;letter-spacing:3.5px;text-transform:uppercase;color:var(--osaka);font-weight:700}
+  header h1{font-family:var(--serif);font-size:58px;font-weight:700;line-height:1.02;margin:14px 0 6px;letter-spacing:-.5px;
+    background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 38%,var(--osaka) 50%,var(--ink) 62%,var(--ink) 100%);
+    background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:shimmer 5s ease-in-out infinite}
+  @keyframes shimmer{0%,100%{background-position:150% 0}50%{background-position:-50% 0}}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* countdown pill */
+  .countdown{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:10px 20px;
+    background:var(--osaka);color:#fff;border-radius:999px;box-shadow:0 8px 24px rgba(218,83,39,.28);
+    animation:cdpop .6s cubic-bezier(.34,1.56,.64,1) both .3s;opacity:0}
+  @keyframes cdpop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+  .cd-emoji{font-size:20px;animation:bob 2.6s ease-in-out infinite}
+  .cd-num{font-family:var(--serif);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+  .cd-word{font-size:13.5px;font-weight:600;letter-spacing:.2px}
+  .cd-flash{animation:cdflash .5s ease}
+  @keyframes cdflash{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  /* hype ticker */
+  .ticker{margin-top:26px;overflow:hidden;position:relative;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .ticker-track{display:inline-flex;gap:0;white-space:nowrap;animation:marquee 22s linear infinite}
+  .ticker-track span{font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--osaka);padding:0 20px;
+    text-transform:uppercase;border-right:1px solid var(--line)}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-  /* ── BACKGROUND SCENE ── */
-  .bg-scene {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+  /* confetti */
+  .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+  .confetti{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:0;
+    animation:confetti-fall linear forwards}
+  @keyframes confetti-fall{
+    0%{opacity:1;transform:translateY(-10px) rotate(0)}
+    100%{opacity:.9;transform:translateY(104vh) rotate(720deg)}
   }
+  header .dates{font-size:15px;color:var(--mut);letter-spacing:.3px}
+  .hero-stats{display:flex;justify-content:center;gap:0;margin-top:34px;flex-wrap:wrap}
+  .hstat{padding:0 26px;border-right:1px solid var(--line)}
+  .hstat:last-child{border-right:none}
+  .hstat .n{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1}
+  .hstat .l{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim);margin-top:5px}
+  .torii-bg{position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:340px;opacity:.05;pointer-events:none}
 
-  .page-wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 24px 100px;
-  }
+  section{padding:44px 0}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .sec-head h2{font-family:var(--serif);font-size:27px;font-weight:700}
+  .sec-head .num{font-family:var(--serif);font-size:15px;color:var(--dim);font-weight:400}
+  .sec-sub{color:var(--mut);font-size:14.5px;margin-bottom:26px;max-width:640px}
+  .sec-sub em{font-style:italic;color:var(--osaka);font-weight:600}
 
-  /* ── HERO ── */
-  .hero {
-    padding: 52px 0 44px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-  }
-  .hero-text { flex: 1; }
-  .hero-eyebrow {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 20px; height: 2.5px;
-    background: var(--coral);
-    border-radius: 2px;
-    display: inline-block;
-  }
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 5.5vw, 64px);
-    font-weight: 900;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-  h1 .accent { color: var(--coral); display: block; }
-  .hero-meta {
-    margin-top: 18px;
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .meta-pill {
-    background: #fff;
-    border: 1.5px solid var(--border);
-    border-radius: 100px;
-    padding: 5px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .countdown-badge {
-    background: var(--coral);
-    border-radius: 20px;
-    padding: 14px 22px;
-    color: #fff;
-    text-align: center;
-    box-shadow: 0 6px 24px rgba(218,83,39,0.35);
-    flex-shrink: 0;
-    min-width: 130px;
-  }
-  .countdown-badge .cd-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 900;
-    line-height: 1;
-    display: block;
-  }
-  .countdown-badge .cd-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    opacity: 0.85;
-    margin-top: 4px;
-  }
+  /* pitch band */
+  .pitch{background:var(--matcha-d);color:#fff;text-align:center;padding:40px 24px;border-radius:16px}
+  .pitch .big{font-family:var(--serif);font-size:34px;font-weight:700;line-height:1.15}
+  .pitch .big em{color:#CFE0B8;font-style:normal}
+  .pitch p{color:#D8E4CC;font-size:14.5px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto}
+  .pitch p em{color:#fff;font-style:italic}
+  .pitch p strong{color:#fff;font-weight:700}
 
-  /* ── STAT CARDS ── */
-  .stat-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 36px;
-  }
-  .stat-card {
-    border-radius: 20px;
-    padding: 24px 28px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-  }
-  .stat-card svg, .countdown-badge svg { width:100%; height:100%; display:block; fill:currentColor; }
-  .stat-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.18) 0%, transparent 55%);
-    pointer-events: none;
-  }
-  .stat-card.card-saved    { background: var(--coral); }
-  .stat-card.card-needed   { background: var(--sky); }
-  .stat-card.card-target   { background: #fff; border: 1.5px solid var(--border); box-shadow: 0 2px 12px rgba(110,101,92,0.08); }
+  /* route */
+  .route{display:flex;gap:14px;flex-wrap:wrap}
+  .rcity{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;position:relative;overflow:hidden}
+  .rcity::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+  .rcity.k::before{background:var(--kyoto)} .rcity.o::before{background:var(--osaka)} .rcity.t::before{background:var(--tokyo)}
+  .rcity .jp{font-family:var(--serif);font-size:13px;letter-spacing:2px;font-weight:700}
+  .rcity.k .jp{color:var(--kyoto)} .rcity.o .jp{color:var(--osaka)} .rcity.t .jp{color:var(--tokyo)}
+  .rcity h3{font-family:var(--serif);font-size:22px;font-weight:700;margin:2px 0 4px}
+  .rcity .nights{font-size:12.5px;color:var(--mut)}
+  .rcity ul{list-style:none;margin-top:12px;font-size:13px;color:var(--mut)}
+  .rcity ul li{padding:2px 0}
 
-  .stat-card-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .stat-card.card-saved .stat-card-label,
-  .stat-card.card-needed .stat-card-label { color: rgba(255,255,255,0.7); }
-  .stat-card.card-target .stat-card-label { color: var(--text-dim); }
+  /* day cards */
+  .day{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0;margin-bottom:14px;overflow:hidden}
+  .day-top{display:flex;align-items:center;gap:14px;padding:15px 22px;border-bottom:1px solid var(--line)}
+  .day-badge{flex-shrink:0;width:46px;height:46px;border-radius:11px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;color:#fff}
+  .day-badge .d{font-size:9px;letter-spacing:.5px;text-transform:uppercase;opacity:.85;line-height:1}
+  .day-badge .n{font-family:var(--serif);font-size:20px;font-weight:700;line-height:1;margin-top:1px}
+  .day-title{flex:1}
+  .day-title h3{font-family:var(--serif);font-size:18px;font-weight:700}
+  .day-title .place{font-size:12.5px;color:var(--mut)}
+  .day-cost{font-family:var(--serif);font-size:17px;font-weight:700;text-align:right}
+  .day-cost .free{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    color:var(--matcha-d);background:var(--matcha-t);padding:3px 9px;border-radius:999px}
+  .stops{display:flex;flex-wrap:wrap;gap:7px;padding:14px 22px}
+  .stop{font-size:12.5px;padding:4px 11px;background:var(--paper);border:1px solid var(--line);border-radius:999px;color:var(--ink)}
+  .stop.paid{border-color:currentColor;font-weight:600}
+  .stop .amt{font-weight:700;margin-left:5px}
+  .k .day-badge{background:var(--kyoto)} .k .stop.paid{color:var(--kyoto-d)}
+  .o .day-badge{background:var(--osaka)} .o .stop.paid{color:var(--osaka-d)}
+  .t .day-badge{background:var(--tokyo)} .t .stop.paid{color:var(--tokyo-d)}
+  .m .day-badge{background:var(--matcha)} .m .stop.paid{color:var(--matcha-d)}
+  .x .day-badge{background:var(--ink)}
+  .day-cost.kc{color:var(--kyoto-d)} .day-cost.oc{color:var(--osaka-d)} .day-cost.tc{color:var(--tokyo-d)} .day-cost.mc{color:var(--matcha-d)} .day-cost.xc{color:var(--ink)}
 
-  .stat-card-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 900;
-    line-height: 1;
-  }
-  .stat-card.card-saved .stat-card-value,
-  .stat-card.card-needed .stat-card-value { color: #fff; }
-  .stat-card.card-target .stat-card-value { color: var(--text); }
+  /* cost breakdown */
+  .cost-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:26px;align-items:start}
+  @media(max-width:720px){.cost-grid{grid-template-columns:1fr}}
+  .breakdown{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 22px}
+  .brow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .brow:last-child{border-bottom:none}
+  .brow .bar{flex:1;height:9px;background:var(--paper);border-radius:5px;overflow:hidden}
+  .brow .bar i{display:block;height:100%;border-radius:5px}
+  .brow .lbl{width:150px;font-size:13.5px}
+  .brow .lbl small{display:block;color:var(--dim);font-size:11px}
+  .brow .amt{width:78px;text-align:right;font-family:var(--serif);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+  .total-card{background:var(--ink);color:#fff;border-radius:14px;padding:24px 24px}
+  .total-card .lbl{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim)}
+  .total-card .big{font-family:var(--serif);font-size:42px;font-weight:700;line-height:1;margin:6px 0 2px}
+  .total-card .alt{font-size:13px;color:#C9BFB4;margin-top:14px;padding-top:14px;border-top:1px solid #3a2f28}
+  .total-card .alt b{color:#fff}
+  .goal-line{margin-top:16px;padding:14px 16px;background:var(--osaka);border-radius:11px;display:flex;flex-direction:column}
+  .goal-line .gl-lbl{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:#FBEAE1;font-weight:700}
+  .goal-line .gl-amt{font-family:var(--serif);font-size:32px;font-weight:700;line-height:1.05;color:#fff;margin:2px 0}
+  .goal-line .gl-sub{font-size:12px;color:#FBEAE1;line-height:1.4}
 
-  .stat-card-sub {
-    font-size: 12px;
-    font-weight: 500;
-    margin-top: 8px;
-  }
-  .stat-card.card-saved .stat-card-sub,
-  .stat-card.card-needed .stat-card-sub { color: rgba(255,255,255,0.65); }
-  .stat-card.card-target .stat-card-sub { color: var(--text-dim); }
+  /* decision */
+  .decide{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:600px){.decide{grid-template-columns:1fr}}
+  .opt{border:1.5px solid var(--line);border-radius:14px;padding:20px 22px;background:var(--card)}
+  .opt.rec{border-color:var(--matcha);background:var(--matcha-t)}
+  .opt .tag{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--dim)}
+  .opt.rec .tag{color:var(--matcha-d)}
+  .opt h3{font-family:var(--serif);font-size:21px;font-weight:700;margin:4px 0 2px}
+  .opt .price{font-family:var(--serif);font-size:26px;font-weight:700}
+  .opt p{font-size:13px;color:var(--mut);margin-top:8px}
 
-  /* Progress bar inside saved card */
-  .stat-card-bar-bg {
-    margin-top: 16px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 100px;
-    height: 8px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  }
-  .stat-card-bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    background: linear-gradient(90deg, #F2D4C4, #fff);
-    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 8px rgba(255,255,255,0.5);
-  }
+  /* milestones */
+  .miles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.miles{grid-template-columns:1fr}}
+  .mile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative}
+  .mile .step{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--osaka)}
+  .mile .amt{font-family:var(--serif);font-size:32px;font-weight:700;line-height:1;margin:6px 0 2px}
+  .mile .by{font-size:12px;color:var(--dim);margin-bottom:12px}
+  .mile .un{font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:12px}
+  .mile .do{font-size:13.5px;font-weight:700;color:var(--osaka-d);margin:2px 0 12px}
+  .mile-goal .do{color:var(--osaka-d)}
+  .mile-prize{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.3px;color:var(--kyoto-d);
+    background:var(--kyoto-t);border:1px solid var(--kyoto);border-radius:999px;padding:3px 10px;margin-bottom:12px}
+  .mile-goal .mile-prize{margin-top:4px}
+  .mile .un b{color:var(--ink)}
+  .mile-goal{background:var(--osaka-t);border-color:var(--osaka)!important;position:relative;box-shadow:0 8px 26px rgba(218,83,39,.15)}
+  .mile-goal .amt{color:var(--osaka-d)}
+  .mile-goal .goal-badge{position:absolute;top:-11px;left:22px;background:var(--osaka);color:#fff;
+    font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;padding:4px 12px;border-radius:999px}
 
-  /* ── SECTION LABEL ── */
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+  footer{text-align:center;padding:40px 24px 56px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
+  footer .serif{font-size:19px;color:var(--ink);display:block;margin-bottom:6px}
+  footer a{color:var(--osaka);text-decoration:none;font-weight:600;border-bottom:1px solid var(--osaka-t)}
+  footer a:hover{border-bottom-color:var(--osaka)}
 
-  /* ── FAMILY CARDS ── */
-  .families-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    align-items: start;
-  }
+  .inline-link{color:var(--osaka);text-decoration:none;font-weight:600;white-space:nowrap;border-bottom:1px solid var(--osaka-t)}
+  .inline-link:hover{border-bottom-color:var(--osaka)}
 
-  .family-card {
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 16px rgba(110,101,92,0.08);
-  }
-  .family-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(110,101,92,0.15);
-  }
+  .vote-banner{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;
+    background:linear-gradient(100deg,var(--osaka-t) 0%,#fff 70%);border:1.5px solid var(--osaka);
+    border-radius:14px;padding:16px 20px;margin-bottom:24px;transition:transform .15s,box-shadow .15s}
+  .vote-banner:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(218,83,39,.18)}
+  .vb-mark{flex-shrink:0;width:44px;height:44px;border-radius:11px;background:var(--osaka);
+    display:flex;align-items:center;justify-content:center}
+  .vb-mark svg{width:24px;height:24px;stroke:#fff}
+  .vb-text{flex:1;line-height:1.35}
+  .vb-text strong{display:block;font-family:var(--serif);font-size:17px;color:var(--osaka-d)}
+  .vb-text span{font-size:13px;color:var(--mut)}
+  .vb-go{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;background:var(--osaka);color:#fff;
+    font-size:13px;font-weight:700;padding:9px 15px;border-radius:999px;white-space:nowrap}
+  .vb-go svg{width:15px;height:15px;stroke:#fff}
+  @media(max-width:560px){.vote-banner{flex-wrap:wrap}.vb-text{flex-basis:calc(100% - 60px)}.vb-go{margin-left:60px}}
 
-  .family-header {
-    padding: 20px 24px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 1.5px solid var(--border);
+  .cta{text-align:center;margin-top:34px}
+  .cta a{display:inline-flex;align-items:center;gap:11px;background:var(--ink);color:#fff;text-decoration:none;
+    font-size:15px;font-weight:600;padding:16px 30px;border-radius:999px;transition:transform .15s,box-shadow .15s;
+    box-shadow:0 6px 22px rgba(35,26,22,.18)}
+  .cta a:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(35,26,22,.26)}
+  .cta a svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .cta .sub{font-size:12.5px;color:var(--dim);margin-top:11px}
+  /* ── Kid-fun layer ──────────────────────────────────────────── */
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+  .petal{position:absolute;top:-24px;font-size:16px;will-change:transform,opacity;opacity:0;
+    animation:fall linear infinite}
+  @keyframes fall{
+    0%{transform:translateY(-20px) translateX(0) rotate(0deg);opacity:0}
+    10%{opacity:.9}
+    90%{opacity:.9}
+    100%{transform:translateY(102vh) translateX(60px) rotate(420deg);opacity:0}
   }
-  .family-header-bg {
-    position: absolute;
-    inset: 0;
-    opacity: 0.07;
-  }
-  .family-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-  .family-icon svg { width: 26px; height: 26px; }
-  .family-title-block { flex: 1; position: relative; z-index: 1; }
-  .family-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1.2;
-  }
-  .family-sub {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 2px;
-    font-weight: 500;
-  }
-  .family-pct-badge {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 900;
-    line-height: 1;
-    position: relative;
-    z-index: 1;
-  }
+  header,section,footer{position:relative;z-index:2}
 
-  /* ── MEMBER ROWS ── */
-  .members-list { padding: 8px 20px 16px; }
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(32px) scale(.98);transition:opacity .55s cubic-bezier(.34,1.56,.64,1),transform .55s cubic-bezier(.34,1.56,.64,1)}
+  .reveal.in{opacity:1;transform:none}
+  .day.in .day-emoji{animation:emoji-burst .6s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes emoji-burst{0%{transform:scale(0) rotate(-40deg)}60%{transform:scale(1.4) rotate(12deg)}100%{transform:scale(1) rotate(0)}}
 
-  .member-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 8px;
-    border-radius: 16px;
-    border-bottom: 1px solid rgba(154,146,138,0.18);
-    transition: background 0.2s;
-  }
-  .member-row:last-child { border-bottom: none; }
-  .member-row:hover { background: #FAF6F0; }
+  /* hero number pop-in */
+  .hstat .n{display:inline-block;animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+  .hstat:nth-child(2) .n{animation-delay:.08s}
+  .hstat:nth-child(3) .n{animation-delay:.16s}
+  .hstat:nth-child(4) .n{animation-delay:.24s}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
 
-  /* Name — large and prominent */
-  .member-info { min-width: 0; }
-  .member-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 19px;
-    font-weight: 800;
-    color: var(--text);
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-  }
+  /* playful hovers */
+  .stop{transition:transform .18s cubic-bezier(.34,1.56,.64,1),background .18s,color .18s,border-color .18s}
+  .stop:hover{transform:translateY(-3px) scale(1.06) rotate(-1.5deg)}
+  .k .stop:hover{background:var(--kyoto-t);border-color:var(--kyoto);color:var(--kyoto-d)}
+  .o .stop:hover{background:var(--osaka-t);border-color:var(--osaka);color:var(--osaka-d)}
+  .t .stop:hover{background:var(--tokyo-t);border-color:var(--tokyo);color:var(--tokyo-d)}
+  .m .stop:hover{background:var(--matcha-t);border-color:var(--matcha);color:var(--matcha-d)}
+  .day{transition:transform .2s,box-shadow .2s}
+  .day:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(35,26,22,.10)}
+  .day:hover .day-badge{animation:wiggle .5s ease}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+  .rcity{transition:transform .2s,box-shadow .2s}
+  .rcity:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(35,26,22,.10)}
 
-  /* ── KEYFRAMES ── */
-  @keyframes float {
-    0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-    25%       { transform: translate(-50%, -50%) translateY(-5px) rotate(1.5deg); }
-    75%       { transform: translate(-50%, -50%) translateY(3px) rotate(-1deg); }
-  }
-  @keyframes float-alt {
-    0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-    30%       { transform: translate(-50%, -50%) translateY(4px) rotate(-2deg); }
-    70%       { transform: translate(-50%, -50%) translateY(-4px) rotate(1deg); }
-  }
-  @keyframes pulse-ring {
-    0%   { box-shadow: 0 3px 12px rgba(0,0,0,0.22), 0 0 0 0 rgba(255,255,255,0.6); }
-    60%  { box-shadow: 0 3px 12px rgba(0,0,0,0.22), 0 0 0 7px rgba(255,255,255,0); }
-    100% { box-shadow: 0 3px 12px rgba(0,0,0,0.22), 0 0 0 0 rgba(255,255,255,0); }
-  }
-  @keyframes shimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes bar-glow {
-    0%, 100% { box-shadow: 0 0 0px rgba(255,255,255,0); }
-    50%       { box-shadow: 0 0 10px rgba(255,255,255,0.55); }
-  }
-  @keyframes count-bounce {
-    0%, 100% { transform: scale(1); }
-    50%       { transform: scale(1.04); }
-  }
+  /* day emoji — bobbing */
+  .day-emoji{display:inline-block;margin-right:8px;font-size:19px;vertical-align:-2px;animation:bob 2.6s ease-in-out infinite}
+  .day:nth-child(odd) .day-emoji{animation-delay:.5s}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(6deg)}}
 
-  /* Progress bar with photo marker */
-  .member-bar-wrap {
-    position: relative;
-    padding: 26px 0;
-    margin: -6px 0;
-  }
-  .member-bar-track {
-    height: 12px;
-    background: rgba(154,146,138,0.16);
-    border-radius: 100px;
-    overflow: visible;
-    position: relative;
-  }
-  .member-bar-inner {
-    height: 100%;
-    border-radius: 100px;
-    overflow: hidden;
-    position: relative;
-  }
-  .member-bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-    animation: bar-glow 3s ease-in-out infinite;
-  }
+  /* goal number sparkle pulse */
+  .gl-amt{position:relative;animation:glow 2.4s ease-in-out infinite}
+  @keyframes glow{0%,100%{text-shadow:0 0 0 rgba(255,255,255,0)}50%{text-shadow:0 0 14px rgba(255,255,255,.5)}}
 
-  /* Milestone ticks on the track */
-  .ms-tick {
-    position: absolute;
-    top: -4px;
-    width: 2px;
-    height: 20px;
-    background: #9A928A;
-    opacity: 0.55;
-    border-radius: 1px;
-    transform: translateX(-50%);
-  }
-  .ms-tick::after {
-    content: attr(data-ms);
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #9A928A;
-  }
-  .ms-chips { display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: 1px; }
-  .ms-chip {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    padding: 1px 6px;
-    border-radius: 999px;
-    border: 1px solid #D9D2C7;
-    color: #9A928A;
-    background: #fff;
-  }
-  .ms-chip.hit { background: #B28E2B; border-color: #B28E2B; color: #fff; }
-  .ms-chip.won { background: #8C2318; border-color: #8C2318; color: #fff; box-shadow: 0 0 0 2px #FBEAE1; }
-  .ms-prize { font-size: 10.5px; font-weight: 700; color: #8C2318; margin-left: 4px; }
+  /* vote banner nudge to catch the eye */
+  .vote-banner .vb-go{animation:nudge 2.2s ease-in-out infinite}
+  @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 
-  .ms-legend {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    flex-wrap: wrap;
-    margin: -8px 0 18px;
-    font-size: 12.5px;
-    color: #6E655C;
-  }
-  .ms-legend b { color: #231A16; }
-  .ms-legend .ms-key {
-    font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px;
-    background: #B28E2B; color: #fff; margin-right: 5px; vertical-align: 1px;
-  }
-
-  /* Photo marker — floats gently at bar tip */
-  .bar-photo-marker {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 3px solid #fff;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.22);
-    overflow: hidden;
-    background: #eee;
-    pointer-events: none;
-    transition: left 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 800;
-    z-index: 2;
-    animation: float 4s ease-in-out infinite, pulse-ring 3.5s ease-out infinite;
-  }
-  /* Stagger float direction per every other marker */
-  .bar-photo-marker.alt {
-    animation: float-alt 4.5s ease-in-out infinite, pulse-ring 4s ease-out infinite;
-  }
-  .bar-photo-marker img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-  }
-
-  /* Stat cards animate in on load */
-  .stat-card {
-    animation: fade-up 0.6s ease both;
-  }
-  .stat-card:nth-child(1) { animation-delay: 0.05s; }
-  .stat-card:nth-child(2) { animation-delay: 0.15s; }
-  .stat-card:nth-child(3) { animation-delay: 0.25s; }
-
-  /* Stat card bar fill shimmer */
-  .stat-card-bar-fill {
-    background: linear-gradient(90deg, #F2D4C4 0%, #fff 40%, #F2D4C4 60%, #fff 100%);
-    background-size: 200% auto;
-    animation: shimmer 3s linear infinite;
-  }
-
-  /* Family cards fade-up on load */
-  .family-card {
-    animation: fade-up 0.7s ease both;
-  }
-  .family-card:nth-child(1) { animation-delay: 0.1s; }
-  .family-card:nth-child(2) { animation-delay: 0.2s; }
-  .family-card:nth-child(3) { animation-delay: 0.3s; }
-  .family-card:nth-child(4) { animation-delay: 0.4s; }
-
-  /* Countdown badge pulses */
-  .countdown-badge {
-    animation: count-bounce 4s ease-in-out infinite;
-  }
-
-  .member-right { text-align: right; flex-shrink: 0; }
-  .member-saved {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-  .member-remaining {
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 2px;
-    font-weight: 500;
-  }
-
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1.5px solid var(--border);
-    font-weight: 500;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 700px) {
-    .families-grid { grid-template-columns: 1fr; }
-    .stat-cards { grid-template-columns: 1fr; }
-    .hero { flex-direction: column; align-items: flex-start; }
-    h1 { font-size: 36px; }
-    .member-name { font-size: 15px; }
+  @media(prefers-reduced-motion:reduce){
+    .petals,.confetti-wrap{display:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    .hstat .n,.day-emoji,.gl-amt,.vote-banner .vb-go,.day:hover .day-badge,
+    header h1,.countdown,.cd-emoji,.ticker-track,.day.in .day-emoji{animation:none}
+    header h1{-webkit-text-fill-color:var(--ink);color:var(--ink)}
+    .ticker{display:none}
+    .stop:hover,.day:hover,.rcity:hover{transform:none}
   }
 </style>
 </head>
 <body>
 
-<!-- ── BACKGROUND SCENE ── -->
-<div class="bg-scene">
-  <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="skyGrad" cx="70%" cy="0%" r="60%">
-        <stop offset="0%" stop-color="#D4E0EC" stop-opacity="0.5"/>
-        <stop offset="100%" stop-color="#FAF6F0" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E3CD8F" stop-opacity="0.5"/>
-        <stop offset="100%" stop-color="#E3CD8F" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="peachGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E8C4AE" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#E8C4AE" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <ellipse cx="1100" cy="-60" rx="700" ry="500" fill="url(#skyGrad)"/>
-    <ellipse cx="1320" cy="80" rx="220" ry="220" fill="url(#sunGrad)"/>
-    <ellipse cx="200" cy="950" rx="500" ry="300" fill="url(#peachGrad)"/>
-    <!-- Fuji -->
-    <g opacity="0.07">
-      <polygon points="1200,600 1320,200 1440,600" fill="#2E77A6"/>
-      <polygon points="1240,600 1320,260 1400,600" fill="#fff"/>
-    </g>
-    <!-- Torii -->
-    <g opacity="0.06" fill="#DA5327">
-      <rect x="60" y="300" width="14" height="320" rx="4"/>
-      <rect x="160" y="300" width="14" height="320" rx="4"/>
-      <rect x="30" y="295" width="174" height="18" rx="5"/>
-      <rect x="48" y="330" width="138" height="12" rx="4"/>
-    </g>
-    <!-- Sakura petals -->
-    <g opacity="0.18">
-      <g transform="translate(980,120) rotate(15)">
-        <ellipse rx="9" ry="18" fill="#C97A8E" transform="rotate(0)"/>
-        <ellipse rx="9" ry="18" fill="#C97A8E" transform="rotate(72)"/>
-        <ellipse rx="9" ry="18" fill="#C97A8E" transform="rotate(144)"/>
-        <ellipse rx="9" ry="18" fill="#C97A8E" transform="rotate(216)"/>
-        <ellipse rx="9" ry="18" fill="#C97A8E" transform="rotate(288)"/>
-        <circle r="5" fill="#F2E4E8"/>
-      </g>
-      <g transform="translate(1080,60) rotate(-20)" opacity="0.7">
-        <ellipse rx="6" ry="12" fill="#C97A8E" transform="rotate(0)"/>
-        <ellipse rx="6" ry="12" fill="#C97A8E" transform="rotate(72)"/>
-        <ellipse rx="6" ry="12" fill="#C97A8E" transform="rotate(144)"/>
-        <ellipse rx="6" ry="12" fill="#C97A8E" transform="rotate(216)"/>
-        <ellipse rx="6" ry="12" fill="#C97A8E" transform="rotate(288)"/>
-        <circle r="3" fill="#F2E4E8"/>
-      </g>
-      <g transform="translate(1180,150) rotate(35)" opacity="0.55">
-        <ellipse rx="7" ry="14" fill="#A8657E" transform="rotate(0)"/>
-        <ellipse rx="7" ry="14" fill="#A8657E" transform="rotate(72)"/>
-        <ellipse rx="7" ry="14" fill="#A8657E" transform="rotate(144)"/>
-        <ellipse rx="7" ry="14" fill="#A8657E" transform="rotate(216)"/>
-        <ellipse rx="7" ry="14" fill="#A8657E" transform="rotate(288)"/>
-        <circle r="4" fill="#F2E4E8"/>
-      </g>
-      <ellipse cx="900" cy="80" rx="5" ry="10" fill="#C97A8E" opacity="0.5" transform="rotate(20 900 80)"/>
-      <ellipse cx="1140" cy="200" rx="4" ry="8" fill="#C97A8E" opacity="0.4" transform="rotate(-10 1140 200)"/>
-      <ellipse cx="1050" cy="170" rx="3" ry="7" fill="#A8657E" opacity="0.35" transform="rotate(45 1050 170)"/>
-      <ellipse cx="1260" cy="100" rx="4" ry="9" fill="#C97A8E" opacity="0.3" transform="rotate(-30 1260 100)"/>
-    </g>
-    <!-- Sunflower -->
-    <g transform="translate(1390,30)" opacity="0.13">
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(0)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(30)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(60)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(90)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(120)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(150)"/>
-      <circle r="12" fill="#6B4E14"/>
-    </g>
-    <!-- Waves -->
-    <g opacity="0.06">
-      <path d="M0,820 Q180,780 360,820 Q540,860 720,820 Q900,780 1080,820 Q1260,860 1440,820 L1440,900 L0,900 Z" fill="#2E77A6"/>
-      <path d="M0,850 Q180,820 360,850 Q540,880 720,850 Q900,820 1080,850 Q1260,880 1440,850 L1440,900 L0,900 Z" fill="#2E77A6" opacity="0.6"/>
-    </g>
-    <!-- Bamboo -->
-    <g opacity="0.07" fill="#6E9142">
-      <rect x="0" y="400" width="8" height="500" rx="4"/>
-      <rect x="22" y="350" width="8" height="550" rx="4"/>
-      <rect x="44" y="420" width="6" height="480" rx="3"/>
-      <ellipse cx="4" cy="430" rx="3" ry="14" transform="rotate(-30 4 430)"/>
-      <ellipse cx="4" cy="510" rx="3" ry="14" transform="rotate(25 4 510)"/>
-      <ellipse cx="26" cy="400" rx="3" ry="14" transform="rotate(-20 26 400)"/>
-      <ellipse cx="26" cy="480" rx="3" ry="14" transform="rotate(30 26 480)"/>
-      <ellipse cx="47" cy="450" rx="3" ry="12" transform="rotate(-25 47 450)"/>
-    </g>
+<header>
+  <svg class="torii-bg" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" fill="#DA5327">
+    <rect x="6" y="14" width="88" height="7" rx="2"/><rect x="12" y="24" width="76" height="5" rx="1.5"/>
+    <rect x="20" y="27" width="8" height="30"/><rect x="72" y="27" width="8" height="30"/>
   </svg>
-</div>
-
-<div class="page-wrapper">
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-text">
-      <div class="hero-eyebrow">Japan Trip · Savings Tracker</div>
-      <h1>
-        Summer in Japan
-        <span class="accent">2027</span>
-      </h1>
-      <div class="hero-meta">
-        <div class="meta-pill">🗓 May 2027</div>
-        <div class="meta-pill">👨‍👩‍👧‍👦 4 Families · <span id="totalMembers">—</span> Travelers</div>
-        <div class="meta-pill">🎯 <span id="pillTarget">₱70,000</span> per person</div>
+  <div class="wrap">
+    <div class="kicker">A Family Trip · 4 Families · 20 Travelers</div>
+    <h1>Japan, Together</h1>
+    <div class="dates">May 29 – June 5, 2027 · Kyoto · Osaka · Tokyo</div>
+    <div class="countdown" id="countdown">
+      <span class="cd-emoji">🗾</span>
+      <span class="cd-num" id="cdNum">—</span>
+      <span class="cd-word">days until we land in Japan!</span>
+    </div>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>⛩️ 27 STOPS</span><span>🐼 SEE THE PANDAS</span><span>🎡 TOKYO DISNEYSEA</span><span>🍜 REAL RAMEN</span><span>🌈 HARAJUKU CREPES</span><span>🎋 BAMBOO FOREST</span><span>🏯 GOLDEN PAVILION</span><span>🌃 OSAKA NEON</span><span>🎮 AKIHABARA</span>
+        <span>⛩️ 27 STOPS</span><span>🐼 SEE THE PANDAS</span><span>🎡 TOKYO DISNEYSEA</span><span>🍜 REAL RAMEN</span><span>🌈 HARAJUKU CREPES</span><span>🎋 BAMBOO FOREST</span><span>🏯 GOLDEN PAVILION</span><span>🌃 OSAKA NEON</span><span>🎮 AKIHABARA</span>
       </div>
     </div>
-    <div class="countdown-badge">
-      <span style="display:block;width:22px;height:22px;margin:0 auto 6px;opacity:.85"><svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="M376.45 32h-240.9A303.17 303.17 0 0 1 0 0v96c0 17.67 14.33 32 32 32h32v64H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h48v240c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V256h256v240c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V256h48c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16h-48v-64h32c17.67 0 32-14.33 32-32V0a303.17 303.17 0 0 1-135.55 32zM128 128h96v64h-96v-64zm256 64h-96v-64h96v64z"></path></svg></span>
-      <span class="cd-num" id="cdDays">—</span>
-      <div class="cd-label">Days to Go</div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">3</div><div class="l">Cities</div></div>
+      <div class="hstat"><div class="n">7</div><div class="l">Nights</div></div>
+      <div class="hstat"><div class="n">27</div><div class="l">Stops</div></div>
+      <div class="hstat"><div class="n">₱70,000</div><div class="l">Per Person</div></div>
     </div>
   </div>
+</header>
 
-  <!-- STAT CARDS -->
-  <div class="stat-cards">
-    <div class="stat-card card-saved"><span style="position:absolute;top:18px;right:20px;width:30px;height:30px;opacity:.5;color:#fff;"><svg  fill="currentColor" stroke-width="0" viewBox="0 0 576 512"   xmlns="http://www.w3.org/2000/svg"><path d="M560 224h-29.5c-8.8-20-21.6-37.7-37.4-52.5L512 96h-32c-29.4 0-55.4 13.5-73 34.3-7.6-1.1-15.1-2.3-23-2.3H256c-77.4 0-141.9 55-156.8 128H56c-14.8 0-26.5-13.5-23.5-28.8C34.7 215.8 45.4 208 57 208h1c3.3 0 6-2.7 6-6v-20c0-3.3-2.7-6-6-6-28.5 0-53.9 20.4-57.5 48.6C-3.9 258.8 22.7 288 56 288h40c0 52.2 25.4 98.1 64 127.3V496c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-48h128v48c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-80.7c11.8-8.9 22.3-19.4 31.3-31.3H560c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16zm-128 64c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zM256 96h128c5.4 0 10.7.4 15.9.8 0-.3.1-.5.1-.8 0-53-43-96-96-96s-96 43-96 96c0 2.1.5 4.1.6 6.2 15.2-3.9 31-6.2 47.4-6.2z"></path></svg></span>
-      <div class="stat-card-label">Total Saved</div>
-      <div class="stat-card-value" id="grandSaved">₱0</div>
-      <div class="stat-card-sub" id="grandPctSub">0% of group target</div>
-      <div class="stat-card-bar-bg">
-        <div class="stat-card-bar-fill" id="grandBar" style="width:0%"></div>
+<section>
+  <div class="wrap">
+    <div class="pitch">
+      <div class="big">₱52,773 gets you <em>there.</em><br>₱70,000 lets you <em>enjoy it.</em></div>
+      <p>The lower number is the floor — flights, a bed each night, food, and every park ticket, all paid. But it leaves no room for anything else. The extra ₱17,000 is the cushion that makes the trip real: travel insurance, a buffer in case hotel or park-ticket prices climb before 2027, any fees we haven't mapped yet — and then spending money for Shinsaibashi, Takeshita Street, and every market lane. <strong style="white-space:nowrap">₱70,000&nbsp;is the real target.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>The Route</h2><span class="num">three cities, one loop</span></div>
+    <div class="sec-sub">We land in Osaka, head straight to Kyoto's old streets, work back through Osaka's neon, then finish with four days in Tokyo.</div>
+    <div class="route">
+      <div class="rcity k">
+        <div class="jp">京都 · KYOTO</div><h3>Old Japan on Foot</h3><div class="nights">3 nights</div>
+        <ul><li>Nishiki Market &amp; Gion streets</li><li>Fushimi Inari torii tunnels</li><li>Arashiyama bamboo &amp; the Golden Pavilion</li></ul>
+      </div>
+      <div class="rcity o">
+        <div class="jp">大阪 · OSAKA</div><h3>Neon &amp; Street Food</h3><div class="nights">1 night</div>
+        <ul><li>Shinsaibashi shopping arcade</li><li>Dotonbori canal &amp; the Glico sign</li><li>Takoyaki, everywhere</li></ul>
+      </div>
+      <div class="rcity t">
+        <div class="jp">東京 · TOKYO</div><h3>Shopping to DisneySea</h3><div class="nights">3 nights</div>
+        <ul><li>Ueno, Akihabara, Asakusa</li><li>Harajuku, Shibuya, Shinjuku</li><li>Tokyo DisneySea finale</li></ul>
       </div>
     </div>
-    <div class="stat-card card-needed"><span style="position:absolute;top:18px;right:20px;width:30px;height:30px;opacity:.5;color:#fff;"><svg  fill="currentColor" stroke-width="0" viewBox="0 0 576 512"   xmlns="http://www.w3.org/2000/svg"><path d="M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z"></path></svg></span>
-      <div class="stat-card-label">Still Needed</div>
-      <div class="stat-card-value" id="grandRemaining">₱0</div>
-      <div class="stat-card-sub" id="totalMembersSub">across <span id="totalMembers2">—</span> travelers</div>
+  </div>
+</section>
+
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>Day by Day</h2><span class="num">every stop on the trip</span></div>
+    <div class="sec-sub">Green means the whole day is free. The few peso figures are the only admissions we pay all trip.</div>
+
+    <a class="vote-banner" href="https://jnpkwan.github.io/Japan_Trip/japan_vote_live.html#board">
+      <div class="vb-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div class="vb-text">
+        <strong>Every stop here won a family vote.</strong>
+        <span>This itinerary is the tally — see the full ranking that decided it.</span>
+      </div>
+      <div class="vb-go">View results <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+    </a>
+
+    <div class="day x">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Travel</span><span class="n">0</span></div>
+        <div class="day-title"><h3><span class="day-emoji">✈️</span>Fly to Japan</h3><div class="place">General Santos → Osaka → Kyoto</div></div>
+        <div class="day-cost xc">₱25,553</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Flight to Osaka<span class="amt">₱25,000</span></span>
+        <span class="stop paid">Airport → Kyoto<span class="amt">₱553</span></span>
+      </div>
     </div>
-    <div class="stat-card card-target"><span style="position:absolute;top:18px;right:20px;width:30px;height:30px;opacity:.5;color:#B28E2B;opacity:.35;"><svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="M255.967 23.386c19.704 15.157 49.792 21.65 82.52 27.105 21.419 3.57 43.864 6.501 65.163 9.832-7.28 1.686-14.641 3.4-21.609 4.97-21.25 4.789-41 8.38-45.967 8.321H175.8l-.168.006c-4.61.172-24.44-3.34-45.662-8.181-7.035-1.605-14.48-3.364-21.842-5.09 21.346-3.342 43.848-6.279 65.32-9.858 32.727-5.454 62.815-11.948 82.52-27.105zm55 67.228v16h-110v-16zm3.394 34a24.977 24.977 0 0 0 4.563 4.28c3.799 2.763 8.317 4.922 13.701 7.076 10.768 4.307 24.987 8.332 41.158 12.375 18.612 4.653 39.434 9.269 60.069 13.865l-50.182 8.404H128.71l-50.54-8.424c20.606-4.59 41.396-9.2 59.98-13.845 16.172-4.043 30.39-8.068 41.159-12.375 5.384-2.154 9.902-4.313 13.7-7.076a24.977 24.977 0 0 0 4.563-4.28zm28.606 62v30h-46v-30zm-64 0v30h-46v-30zm-64 0v30h-46v-30zm131.123 48c1.246 1.65 2.68 3.113 4.156 4.422 3.592 3.184 8.04 6.026 13.383 8.965 10.686 5.877 24.947 11.954 41.178 18.041 20.082 7.531 43.024 14.894 65.33 21.42l-54.914 9.152H96.263l-54.533-9.133c22.327-6.53 45.294-13.9 65.397-21.439 16.23-6.087 30.492-12.164 41.178-18.041 5.343-2.939 9.79-5.781 13.382-8.965 1.477-1.309 2.91-2.772 4.157-4.422zm28.877 80v30h-238v-30zm3.123 48c1.246 1.65 2.68 3.113 4.156 4.422 3.592 3.184 8.04 6.026 13.383 8.965 10.686 5.877 24.947 11.954 41.178 18.041 20.102 7.539 43.07 14.909 65.396 21.44l-54.533 9.132H64.71l-54.913-9.152c22.305-6.526 45.247-13.889 65.33-21.42 16.23-6.087 30.492-12.164 41.178-18.041 5.343-2.939 9.79-5.781 13.382-8.965 1.477-1.309 2.91-2.772 4.157-4.422zm60.877 80v46h-142v-46zm-160 0v46h-46v-46zm-64 0v46h-142v-46z"></path></svg></span>
-      <div class="stat-card-label">Grand Target</div>
-      <div class="stat-card-value" id="grandTarget">₱0</div>
-      <div class="stat-card-sub"><span id="subTarget">₱70,000</span> per person</div>
+
+    <div class="day k">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">1</span></div>
+        <div class="day-title"><h3><span class="day-emoji">⛩️</span>Kyoto — Old City on Foot</h3><div class="place">Gion &amp; the eastern temples</div></div>
+        <div class="day-cost"><span class="free">All free</span></div>
+      </div>
+      <div class="stops">
+        <span class="stop">Nishiki Market</span><span class="stop">Yasaka-dori</span>
+        <span class="stop">Sannenzaka / Ninenzaka</span><span class="stop">Fushimi Inari Taisha</span>
+        <span class="stop">Shirakawa Canal</span>
+      </div>
+    </div>
+
+    <div class="day m">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">2</span></div>
+        <div class="day-title"><h3><span class="day-emoji">🎋</span>Arashiyama &amp; the Golden Pavilion</h3><div class="place">Kyoto's western hills</div></div>
+        <div class="day-cost mc">₱300</div>
+      </div>
+      <div class="stops">
+        <span class="stop">Bamboo Forest</span><span class="stop">Togetsukyō Bridge</span>
+        <span class="stop paid">Kinkaku-ji<span class="amt">₱200</span></span>
+        <span class="stop paid">Local bus<span class="amt">₱100</span></span>
+      </div>
+    </div>
+
+    <div class="day o">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">3</span></div>
+        <div class="day-title"><h3><span class="day-emoji">🍜</span>Osaka — Neon Night</h3><div class="place">Kyoto → Osaka</div></div>
+        <div class="day-cost oc">₱163</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Kyoto → Osaka<span class="amt">₱163</span></span>
+        <span class="stop">Shinsaibashi</span><span class="stop">Dotonbori</span>
+      </div>
+    </div>
+
+    <div class="day t">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">4</span></div>
+        <div class="day-title"><h3><span class="day-emoji">🐼</span>Tokyo — Ueno, Akihabara, Asakusa</h3><div class="place">Osaka → Tokyo, then old &amp; new</div></div>
+        <div class="day-cost tc">₱240<span style="font-size:11px;color:var(--dim);font-weight:400"> + transfer</span></div>
+      </div>
+      <div class="stops">
+        <span class="stop">Ameyoko Market</span><span class="stop">Ueno Park</span>
+        <span class="stop paid">Ueno Zoo<span class="amt">₱240</span></span>
+        <span class="stop">Akihabara</span><span class="stop">Nakamise-dori</span>
+        <span class="stop">Sensō-ji</span><span class="stop">Don Quijote</span>
+      </div>
+    </div>
+
+    <div class="day t">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">5</span></div>
+        <div class="day-title"><h3><span class="day-emoji">🌈</span>Harajuku · Shibuya · Shinjuku</h3><div class="place">The flagship Tokyo day</div></div>
+        <div class="day-cost"><span class="free">All free</span></div>
+      </div>
+      <div class="stops">
+        <span class="stop">Takeshita Street</span><span class="stop">Shibuya Crossing</span>
+        <span class="stop">Shibuya 109</span><span class="stop">Hachikō Square</span>
+        <span class="stop">Yoyogi Park</span><span class="stop">Godzilla Head</span>
+        <span class="stop">Kabukichō</span><span class="stop">Cross Shinjuku Vision</span>
+        <span class="stop">Omoide Yokochō</span>
+      </div>
+    </div>
+
+    <div class="day t">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Day</span><span class="n">6</span></div>
+        <div class="day-title"><h3><span class="day-emoji">🎡</span>Tokyo DisneySea</h3><div class="place">The grand finale</div></div>
+        <div class="day-cost tc">₱2,725</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Tokyo DisneySea — full day<span class="amt">₱2,725</span></span>
+      </div>
+    </div>
+
+    <div class="day x">
+      <div class="day-top">
+        <div class="day-badge"><span class="d">Travel</span><span class="n">7</span></div>
+        <div class="day-title"><h3><span class="day-emoji">🛬</span>Fly Home</h3><div class="place">Tokyo → airport → General Santos</div></div>
+        <div class="day-cost xc">₱345</div>
+      </div>
+      <div class="stops">
+        <span class="stop paid">Tokyo → airport<span class="amt">₱345</span></span>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="section-label">Family Savings</div>
-  <div class="ms-legend" id="msLegend"></div>
-  <div class="families-grid" id="familiesGrid"></div>
-
-  <div class="footer">Last updated: <span id="lastUpdated">—</span></div>
-</div>
-
-<script>
-
-// Per-person savings target. Overrides trip.targetPerPerson in savings-data.json;
-// set to null to use the JSON value instead.
-const TARGET_OVERRIDE = 70000;
-
-const MILESTONES = [
-  { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30", prize: 1000, winner: "" },
-  { label: "M2", amt: 50000,  due: "end of December",  date: "2026-12-31", prize: 2000, winner: "" },
-  { label: "M3", amt: 70000,  due: "end of April",     date: "2027-04-30", prize: 2000, winner: "" },
-];
-
-// FX: pesos per 1 US dollar. Mid-market, 16 Jul 2026 — nudge this when it drifts.
-// Only affects families flagged currency:"USD" below.
-const USD_RATE = 61.70;
-
-// Families whose target differs from the default (e.g. flying from abroad).
-// Keyed by how the family name STARTS in savings-data.json (case-insensitive).
-// currency:"USD" means their `saved` values in the JSON are DOLLARS, not pesos.
-// Targets/milestones here stay in PESOS — the card converts them for display.
-const FAMILY_OVERRIDES = [
-  {
-    match: "C",              // C Family — flying from the US, higher airfare
-    currency: "USD",
-    target: 100000,
-    milestones: [
-      { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
-      { label: "M2", amt: 75000,  due: "end of December",  date: "2026-12-31" },
-      { label: "M3", amt: 100000, due: "end of April",     date: "2027-04-30" },
-    ],
-  },
-];
-function famConfig(name) {
-  const o = FAMILY_OVERRIDES.find(o => name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
-  const usd = !!(o && o.currency === "USD");
-  return o
-    ? { target: o.target, milestones: o.milestones.map((m, i) => ({ ...MILESTONES[i], ...m })),
-        rate: usd ? USD_RATE : 1, sym: usd ? "$" : null }
-    : { target: (TARGET_OVERRIDE ?? DATA.trip.targetPerPerson), milestones: MILESTONES,
-        rate: 1, sym: null };
-}
-// Format a PESO amount in the family's own currency.
-function fmtFam(pesos, cfg) {
-  if (!cfg.sym) return fmt(pesos);
-  return cfg.sym + Math.round(pesos / cfg.rate).toLocaleString('en-US');
-}
-let DATA = null;
-
-// deck icons: Osaka castle · Kyoto torii · Tokyo city · Nara deer
-const FAMILY_ICONS = [
-  `<svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="M255.95 27.11L180.6 107.614l150.7 1.168-75.35-81.674h-.003zM25 109.895v68.01l19.412 25.99h71.06l19.528-26v-68h-14v15.995h-18v-15.994H89v15.995H71v-15.994H57v15.995H39v-15.994H25zm352 0v68l19.527 26h71.06L487 177.906v-68.01h-14v15.995h-18v-15.994h-14v15.995h-18v-15.994h-14v15.995h-18v-15.994h-14zm-176 15.877V260.89h110V126.63l-110-.857zm55 20.118c8 0 16 4 16 12v32h-32v-32c0-8 8-12 16-12zM41 221.897V484.89h78V221.897H41zm352 0V484.89h78V221.897h-78zM56 241.89c4 0 8 4 8 12v32H48v-32c0-8 4-12 8-12zm400 0c4 0 8 4 8 12v32h-16v-32c0-8 4-12 8-12zm-303 37v23h-16v183h87v-55c0-24 16-36 32-36s32 12 32 36v55h87v-183h-16v-23h-14v23h-18v-23h-14v23h-18v-23h-14v23h-18v-23h-14v23h-18v-23h-14v23h-18v-23h-14v23h-18v-23h-14zm-49 43c4 0 8 4 8 12v32H96v-32c0-8 4-12 8-12zm72 0c8 0 16 4 16 12v32h-32v-32c0-8 8-12 16-12zm80 0c8 0 16 4 16 12v32h-32v-32c0-8 8-12 16-12zm80 0c8 0 16 4 16 12v32h-32v-32c0-8 8-12 16-12zm72 0c4 0 8 4 8 12v32h-16v-32c0-8 4-12 8-12zm-352 64c4 0 8 4 8 12v32H48v-32c0-8 4-12 8-12zm400 0c4 0 8 4 8 12v32h-16v-32c0-8 4-12 8-12z"></path></svg>`,
-  `<svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="M376.45 32h-240.9A303.17 303.17 0 0 1 0 0v96c0 17.67 14.33 32 32 32h32v64H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h48v240c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V256h256v240c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V256h48c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16h-48v-64h32c17.67 0 32-14.33 32-32V0a303.17 303.17 0 0 1-135.55 32zM128 128h96v64h-96v-64zm256 64h-96v-64h96v64z"></path></svg>`,
-  `<svg  fill="currentColor" stroke-width="0" viewBox="0 0 640 512"   xmlns="http://www.w3.org/2000/svg"><path d="M616 192H480V24c0-13.26-10.74-24-24-24H312c-13.26 0-24 10.74-24 24v72h-64V16c0-8.84-7.16-16-16-16h-16c-8.84 0-16 7.16-16 16v80h-64V16c0-8.84-7.16-16-16-16H80c-8.84 0-16 7.16-16 16v80H24c-13.26 0-24 10.74-24 24v360c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V216c0-13.26-10.75-24-24-24zM128 404c0 6.63-5.37 12-12 12H76c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12H76c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12H76c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm128 192c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm160 96c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12V76c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm160 288c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40zm0-96c0 6.63-5.37 12-12 12h-40c-6.63 0-12-5.37-12-12v-40c0-6.63 5.37-12 12-12h40c6.63 0 12 5.37 12 12v40z"></path></svg>`,
-  `<svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="m139.3 20.25-16.1 4.5c9.4 33.5 22.3 51.1 37 60.3 14.9 9.4 32.1 10.2 50.9 8.5 25-2.3 53.2-9.6 82 1.1 7.8 3.5 16 7.95 24.7 13.85 4.6-1.4 8.6-3.2 12.6-4.5 0 0 3.2-10.25-2-23.35-4.5-11.5-15.7-26-44-36.2l-5.6 15.6c17.4 6.4 26.8 14.3 31.6 21.8.7 1.1 1.2 2.1 1.7 3.1-3.8-2-7.7-3.8-11.5-5.2-28.1-13-50.6-13.8-68.6-15.8-9.6-1-17.7-2.2-24.4-7-6.7-4.9-11.7-13.4-16-28.2l-16 4.7c5.7 19.6 13.3 30.4 22.2 36.9 4 2.9 8.3 5 12.9 6.5-15.8.85-30.7.67-41.7-5.9-12.2-7.7-21.9-22.9-29.7-50.7zm89.5 3.6c-.9 11.2 1.1 20.3 4.4 27.7 7.7.96 14.4 1.1 21.4 2.3-5.4-6-10.2-15.2-9.2-28.8zm120.3 13.5-10.9 12.5c8.2 7.2 10.5 15.8 10.5 23.1-4.4-3.92-8.4-6.53-13.1-8.9 7.2 8.42 8.2 23.36 8.7 31.4l15.5 1.7s17.6-35.2-10.7-59.8zm-80.7 69.35c-17.5 2-26.8-2.6-32.4 13.8 0 0 18.8 27.9 68.9 27.2-2.8 11.4-1.5 19.8-1.5 29.9 0 33.6-27 62.9-86.5 62.9-30.2 0-66.9 5.4-94.9 20.5-19.9 10.7-35.47 26.2-42.36 47.7l7.81 10.9 14.95.2v61.7l-18.24 28.3 5.24 82h17.3l1.5-66c8.6-5 28.3-18 45.1-38 22.8-26.9 40.3-66 19.7-114.4l15.4-6.5c16.9 39.7 11 74.1-3.8 101.8 28.3-.9 52.6-2.7 73.2-6.1l-4.7-56.3 16.6-1.4 15.8 186.9h17.2l2.9-121.7c13.7-5.8 44.9-27.1 59.5-101.1 1.8-9 2.8-16.6 3.3-23.1 2.3-16.5 3.6-35.1 4-56.3l-24.5-7.7h75.3l7.3-16.5c-7.1.3-15.6-3.4-15.6-3.4l1.7-8h15.8l-85.5-44.3c-9.5 3.6-19.5 8.3-26.5 14-5.6-4-25-16.5-52-17zm95.5 226.6c-9.7 18.1-20.1 31.6-29.1 41.2l47.1 20.8-20.9 47.5 15 7 33.4-64.8-44.3-37.4c-.4-2.3-.9-6.8-1.2-14.3zm-153.8 50.8c-11.3.7-23.3 1.2-36.1 1.4-8.7 11.5-18.7 22.6-29.1 31.2l8.7 75h17.1v-65c7.3-6 24.9-21.3 39.4-42.6z"></path></svg>`
-];
-
-// wafū city palettes — one per family, matching the trip deck
-const CITY_PALS = [
-  { accent:'#DA5327', tint:'#FBEAE1', name:'Osaka' },
-  { accent:'#B28E2B', tint:'#EFEAF0', name:'Kyoto' },
-  { accent:'#2E77A6', tint:'#E9EEF3', name:'Tokyo' },
-  { accent:'#6E9142', tint:'#EBF0E6', name:'Day trips' },
-];
-
-const AVATAR_PALETTES = [
-  { bg: '#FBEAE1', text: '#8C2318' },
-  { bg: '#E9EEF3', text: '#1B3A5C' },
-  { bg: '#EBF0E6', text: '#3B5A34' },
-  { bg: '#EFEAF0', text: '#43304E' },
-  { bg: '#F2D4C4', text: '#B03A1E' },
-  { bg: '#E7E0D2', text: '#6E655C' },
-];
-
-function initials(name) {
-  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-}
-
-// ── Countdown — next milestone deadline, then the trip ───────────────
-function updateCountdown() {
-  const now = new Date();
-  const targets = MILESTONES
-    .map(ms => ({ label: "to " + ms.label + " · " + ms.due, date: new Date(ms.date + "T23:59:59") }))
-    .concat([{ label: "to the trip!", date: new Date('2027-05-29T00:00:00') }])
-    .sort((a, b) => a.date - b.date);
-  const next = targets.find(t => t.date > now) || targets[targets.length - 1];
-  const diff = next.date - now;
-  document.getElementById('cdDays').textContent =
-    diff <= 0 ? '0' : Math.floor(diff / 86400000).toLocaleString();
-  document.querySelector('.countdown-badge .cd-label').textContent = "days " + next.label;
-}
-updateCountdown();
-setInterval(updateCountdown, 60000);
-
-// ── Helpers ──────────────────────────────────────────────────────────
-function fmt(n) {
-  return (DATA.trip.currency || '₱') + Math.round(n).toLocaleString('en-PH');
-}
-function pct(saved, target) {
-  return Math.min(100, Math.round((saved / target) * 100));
-}
-function barColor(p, familyColor) {
-  return familyColor;   /* color = family, always; completion shown by badge */
-}
-const STAR = `<svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;fill:#B28E2B;vertical-align:-1px;margin-right:3px"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>`;
-
-// ── Build avatar HTML ─────────────────────────────────────────────────
-// Shows photo if available, initials as fallback (the img onerror handles missing files gracefully)
-// ── Build photo marker HTML for bar tip ───────────────────────────────
-function markerHTML(m, av, idx) {
-  const ini = initials(m.name);
-  const altClass = idx % 2 === 1 ? ' alt' : '';
-  if (m.photo) {
-    return `<div class="bar-photo-marker${altClass}" style="background:${av.bg}; color:${av.text}">
-      <span style="position:absolute;font-size:9px;font-weight:800">${ini}</span>
-      <img src="${m.photo}" alt="" onerror="this.style.display='none'" style="position:relative;z-index:1">
-    </div>`;
-  }
-  return `<div class="bar-photo-marker${altClass}" style="background:${av.bg}; color:${av.text}; font-size:9px">${ini}</div>`;
-}
-
-// ── Render ────────────────────────────────────────────────────────────
-function render() {
-  const defaultTarget = TARGET_OVERRIDE ?? DATA.trip.targetPerPerson;
-  let totalSaved = 0, totalTarget = 0, totalMembers = 0;
-
-  DATA.families.forEach(f => {
-    const cfg = famConfig(f.name);
-    f.members.forEach(m => {
-      totalSaved  += m.saved * cfg.rate;
-      totalTarget += cfg.target;
-      totalMembers++;
-    });
-  });
-
-  const op = pct(totalSaved, totalTarget);
-  document.getElementById('pillTarget').textContent = fmt(defaultTarget);
-  document.getElementById('subTarget').textContent  = fmt(defaultTarget);
-  document.getElementById('grandSaved').textContent     = fmt(totalSaved);
-  document.getElementById('grandTarget').textContent    = fmt(totalTarget);
-  document.getElementById('grandRemaining').textContent = fmt(Math.max(0, totalTarget - totalSaved));
-  document.getElementById('grandPctSub').textContent    = op + '% of group target';
-  document.getElementById('totalMembers').textContent   = totalMembers;
-  const tm2 = document.getElementById('totalMembers2');
-  if (tm2) tm2.textContent = totalMembers;
-  setTimeout(() => { document.getElementById('grandBar').style.width = op + '%'; }, 120);
-
-  const grid = document.getElementById('familiesGrid');
-  grid.innerHTML = '';
-
-  document.getElementById('msLegend').innerHTML = MILESTONES.map(ms =>
-    `<span><span class="ms-key">${ms.label}</span><b>${fmt(ms.amt)}</b> by ${ms.due}` +
-    (ms.prize ? ` <span class="ms-prize">🏆 ${fmt(ms.prize)} ${ms.winner ? 'won by ' + ms.winner : 'reward — first to reach ' + fmt(ms.amt)}</span>` : '') +
-    `</span>`
-  ).join('') +
-  FAMILY_OVERRIDES.map(o => {
-    const fam = DATA.families.find(f => f.name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
-    if (!fam) return '';
-    const c = famConfig(fam.name);
-    return `<span style="color:#9A928A">— ${fam.name}: ${o.milestones.map(m => fmtFam(m.amt, c)).join(' / ')} (${fmtFam(o.target, c)} goal)</span>`;
-  }).join('') +
-  `<span style="color:#9A928A">— others per traveler, of the ${fmt(defaultTarget)} goal</span>`;
-
-  // palette index per family (default: JSON order), with K↔R swap
-  const palIdx = DATA.families.map((_, i) => i % CITY_PALS.length);
-  const kI = DATA.families.findIndex(f => /^k/i.test(f.name.trim()));
-  const rI = DATA.families.findIndex(f => /^r/i.test(f.name.trim()));
-  if (kI > -1 && rI > -1) { const t = palIdx[kI]; palIdx[kI] = palIdx[rI]; palIdx[rI] = t; }
-
-  DATA.families.forEach((family, fi) => {
-    const cfg    = famConfig(family.name);
-    const target = cfg.target;
-    const msList = cfg.milestones;
-    let famSaved = 0;
-    family.members.forEach(m => famSaved += m.saved * cfg.rate);
-    const famPct = pct(famSaved, target * family.members.length);
-    const pi     = palIdx[fi];
-    const col    = CITY_PALS[pi].accent;
-    const icon   = FAMILY_ICONS[pi % FAMILY_ICONS.length];
-
-    const card = document.createElement('div');
-    card.className = 'family-card';
-    card.innerHTML = `
-      <div class="family-header">
-        <div class="family-header-bg" style="background:${col}"></div>
-        <div class="family-icon" style="background:${CITY_PALS[pi].tint}; color:${col}">${icon}</div>
-        <div class="family-title-block">
-          <div class="family-name">${family.name}</div>
-          <div class="family-sub">${family.members.length} members &nbsp;·&nbsp; ${fmtFam(famSaved, cfg)} saved</div>
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>Where Every Peso Goes</h2><span class="num">per person</span></div>
+    <div class="sec-sub">The big three — flight, hotel, food — are three-quarters of the cost. Everything you saw above adds up to less than you'd think.</div>
+    <div class="cost-grid">
+      <div class="breakdown">
+        <div class="brow"><div class="lbl">Flight <small>round trip</small></div><div class="bar"><i style="width:100%;background:var(--osaka)"></i></div><div class="amt">₱25,000</div></div>
+        <div class="brow"><div class="lbl">Hotels <small>₱2,500 × 6 nights</small></div><div class="bar"><i style="width:60%;background:var(--kyoto)"></i></div><div class="amt">₱15,000</div></div>
+        <div class="brow"><div class="lbl">Food <small>₱1,000 × 7 days</small></div><div class="bar"><i style="width:28%;background:var(--matcha)"></i></div><div class="amt">₱7,000</div></div>
+        <div class="brow"><div class="lbl">Tickets <small>Kinkaku-ji · Zoo · DisneySea</small></div><div class="bar"><i style="width:13%;background:var(--tokyo)"></i></div><div class="amt">₱3,165</div></div>
+        <div class="brow"><div class="lbl">Transport <small>trains, buses, transfers</small></div><div class="bar"><i style="width:7.5%;background:var(--osaka-d)"></i></div><div class="amt">₱1,886</div></div>
+        <div class="brow"><div class="lbl">eSIM <small>data, 8 days</small></div><div class="bar"><i style="width:3%;background:var(--dim)"></i></div><div class="amt">₱722</div></div>
+      </div>
+      <div class="total-card">
+        <div class="lbl">The floor · by bus</div>
+        <div class="big">₱52,773</div>
+        <div style="font-size:12.5px;color:#C9BFB4">Flights, beds, food, every ticket — all in. But ₱0 to spend.</div>
+        <div class="alt">By bullet train instead: <b>₱57,923</b><br><span style="font-size:12px">The one upgrade decision — see below.</span></div>
+        <div class="goal-line">
+          <span class="gl-lbl">What we actually save toward</span>
+          <span class="gl-amt">₱70,000</span>
+          <span class="gl-sub">+ ₱17,000 buffer — insurance, price changes, and spending money</span>
         </div>
-        <div class="family-pct-badge" style="color:${col}">${famPct}%</div>
       </div>
-      <div class="members-list">
-        ${family.members.map((m, mi) => {
-          const savedP = m.saved * cfg.rate;
-          const p    = pct(savedP, target);
-          const rem  = Math.max(0, target - savedP);
-          const col2 = barColor(p, col);
-          const av   = AVATAR_PALETTES[(fi * 4 + mi) % AVATAR_PALETTES.length];
-          const reached = p >= 100;
-          const ticks = msList.map(ms =>
-            `<div class="ms-tick" data-ms="${ms.label}" style="left:${Math.min(100, ms.amt / target * 100)}%"></div>`).join('');
-          const chips = `<span class="ms-chips">${msList.map(ms => {
-            const won = ms.winner && ms.winner === m.name;
-            return `<span class="ms-chip${savedP >= ms.amt ? ' hit' : ''}${won ? ' won' : ''}">${won ? '🏆 ' : ''}${ms.label}${savedP >= ms.amt ? ' ✓' : ''}</span>`;
-          }).join('')}</span>`;
+    </div>
+  </div>
+</section>
 
-          return `
-          <div class="member-row">
-            <div class="member-info">
-              <div class="member-name">${m.name}</div>
-              <div class="member-bar-wrap">
-                <div class="member-bar-track">
-                  ${ticks}
-                  <div class="member-bar-inner">
-                    <div class="member-bar-fill mbf" data-pct="${p}"
-                         style="background:${col2}; width:0%"></div>
-                  </div>
-                  ${markerHTML(m, av, fi * 10 + mi)}
-                </div>
-              </div>
-            </div>
-            <div class="member-right">
-              <div class="member-saved" style="color:${col2}">${fmtFam(savedP, cfg)}${chips}</div>
-              <div class="member-remaining">${reached ? STAR + '<span style="color:#B28E2B;font-weight:700">Goal reached!</span>' : fmtFam(rem, cfg) + ' to go'}</div>
-            </div>
-          </div>`;
-        }).join('')}
-      </div>`;
-    grid.appendChild(card);
-  });
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>The One Decision</h2><span class="num">Osaka → Tokyo</span></div>
+    <div class="sec-sub">The only real fork in the budget. The overnight bus doubles as a hotel night, which is why it's ₱5,150 cheaper per person.</div>
+    <div class="decide">
+      <div class="opt rec">
+        <div class="tag">Recommended · saves ₱5,150</div>
+        <h3>Overnight Bus 🚌</h3>
+        <div class="price">₱725</div>
+        <p>You sleep on the bus, so it replaces a hotel night. Cheapest by far — the whole trip lands at ₱52,773.</p>
+      </div>
+      <div class="opt">
+        <div class="tag">The comfort upgrade</div>
+        <h3>Bullet Train 🚄</h3>
+        <div class="price">₱3,375</div>
+        <p>Two hours, fifteen minutes in comfort — plus one more hotel night. Brings the trip to ₱57,923. Anyone can take the train and cover the difference themselves.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  // Animate bars + photo marker positions
-  setTimeout(() => {
-    document.querySelectorAll('.member-bar-wrap').forEach(wrap => {
-      const fill   = wrap.querySelector('.mbf');
-      const marker = wrap.querySelector('.bar-photo-marker');
-      const p      = parseFloat(fill.dataset.pct);
-      fill.style.width = p + '%';
-      if (marker) {
-        // clamp so marker stays visible at both ends
-        const clampedPct = Math.max(2, Math.min(98, p));
-        marker.style.left = clampedPct + '%';
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sec-head"><h2>What We're Saving For</h2><span class="num">three milestones</span></div>
+    <div class="sec-sub">Each milestone pays for a real piece of the trip. The first two get you <em>there</em>. The third — ₱70,000 — is the one that counts: it's the difference between watching from the sidelines and actually joining in.</div>
+    <div class="miles">
+      <div class="mile" style="border-top:4px solid var(--osaka)">
+        <div class="mile-prize">🏆 ₱1,000 to the first to reach it</div>
+        <div class="step">Milestone 1 · by end of September</div>
+        <div class="amt">₱15,000</div>
+        <div class="by">2026</div>
+        <div class="do">🏨 We start booking hotels</div>
+        <div class="un"><b>Every hotel night is paid.</b> ₱2,500 a night × 6 nights, exactly.</div>
+      </div>
+      <div class="mile" style="border-top:4px solid var(--kyoto)">
+        <div class="mile-prize">🏆 ₱2,000 to the first to reach it</div>
+        <div class="step">Milestone 2 · by end of December</div>
+        <div class="amt">₱50,000</div>
+        <div class="by">2026</div>
+        <div class="do">✈️ We start booking plane tickets</div>
+        <div class="un"><b>Wheels-up ready.</b> Flight, food, all transport and your eSIM — covered.</div>
+      </div>
+      <div class="mile mile-goal" style="border-top:4px solid var(--osaka)">
+        <div class="goal-badge">The real target</div>
+        <div class="mile-prize">🏆 ₱2,000 to the first to reach it</div>
+        <div class="step">Milestone 3 · by end of April</div>
+        <div class="amt">₱70,000</div>
+        <div class="by">2027</div>
+        <div class="do">🎉 Everyone's fully funded</div>
+        <div class="un"><b>Fully funded — with a safety net.</b> Every ticket paid, plus ~₱17,000 for travel insurance, price changes we can't predict yet, and real spending money.</div>
+      </div>
+    </div>
+    <div class="cta">
+      <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+        See how everyone's saving
+      </a>
+      <div class="sub">Live progress toward each milestone, family by family.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="serif">Japan, Together</span>
+  20 travelers · 4 families · one unforgettable trip · May 2027<br>
+  Costs are per person and estimated. <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">Track our progress on the savings board →</a>
+</footer>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ── drifting sakura petals ────────────────────────────────────
+  if(!reduce){
+    var box = document.getElementById("petals");
+    var glyphs = ["🌸","🌸","🌸","❀","✿"];
+    var N = 14;
+    for(var i=0;i<N;i++){
+      var p = document.createElement("div");
+      p.className = "petal";
+      p.textContent = glyphs[i % glyphs.length];
+      p.style.left = Math.random()*100 + "vw";
+      p.style.fontSize = (12 + Math.random()*10) + "px";
+      var dur = 9 + Math.random()*9;
+      p.style.animationDuration = dur + "s";
+      p.style.animationDelay = (-Math.random()*dur) + "s";
+      p.style.opacity = 0.5 + Math.random()*0.4;
+      box.appendChild(p);
+    }
+  }
+
+  // ── scroll reveal ─────────────────────────────────────────────
+  var targets = document.querySelectorAll("section, .day, .rcity, .mile, .vote-banner, .cta");
+  if(reduce || !("IntersectionObserver" in window)){
+    targets.forEach(function(t){ t.classList.add("in"); });
+  } else {
+    targets.forEach(function(t){ t.classList.add("reveal"); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    targets.forEach(function(t){ io.observe(t); });
+  }
+
+  // ── hero count-up ─────────────────────────────────────────────
+  function countUp(el){
+    var raw = el.textContent.trim();
+    var m = raw.match(/^(\D*)([\d,]+)(\D*)$/);
+    if(!m){ return; }
+    var pre = m[1], suf = m[3];
+    var target = parseInt(m[2].replace(/,/g,""), 10);
+    if(isNaN(target)){ return; }
+    var dur = 900, t0 = null;
+    function fmt(n){ return n.toLocaleString("en-US"); }
+    function step(ts){
+      if(t0===null) t0 = ts;
+      var k = Math.min((ts - t0)/dur, 1);
+      var eased = 1 - Math.pow(1-k, 3);
+      el.textContent = pre + fmt(Math.round(target*eased)) + suf;
+      if(k<1) requestAnimationFrame(step);
+      else el.textContent = pre + fmt(target) + suf;
+    }
+    requestAnimationFrame(step);
+  }
+  var stats = document.querySelectorAll(".hero-stats .n");
+  if(reduce){ /* leave as-is */ }
+  else { stats.forEach(function(el, i){ setTimeout(function(){ countUp(el); }, 120 + i*90); }); }
+
+  // ── live countdown to departure ───────────────────────────────
+  var cd = document.getElementById("cdNum");
+  if(cd){
+    var dep = new Date("2027-05-29T00:00:00");
+    var last = null;
+    function tickCountdown(){
+      var now = new Date();
+      var days = Math.max(0, Math.ceil((dep - now) / 86400000));
+      var txt = days.toLocaleString("en-US");
+      if(txt !== cd.textContent){
+        cd.textContent = txt;
+        if(last !== null && !reduce){
+          cd.classList.remove("cd-flash");
+          void cd.offsetWidth;      // restart animation
+          cd.classList.add("cd-flash");
+        }
+        last = txt;
       }
-    });
-  }, 160);
+    }
+    tickCountdown();
+    setInterval(tickCountdown, 1000 * 60 * 30);   // refresh twice an hour
+  }
 
-  const now = new Date();
-  document.getElementById('lastUpdated').textContent =
-    now.toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
-}
-
-// ── Load ─────────────────────────────────────────────────────────────
-fetch('savings-data.json')
-  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-  .then(json => { DATA = json; render(); })
-  .catch(() => {
-    document.getElementById('familiesGrid').innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
-        <div style="font-size:40px;margin-bottom:16px">⚠️</div>
-        <div style="font-family:'Playfair Display',serif;font-size:20px;color:#231A16;margin-bottom:8px">Could not load savings-data.json</div>
-        <div style="font-size:14px;color:#6E655C;line-height:1.7">Make sure <strong>savings-data.json</strong> is in the same folder as this HTML file<br>and open via a local server (e.g. <code>python3 -m http.server</code>).</div>
-      </div>`;
-  });
+  // ── confetti burst when the goal amount scrolls into view ──────
+  if(!reduce && ("IntersectionObserver" in window)){
+    var goalEl = document.querySelector(".goal-line") || document.querySelector(".mile-goal");
+    if(goalEl){
+      var fired = false;
+      var cols = ["#DA5327","#B28E2B","#2E77A6","#6E9142","#8C2318","#C97A8E"];
+      function burst(){
+        var wrap = document.createElement("div");
+        wrap.className = "confetti-wrap";
+        document.body.appendChild(wrap);
+        var n = 46;
+        for(var i=0;i<n;i++){
+          var c = document.createElement("div");
+          c.className = "confetti";
+          c.style.left = Math.random()*100 + "vw";
+          c.style.background = cols[i % cols.length];
+          var dur = 2.4 + Math.random()*1.8;
+          c.style.animationDuration = dur + "s";
+          c.style.animationDelay = (Math.random()*0.5) + "s";
+          if(Math.random() > 0.5) c.style.borderRadius = "50%";
+          c.style.width = (7 + Math.random()*6) + "px";
+          c.style.height = (10 + Math.random()*8) + "px";
+          wrap.appendChild(c);
+        }
+        setTimeout(function(){ wrap.remove(); }, 5200);
+      }
+      var gio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting && !fired){ fired = true; burst(); gio.disconnect(); }
+        });
+      }, { threshold: 0.5 });
+      gio.observe(goalEl);
+    }
+  }
+})();
 </script>
 </body>
 </html>

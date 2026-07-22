@@ -693,11 +693,18 @@ const MILESTONES = [
   { label: "M3", amt: 70000,  due: "end of April",     date: "2027-04-30", prize: 2000, winner: "" },
 ];
 
+// FX: pesos per 1 US dollar. Mid-market, 16 Jul 2026 — nudge this when it drifts.
+// Only affects families flagged currency:"USD" below.
+const USD_RATE = 61.70;
+
 // Families whose target differs from the default (e.g. flying from abroad).
 // Keyed by how the family name STARTS in savings-data.json (case-insensitive).
+// currency:"USD" means their `saved` values in the JSON are DOLLARS, not pesos.
+// Targets/milestones here stay in PESOS — the card converts them for display.
 const FAMILY_OVERRIDES = [
   {
     match: "C",              // C Family — flying from the US, higher airfare
+    currency: "USD",
     target: 100000,
     milestones: [
       { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
@@ -708,9 +715,17 @@ const FAMILY_OVERRIDES = [
 ];
 function famConfig(name) {
   const o = FAMILY_OVERRIDES.find(o => name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
+  const usd = !!(o && o.currency === "USD");
   return o
-    ? { target: o.target, milestones: o.milestones.map((m, i) => ({ ...MILESTONES[i], ...m })) }
-    : { target: (TARGET_OVERRIDE ?? DATA.trip.targetPerPerson), milestones: MILESTONES };
+    ? { target: o.target, milestones: o.milestones.map((m, i) => ({ ...MILESTONES[i], ...m })),
+        rate: usd ? USD_RATE : 1, sym: usd ? "$" : null }
+    : { target: (TARGET_OVERRIDE ?? DATA.trip.targetPerPerson), milestones: MILESTONES,
+        rate: 1, sym: null };
+}
+// Format a PESO amount in the family's own currency.
+function fmtFam(pesos, cfg) {
+  if (!cfg.sym) return fmt(pesos);
+  return cfg.sym + Math.round(pesos / cfg.rate).toLocaleString('en-US');
 }
 let DATA = null;
 
@@ -761,7 +776,7 @@ setInterval(updateCountdown, 60000);
 
 // ── Helpers ──────────────────────────────────────────────────────────
 function fmt(n) {
-  return (DATA.trip.currency || '₱') + n.toLocaleString('en-PH');
+  return (DATA.trip.currency || '₱') + Math.round(n).toLocaleString('en-PH');
 }
 function pct(saved, target) {
   return Math.min(100, Math.round((saved / target) * 100));
@@ -794,7 +809,7 @@ function render() {
   DATA.families.forEach(f => {
     const cfg = famConfig(f.name);
     f.members.forEach(m => {
-      totalSaved  += m.saved;
+      totalSaved  += m.saved * cfg.rate;
       totalTarget += cfg.target;
       totalMembers++;
     });
@@ -822,7 +837,9 @@ function render() {
   ).join('') +
   FAMILY_OVERRIDES.map(o => {
     const fam = DATA.families.find(f => f.name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
-    return fam ? `<span style="color:#9A928A">— ${fam.name}: ${o.milestones.map(m => fmt(m.amt)).join(' / ')} (${fmt(o.target)} goal)</span>` : '';
+    if (!fam) return '';
+    const c = famConfig(fam.name);
+    return `<span style="color:#9A928A">— ${fam.name}: ${o.milestones.map(m => fmtFam(m.amt, c)).join(' / ')} (${fmtFam(o.target, c)} goal)</span>`;
   }).join('') +
   `<span style="color:#9A928A">— others per traveler, of the ${fmt(defaultTarget)} goal</span>`;
 
@@ -837,7 +854,7 @@ function render() {
     const target = cfg.target;
     const msList = cfg.milestones;
     let famSaved = 0;
-    family.members.forEach(m => famSaved += m.saved);
+    family.members.forEach(m => famSaved += m.saved * cfg.rate);
     const famPct = pct(famSaved, target * family.members.length);
     const pi     = palIdx[fi];
     const col    = CITY_PALS[pi].accent;
@@ -851,14 +868,15 @@ function render() {
         <div class="family-icon" style="background:${CITY_PALS[pi].tint}; color:${col}">${icon}</div>
         <div class="family-title-block">
           <div class="family-name">${family.name}</div>
-          <div class="family-sub">${family.members.length} members &nbsp;·&nbsp; ${fmt(famSaved)} saved</div>
+          <div class="family-sub">${family.members.length} members &nbsp;·&nbsp; ${fmtFam(famSaved, cfg)} saved</div>
         </div>
         <div class="family-pct-badge" style="color:${col}">${famPct}%</div>
       </div>
       <div class="members-list">
         ${family.members.map((m, mi) => {
-          const p    = pct(m.saved, target);
-          const rem  = Math.max(0, target - m.saved);
+          const savedP = m.saved * cfg.rate;
+          const p    = pct(savedP, target);
+          const rem  = Math.max(0, target - savedP);
           const col2 = barColor(p, col);
           const av   = AVATAR_PALETTES[(fi * 4 + mi) % AVATAR_PALETTES.length];
           const reached = p >= 100;
@@ -866,7 +884,7 @@ function render() {
             `<div class="ms-tick" data-ms="${ms.label}" style="left:${Math.min(100, ms.amt / target * 100)}%"></div>`).join('');
           const chips = `<span class="ms-chips">${msList.map(ms => {
             const won = ms.winner && ms.winner === m.name;
-            return `<span class="ms-chip${m.saved >= ms.amt ? ' hit' : ''}${won ? ' won' : ''}">${won ? '🏆 ' : ''}${ms.label}${m.saved >= ms.amt ? ' ✓' : ''}</span>`;
+            return `<span class="ms-chip${savedP >= ms.amt ? ' hit' : ''}${won ? ' won' : ''}">${won ? '🏆 ' : ''}${ms.label}${savedP >= ms.amt ? ' ✓' : ''}</span>`;
           }).join('')}</span>`;
 
           return `
@@ -885,8 +903,8 @@ function render() {
               </div>
             </div>
             <div class="member-right">
-              <div class="member-saved" style="color:${col2}">${fmt(m.saved)}${chips}</div>
-              <div class="member-remaining">${reached ? STAR + '<span style="color:#B28E2B;font-weight:700">Goal reached!</span>' : fmt(rem) + ' to go'}</div>
+              <div class="member-saved" style="color:${col2}">${fmtFam(savedP, cfg)}${chips}</div>
+              <div class="member-remaining">${reached ? STAR + '<span style="color:#B28E2B;font-weight:700">Goal reached!</span>' : fmtFam(rem, cfg) + ' to go'}</div>
             </div>
           </div>`;
         }).join('')}
