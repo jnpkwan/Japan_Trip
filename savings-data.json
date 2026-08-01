@@ -15,7 +15,7 @@
         { "id": "b1", "name": "Benjo",  "saved": 2250, "photo": "photos/benjo.jpg"  },
         { "id": "b2", "name": "Kitan",  "saved": 2760, "photo": "photos/kitan.jpg"  },
         { "id": "b3", "name": "Oshie",  "saved": 4555, "photo": "photos/oshie.jpg"  },
-        { "id": "b4", "name": "Yzzie",  "saved": 5855, "photo": "photos/yzzie.jpg"  }
+        { "id": "b4", "name": "Yzzie",  "saved": 6655, "photo": "photos/yzzie.jpg"  }
       ]
     },
     {
@@ -52,7 +52,7 @@
         { "id": "r2", "name": "Joseph", "saved": 5000, "photo": "photos/joseph.jpg" },
         { "id": "r3", "name": "Paula",  "saved": 1300, "photo": "photos/paula.jpg"  },
         { "id": "r4", "name": "Paul",   "saved": 2500, "photo": "photos/paul.jpg"   },
-        { "id": "r5", "name": "Keila",  "saved": 3010, "photo": "photos/keila.jpg"  },
+        { "id": "r5", "name": "Keila",  "saved": 3310, "photo": "photos/keila.jpg"  },
         { "id": "r6", "name": "Lucas",  "saved": 1780, "photo": "photos/lucas.jpg"  }
       ]
     }
