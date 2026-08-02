@@ -51,7 +51,7 @@
         { "id": "r1", "name": "Maw", "saved": 70000, "photo": "photos/thelma.jpg" },
         { "id": "r2", "name": "Joseph", "saved": 5000, "photo": "photos/joseph.jpg" },
         { "id": "r3", "name": "Paula",  "saved": 1300, "photo": "photos/paula.jpg"  },
-        { "id": "r4", "name": "Paul",   "saved": 2500, "photo": "photos/paul.jpg"   },
+        { "id": "r4", "name": "Paul",   "saved": 3500, "photo": "photos/paul.jpg"   },
         { "id": "r5", "name": "Keila",  "saved": 3310, "photo": "photos/keila.jpg"  },
         { "id": "r6", "name": "Lucas",  "saved": 1780, "photo": "photos/lucas.jpg"  }
       ]
