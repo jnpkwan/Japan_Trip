@@ -23,10 +23,10 @@
       "name": "C Family",
       "color": "#1AAFD0",
       "members": [
-        { "id": "c1", "name": "Nono",   "saved": 50, "photo": "photos/nono.jpg"   },
-        { "id": "c2", "name": "Debbie", "saved": 50, "photo": "photos/debbie.jpg" },
-        { "id": "c3", "name": "Nico",   "saved": 50, "photo": "photos/nico.jpg"   },
-        { "id": "c4", "name": "Nia",    "saved": 50, "photo": "photos/nia.jpg"    }
+        { "id": "c1", "name": "Nono",   "saved": 300, "photo": "photos/nono.jpg"   },
+        { "id": "c2", "name": "Debbie", "saved": 300, "photo": "photos/debbie.jpg" },
+        { "id": "c3", "name": "Nico",   "saved": 300, "photo": "photos/nico.jpg"   },
+        { "id": "c4", "name": "Nia",    "saved": 300, "photo": "photos/nia.jpg"    }
       ]
     },
     {
