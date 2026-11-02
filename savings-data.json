@@ -50,7 +50,7 @@
       "members": [
         { "id": "r1", "name": "Maw", "saved": 70000, "photo": "photos/thelma.jpg" },
         { "id": "r2", "name": "Joseph", "saved": 15000, "photo": "photos/joseph.jpg" },
-        { "id": "r3", "name": "Paula",  "saved": 1300, "photo": "photos/paula.jpg"  },
+        { "id": "r3", "name": "Paula",  "saved": 15000, "photo": "photos/paula.jpg"  },
         { "id": "r4", "name": "Paul",   "saved": 15000, "photo": "photos/paul.jpg"   },
         { "id": "r5", "name": "Keila",  "saved": 15000, "photo": "photos/keila.jpg"  },
         { "id": "r6", "name": "Lucas",  "saved": 15480, "photo": "photos/lucas.jpg"  }
