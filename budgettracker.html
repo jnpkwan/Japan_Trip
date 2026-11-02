@@ -640,7 +640,7 @@
         <span class="accent">2027</span>
       </h1>
       <div class="hero-meta">
-        <div class="meta-pill">🗓 May 2027</div>
+        <div class="meta-pill">🗓 June 2–9, 2027</div>
         <div class="meta-pill">👨‍👩‍👧‍👦 4 Families · <span id="totalMembers">—</span> Travelers</div>
         <div class="meta-pill">🎯 <span id="pillTarget">₱70,000</span> per person</div>
       </div>
@@ -763,7 +763,7 @@ function updateCountdown() {
   const now = new Date();
   const targets = MILESTONES
     .map(ms => ({ label: "to " + ms.label + " · " + ms.due, date: new Date(ms.date + "T23:59:59") }))
-    .concat([{ label: "to the trip!", date: new Date('2027-05-29T00:00:00') }])
+    .concat([{ label: "to the trip!", date: new Date('2027-06-02T00:00:00') }])
     .sort((a, b) => a.date - b.date);
   const next = targets.find(t => t.date > now) || targets[targets.length - 1];
   const diff = next.date - now;

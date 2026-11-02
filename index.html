@@ -134,6 +134,9 @@
   .total-card .big{font-family:var(--serif);font-size:42px;font-weight:700;line-height:1;margin:6px 0 2px}
   .total-card .alt{font-size:13px;color:#C9BFB4;margin-top:14px;padding-top:14px;border-top:1px solid #3a2f28}
   .total-card .alt b{color:#fff}
+  .total-card .tc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px solid #3a2f28;font-size:13.5px;color:#C9BFB4}
+  .total-card .tc-row b{font-family:var(--serif);font-size:20px;color:#fff;font-variant-numeric:tabular-nums}
+  .total-card .lbl{display:block;margin-bottom:4px}
   .goal-line{margin-top:16px;padding:14px 16px;background:var(--osaka);border-radius:11px;display:flex;flex-direction:column}
   .goal-line .gl-lbl{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:#FBEAE1;font-weight:700}
   .goal-line .gl-amt{font-family:var(--serif);font-size:32px;font-weight:700;line-height:1.05;color:#fff;margin:2px 0}
@@ -298,7 +301,7 @@
   <div class="wrap">
     <div class="kicker">A Family Trip · 4 Families · 20 Travelers</div>
     <h1>Japan, Together</h1>
-    <div class="dates">May 29 – June 5, 2027 · Kyoto · Osaka · Tokyo</div>
+    <div class="dates">June 2 – 9, 2027 · Kyoto · Osaka · Tokyo</div>
     <div class="countdown" id="countdown">
       <span class="cd-emoji">🗾</span>
       <span class="cd-num" id="cdNum">—</span>
@@ -322,8 +325,8 @@
 <section>
   <div class="wrap">
     <div class="pitch">
-      <div class="big">₱52,773 gets you <em>there.</em><br>₱70,000 lets you <em>enjoy it.</em></div>
-      <p>The lower number is the floor — flights, a bed each night, food, and every park ticket, all paid. But it leaves no room for anything else. The extra ₱17,000 is the cushion that makes the trip real: travel insurance, a buffer in case hotel or park-ticket prices climb before 2027, any fees we haven't mapped yet — and then spending money for Shinsaibashi, Takeshita Street, and every market lane. <strong style="white-space:nowrap">₱70,000&nbsp;is the real target.</strong></p>
+      <div class="big">₱50,000 gets you <em>there.</em><br>₱70,000 lets you <em>enjoy it.</em></div>
+      <p>The first ₱50,000 books the trip — hotels at Milestone 1, plane tickets at Milestone 2. The last ₱20,000 covers everything else once you land: food, park tickets, trains, your eSIM, and pocket money for Shinsaibashi, Takeshita Street, and every market lane. <strong style="white-space:nowrap">₱70,000&nbsp;is the real target.</strong></p>
     </div>
   </div>
 </section>
@@ -482,14 +485,14 @@
         <div class="brow"><div class="lbl">eSIM <small>data, 8 days</small></div><div class="bar"><i style="width:3%;background:var(--dim)"></i></div><div class="amt">₱722</div></div>
       </div>
       <div class="total-card">
-        <div class="lbl">The floor · by bus</div>
-        <div class="big">₱52,773</div>
-        <div style="font-size:12.5px;color:#C9BFB4">Flights, beds, food, every ticket — all in. But ₱0 to spend.</div>
-        <div class="alt">By bullet train instead: <b>₱57,923</b><br><span style="font-size:12px">The one upgrade decision — see below.</span></div>
+        <div class="lbl">Three milestones · per person</div>
+        <div class="tc-row"><span>M1 · Hotels</span><b>₱15,000</b></div>
+        <div class="tc-row"><span>M2 · Plane tickets</span><b>₱50,000</b></div>
+        <div class="tc-row"><span>M3 · Everything else</span><b>₱70,000</b></div>
         <div class="goal-line">
           <span class="gl-lbl">What we actually save toward</span>
           <span class="gl-amt">₱70,000</span>
-          <span class="gl-sub">+ ₱17,000 buffer — insurance, price changes, and spending money</span>
+          <span class="gl-sub">Hotels, flights, and everything else — all covered</span>
         </div>
       </div>
     </div>
@@ -505,13 +508,13 @@
         <div class="tag">Recommended · saves ₱5,150</div>
         <h3>Overnight Bus 🚌</h3>
         <div class="price">₱725</div>
-        <p>You sleep on the bus, so it replaces a hotel night. Cheapest by far — the whole trip lands at ₱52,773.</p>
+        <p>You sleep on the bus, so it replaces a hotel night. Cheapest by far.</p>
       </div>
       <div class="opt">
         <div class="tag">The comfort upgrade</div>
         <h3>Bullet Train 🚄</h3>
         <div class="price">₱3,375</div>
-        <p>Two hours, fifteen minutes in comfort — plus one more hotel night. Brings the trip to ₱57,923. Anyone can take the train and cover the difference themselves.</p>
+        <p>Two hours, fifteen minutes in comfort — plus one more hotel night. Anyone can take the train and cover the ₱5,150 difference themselves.</p>
       </div>
     </div>
   </div>
@@ -536,7 +539,7 @@
         <div class="amt">₱50,000</div>
         <div class="by">2026</div>
         <div class="do">✈️ We start booking plane tickets</div>
-        <div class="un"><b>Wheels-up ready.</b> Flight, food, all transport and your eSIM — covered.</div>
+        <div class="un"><b>Every plane ticket is paid.</b> Your round-trip flight, booked and locked.</div>
       </div>
       <div class="mile mile-goal" style="border-top:4px solid var(--osaka)">
         <div class="goal-badge">The real target</div>
@@ -544,8 +547,8 @@
         <div class="step">Milestone 3 · by end of April</div>
         <div class="amt">₱70,000</div>
         <div class="by">2027</div>
-        <div class="do">🎉 Everyone's fully funded</div>
-        <div class="un"><b>Fully funded — with a safety net.</b> Every ticket paid, plus ~₱17,000 for travel insurance, price changes we can't predict yet, and real spending money.</div>
+        <div class="do">🎒 Everything else</div>
+        <div class="un"><b>Everyone's fully funded.</b> The last ₱20,000 covers food, park tickets, transport, your eSIM, and pocket money.</div>
       </div>
     </div>
     <div class="cta">
@@ -560,7 +563,7 @@
 
 <footer>
   <span class="serif">Japan, Together</span>
-  20 travelers · 4 families · one unforgettable trip · May 2027<br>
+  20 travelers · 4 families · one unforgettable trip · June 2027<br>
   Costs are per person and estimated. <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">Track our progress on the savings board →</a>
 </footer>
 
@@ -629,7 +632,7 @@
   // ── live countdown to departure ───────────────────────────────
   var cd = document.getElementById("cdNum");
   if(cd){
-    var dep = new Date("2027-05-29T00:00:00");
+    var dep = new Date("2027-06-02T00:00:00");
     var last = null;
     function tickCountdown(){
       var now = new Date();
