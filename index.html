@@ -460,6 +460,35 @@
   .pcard.next .pc-tag{background:var(--ink);color:#fff;border-color:var(--ink);animation:bob2 1.6s ease-in-out infinite}
   .pcard.done .pc-tag{background:var(--kyoto-t);color:var(--kyoto-d);border-color:var(--kyoto)}
 
+  /* peeking shiba */
+  .peek{position:fixed;top:42%;right:0;z-index:55;width:130px;pointer-events:none;
+    transform:translateX(120%) rotate(-22deg);transform-origin:100% 50%;transition:transform .6s var(--spring)}
+  .peek.left{right:auto;left:0;transform:translateX(-120%) rotate(22deg);transform-origin:0 50%}
+  .peek.left .peek-dog svg{transform:scaleX(-1)}
+  .peek.in{transform:translateX(36%) rotate(-22deg)}
+  .peek.left.in{transform:translateX(-36%) rotate(22deg)}
+  .peek-dog svg{display:block;width:130px;height:auto;filter:drop-shadow(0 6px 10px rgba(27,43,74,.22))}
+  .peek.hop .peek-dog{animation:dogjump .55s var(--spring) 2}
+  @keyframes dogjump{0%,100%{transform:none}50%{transform:translate(-14px,-16px) rotate(-8deg)}}
+  .peek.left.hop .peek-dog{animation-name:dogjumpL}
+  @keyframes dogjumpL{0%,100%{transform:none}50%{transform:translate(14px,-16px) rotate(8deg)}}
+  .peek .paw{transform-origin:16px 104px;animation:wave2 .5s ease-in-out infinite alternate}
+  @keyframes wave2{from{transform:rotate(-12deg)}to{transform:rotate(14deg) translateY(-4px)}}
+  .blink{transform-origin:60px 61px;animation:blink 3.2s infinite}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+  .peek .eyes-h,.peek .eyes-w,.peek .mouth-o{display:none}
+  .peek.happy .eyes-n{display:none} .peek.happy .eyes-h{display:inline}
+  .peek.wow .eyes-n{display:none} .peek.wow .eyes-w{display:inline} .peek.wow .mouth-n{display:none} .peek.wow .mouth-o{display:inline}
+  .peek-bubble{position:absolute;top:-10px;right:calc(100% - 20px);max-width:180px;width:max-content;background:#fff;color:var(--ink);
+    font-size:15px;font-weight:900;line-height:1.3;padding:9px 13px;border-radius:16px;box-shadow:0 8px 22px rgba(27,43,74,.2);
+    transform:rotate(22deg) scale(0);transform-origin:100% 100%;transition:transform .35s var(--spring)}
+  .peek-bubble::after{content:"";position:absolute;right:-6px;bottom:12px;border:8px solid transparent;border-left-color:#fff;border-right:0}
+  .peek.left .peek-bubble{right:auto;left:calc(100% - 20px);transform:rotate(-22deg) scale(0);transform-origin:0 100%}
+  .peek.left .peek-bubble::after{right:auto;left:-6px;border-left:0;border-right:8px solid #fff;border-top-color:transparent;border-bottom-color:transparent}
+  .peek.talk .peek-bubble{transform:rotate(22deg) scale(1)}
+  .peek.left.talk .peek-bubble{transform:rotate(-22deg) scale(1)}
+  @media(max-width:520px){.peek,.peek-dog svg{width:104px}.peek-bubble{font-size:13.5px;max-width:150px}}
+
   /* fun layer */
   .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
   .confetti{position:absolute;top:-14px;opacity:0;border-radius:2px;animation:confetti-fall linear forwards}
@@ -469,7 +498,7 @@
 
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
-    .confetti-wrap,.train,.cloud,.r-ride{display:none}
+    .confetti-wrap,.train,.cloud,.r-ride,.peek{display:none}
     .reveal,.plus,.stop,.mem,.me,.stampc,.g-prize,.capsule,.slot,.pcard,.ticket,.stamp,.t-bonus,.t-dots i,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
     .tile.new{flex-grow:1;opacity:1;margin:0;box-shadow:inset 0 0 0 3px var(--sun)}
   }
@@ -735,6 +764,30 @@
     Costs are per person and estimated. <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">Savings board →</a>
   </footer>
 </main>
+
+<!-- Peeking shiba: pops in from the side when you twist the gacha -->
+<div class="peek" id="peek" aria-live="polite">
+  <div class="peek-bubble" id="peekSay"></div>
+  <div class="peek-dog">
+    <svg viewBox="0 0 120 124" aria-hidden="true">
+      <path d="M20 46 L26 6 L54 30 Z" fill="#E8913A"/><path d="M27 38 L30 15 L46 30 Z" fill="#FFC9A8"/>
+      <path d="M100 46 L94 6 L66 30 Z" fill="#E8913A"/><path d="M93 38 L90 15 L74 30 Z" fill="#FFC9A8"/>
+      <ellipse cx="60" cy="64" rx="48" ry="43" fill="#E8913A"/>
+      <path d="M18 70 Q26 108 60 110 Q94 108 102 70 Q90 84 76 78 Q66 72 60 74 Q54 72 44 78 Q30 84 18 70 Z" fill="#FFF6EC"/>
+      <ellipse cx="42" cy="44" rx="6" ry="3.5" fill="#FFF6EC"/><ellipse cx="78" cy="44" rx="6" ry="3.5" fill="#FFF6EC"/>
+      <g class="eyes-n"><g class="blink"><ellipse cx="42" cy="61" rx="5.5" ry="7" fill="#1B2B4A"/><ellipse cx="78" cy="61" rx="5.5" ry="7" fill="#1B2B4A"/>
+        <circle cx="44" cy="58" r="2" fill="#fff"/><circle cx="80" cy="58" r="2" fill="#fff"/></g></g>
+      <g class="eyes-h" fill="none" stroke="#1B2B4A" stroke-width="3.5" stroke-linecap="round"><path d="M35 63 Q42 54 49 63"/><path d="M71 63 Q78 54 85 63"/></g>
+      <g class="eyes-w"><circle cx="42" cy="61" r="8" fill="#fff" stroke="#1B2B4A" stroke-width="2.5"/><circle cx="42" cy="62" r="4" fill="#1B2B4A"/>
+        <circle cx="78" cy="61" r="8" fill="#fff" stroke="#1B2B4A" stroke-width="2.5"/><circle cx="78" cy="62" r="4" fill="#1B2B4A"/></g>
+      <ellipse cx="30" cy="80" rx="8" ry="5" fill="#FF8A8F" opacity=".55"/><ellipse cx="90" cy="80" rx="8" ry="5" fill="#FF8A8F" opacity=".55"/>
+      <ellipse cx="60" cy="80" rx="6.5" ry="5" fill="#1B2B4A"/>
+      <path class="mouth-n" d="M60 85 Q60 93 51 93 M60 85 Q60 93 69 93" fill="none" stroke="#1B2B4A" stroke-width="2.6" stroke-linecap="round"/>
+      <g class="mouth-o"><ellipse cx="60" cy="94" rx="7" ry="8" fill="#1B2B4A"/><ellipse cx="60" cy="98" rx="4.5" ry="3.5" fill="#FF8A8F"/></g>
+      <ellipse class="paw" cx="16" cy="104" rx="12" ry="9" fill="#FFF6EC" stroke="#E8913A" stroke-width="3"/>
+    </svg>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1042,6 +1095,33 @@
     }, t + 650));
   }
 
+  // ── Peeking shiba ────────────────────────────────────────────
+  var peekEl = $("peek"), peekT = [];
+  var LINES = {
+    twist:  ["Ooh, what's inside?! 👀", "Twist it! Twist it!", "I hear rattling…", "Gacha gacha gacha!", "Ooh, ooh, ooh!"],
+    drop:   ["Tap it, tap it! 👇", "Open it! Open it!", "Quick, open it!"],
+    common: ["Nice one! Into the album!", "Ooh, I like that one!", "Yay! A new friend!"],
+    dbl:    ["A double! Keep twisting!", "Two of those? Lucky you!", "Hehe, a twin!"],
+    lucky:  ["🍀 Lucky streak! Next one's NEW!"],
+    rare:   ["WHOA! A rare one! ★", "Rare!! So shiny!"],
+    superr: ["NO WAY!!! THE GOLDEN CAT!!! ✨"]
+  };
+  function pickLine(k){ var a = LINES[k]; return a[Math.floor(Math.random() * a.length)]; }
+  function peek(line, mood, ms){
+    if(reduce) return;
+    peekT.forEach(clearTimeout); peekT = [];
+    var wasIn = peekEl.classList.contains("in");
+    if(!wasIn) peekEl.classList.toggle("left", Math.random() < 0.5);
+    peekEl.classList.remove("happy", "wow", "hop", "talk");
+    if(mood) peekEl.classList.add(mood);
+    peekEl.classList.add("in");
+    if(!wasIn){ tone(392, 0, 0.12, "sine", 0.07); tone(587, 0.09, 0.14, "sine", 0.07); }
+    peekT.push(setTimeout(function(){ $("peekSay").textContent = line; peekEl.classList.add("talk"); }, wasIn ? 60 : 380));
+    if(mood) peekT.push(setTimeout(function(){ void peekEl.offsetWidth; peekEl.classList.add("hop"); }, 400));
+    peekT.push(setTimeout(function(){ peekEl.classList.remove("talk"); }, (ms || 2600)));
+    peekT.push(setTimeout(function(){ peekEl.classList.remove("in", "hop"); }, (ms || 2600) + 300));
+  }
+
   // ── Gachapon ─────────────────────────────────────────────────
   var RAR = {
     common: { lbl: "Common",     c: "var(--tokyo)",  t: "var(--tokyo-t)",  w: 10 },
@@ -1133,6 +1213,7 @@
     mach.classList.remove("shake"); void mach.offsetWidth; mach.classList.add("shake");
     for(var i = 0; i < 6; i++) tone(1400 - i*80, i*0.14, 0.035, "square", 0.025);
     pending = pickToy();
+    peek(pickLine("twist"), null, 1600);
     var R = RAR[pending.r];
     setTimeout(function(){
       cap.style.setProperty("--c", R.c);
@@ -1140,6 +1221,7 @@
       setTimeout(thud, reduce ? 0 : 480);
       gBusy = false;
       $("gMsg").innerHTML = "A capsule dropped! Tap it to open 👇";
+      peek(pickLine("drop"), null, 4000);
       renderGacha();
     }, reduce ? 0 : 1000);
   });
@@ -1153,6 +1235,10 @@
     lastNew = isNew ? t.id : null;
     setTimeout(function(){ cap.hidden = true; cap.classList.remove("open", "drop"); }, 600);
     showPrize(t, isNew);
+    if(t.r === "superr") peek(pickLine("superr"), "wow", 4200);
+    else if(t.r === "rare") peek(pickLine("rare"), "wow", 3200);
+    else if(!isNew && lucky()) peek(pickLine("lucky"), "happy", 3200);
+    else peek(pickLine(isNew ? "common" : "dbl"), "happy", 2800);
     if(t.r === "common") [784, 1047].forEach(function(f, i){ tone(f, i*0.1, 0.18, "triangle", 0.08); });
     else fanfare();
     renderGacha(); lastNew = null;
