@@ -363,35 +363,6 @@
   .stairs.personal .st.next .bar{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--c) 45%,#fff),0 0 0 3px var(--card),0 0 0 5px var(--ink)}
   .stairs.personal .st .bar .bd-pill{background:#fff}
 
-  /* race */
-  .race{padding:16px 14px}
-  .r-scale{display:grid;grid-template-columns:22px 96px 1fr 46px;gap:8px;margin-bottom:4px}
-  .r-scale .sc{position:relative;height:14px}
-  .r-scale .sc span{position:absolute;transform:translateX(-50%);font-size:10px;font-weight:900;color:var(--dim)}
-  .lane{display:grid;grid-template-columns:22px 96px 1fr 46px;align-items:center;gap:8px;padding:4px 6px;margin:0 -6px;border-radius:14px;cursor:pointer;
-    transition:background .2s}
-  .lane:hover{background:var(--paper)}
-  .lane.me-lane{background:var(--sun-t);box-shadow:0 0 0 2px var(--sun)}
-  .lane .rk{font-size:13px;font-weight:900;color:var(--dim);text-align:right}
-  .lane .ln{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .lane .tr{position:relative;height:32px;border-radius:999px;background:repeating-linear-gradient(90deg,var(--paper) 0 14px,#EAF2F6 14px 28px)}
-  .lane .tick{position:absolute;top:4px;bottom:4px;width:2px;margin-left:-1px;background:rgba(27,43,74,.12)}
-  .lane .fin{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:17px}
-  .runner{position:absolute;top:50%;left:4%;transform:translate(-50%,-50%);transition:left 1.8s cubic-bezier(.2,.8,.2,1);z-index:2}
-  .runner .av{width:28px;height:28px;border:2px solid #fff;box-shadow:0 2px 6px rgba(27,43,74,.25)}
-  .race.go .runner .av{animation:runbob .25s ease-in-out 7}
-  @keyframes runbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) rotate(-6deg)}}
-  .lane.lead .runner::after{content:"👑";position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:14px}
-  .runner.wig .av{animation:wiggle .5s ease}
-  .lane .pc{font-size:13px;font-weight:900;text-align:right}
-  .race-key{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;font-weight:800;color:var(--mut)}
-  .race-key span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--c)}
-  @media(max-width:560px){
-    .r-scale,.lane{grid-template-columns:18px 64px 1fr 38px;gap:6px}
-    .lane .ln,.lane .pc{font-size:11.5px}
-    .me-pct{font-size:30px}.me-name{font-size:18px}
-  }
-
   /* gachapon */
   .gacha{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:start}
   @media(max-width:700px){.gacha{grid-template-columns:1fr}}
@@ -572,15 +543,6 @@
         </div>
       </div>
       <div class="tix-note">Both tickets go to Japan. <span>The bigger one just stays longer.</span></div>
-    </div>
-  </section>
-
-  <!-- Race to Japan -->
-  <section style="padding-top:8px" id="raceSec" hidden>
-    <div class="wrap">
-      <div class="sec-head"><h2>Race to Japan 🏁</h2><span class="sub">all <span id="raceCount"></span> travelers</span></div>
-      <div class="sec-sub">Everyone's racing to the full trip. Tap your own lane.</div>
-      <div class="panel race" id="race"></div>
     </div>
   </section>
 
@@ -920,7 +882,6 @@
       });
       dataState = people.length ? "ok" : "empty";
       if(fam) renderWho();
-      buildRace();
     })
     .catch(function(err){
       dataState = "fail";
@@ -943,7 +904,7 @@
     var saved = null;
     try { saved = localStorage.getItem("jt-me-" + famKey); } catch(e){}
     var pick = mine.filter(function(p){ return p.name === saved; })[0];
-    if(pick) selectMe(pick, true); else { me = null; $("meCard").hidden = true; markLanes(); }
+    if(pick) selectMe(pick, true); else { me = null; $("meCard").hidden = true; }
   }
   $("memChips").addEventListener("click", function(e){
     var b = e.target.closest(".mem"); if(!b) return;
@@ -956,7 +917,7 @@
     me = null;
     try { localStorage.removeItem("jt-me-" + famKey); } catch(e){}
     document.querySelectorAll(".mem").forEach(function(x){ x.classList.remove("on"); });
-    $("meCard").hidden = true; markLanes(); renderGacha(); climb();
+    $("meCard").hidden = true; renderGacha(); climb();
   }
 
   function selectMe(p, quiet){
@@ -965,7 +926,7 @@
     try { localStorage.setItem("jt-me-" + famKey, p.name); } catch(e){}
     document.querySelectorAll(".mem").forEach(function(x){ x.classList.toggle("on", decodeURIComponent(x.dataset.n) === p.name); });
     renderMeCard(p);
-    markLanes(); renderGacha();
+    renderGacha();
     if(!quiet) thud();
     personalClimb(p, quiet);
   }
@@ -1037,58 +998,6 @@
       else if(v >= MAIN_TRIP){ burst(24); fanfare(); }
     }, t + 650));
   }
-
-  // ── Race to Japan ─────────────────────────────────────────────
-  var raceBuilt = false, raceSeen = false;
-  function lanePos(pct){ return 4 + Math.min(100, pct) * 0.84; }   // keep runners inside the track, 🗾 at the end
-  function buildRace(){
-    if(!people.length) return;
-    $("raceSec").hidden = false;
-    $("raceCount").textContent = people.length;
-    var goalOf = function(p){ return FAMILIES[p.fk].goal; };
-    var rows = people.map(function(p){ return { p: p, pct: p.p === null ? -1 : Math.min(100, p.p / goalOf(p) * 100) }; })
-                     .sort(function(a, b){ return b.pct - a.pct; });
-    var ticks = [15000, 50000, 70000].map(function(a){ return a / 85000 * 100; });
-    var html = '<div class="r-scale"><span></span><span></span><div class="sc">' +
-               ticks.map(function(t, i){ return '<span style="left:' + lanePos(t) + '%">M' + (i+1) + '</span>'; }).join("") +
-               '<span style="left:' + lanePos(100) + '%">M4</span></div><span></span></div>';
-    var lastPct = null, lastRank = 0;
-    rows.forEach(function(r, i){
-      var rank = r.pct === lastPct ? lastRank : i + 1; lastPct = r.pct; lastRank = rank;
-      html += '<div class="lane' + (rank === 1 && r.pct > 0 ? " lead" : "") + '" data-n="' + encodeURIComponent(r.p.name) + '" data-f="' + r.p.fk + '">' +
-              '<span class="rk num">' + rank + '</span><span class="ln">' + r.p.name + '</span>' +
-              '<div class="tr">' + ticks.map(function(t){ return '<i class="tick" style="left:' + lanePos(t) + '%"></i>'; }).join("") +
-              '<span class="fin">🗾</span><span class="runner" data-x="' + lanePos(Math.max(0, r.pct)) + '">' + avatar(r.p) + '</span></div>' +
-              '<span class="pc num">' + (r.pct < 0 ? "—" : r.pct >= 100 ? "🎉" : Math.round(r.pct) + "%") + '</span></div>';
-    });
-    html += '<div class="race-key">' + Object.keys(FAMILIES).map(function(k){
-      return '<span style="--c:' + FAMILIES[k].color + '">' + FAMILIES[k].name + '</span>'; }).join("") + '</div>';
-    $("race").innerHTML = html;
-    raceBuilt = true; markLanes();
-    if(raceSeen) runRace();
-  }
-  function runRace(){
-    var race = $("race");
-    race.classList.add("go");
-    race.querySelectorAll(".runner").forEach(function(r, i){
-      setTimeout(function(){ r.style.left = r.dataset.x + "%"; }, reduce ? 0 : 200 + i*70);
-    });
-  }
-  function markLanes(){
-    document.querySelectorAll(".lane").forEach(function(l){
-      l.classList.toggle("me-lane", !!me && decodeURIComponent(l.dataset.n) === me.name && l.dataset.f === me.fk);
-    });
-  }
-  $("race").addEventListener("click", function(e){
-    var l = e.target.closest(".lane"); if(!l) return;
-    var name = decodeURIComponent(l.dataset.n), fk = l.dataset.f;
-    var r = l.querySelector(".runner"); r.classList.remove("wig"); void r.offsetWidth; r.classList.add("wig");
-    if(fk === famKey){
-      var p = people.filter(function(x){ return x.fk === fk && x.name === name; })[0];
-      selectMe(p, false);
-      $("stairs").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
-    } else blip(0);
-  });
 
   // ── Gachapon ─────────────────────────────────────────────────
   var RAR = {
@@ -1288,7 +1197,6 @@
     });
     onShow.set(tix, function(){ tix.classList.add("in"); });
     onShow.set($("breakdown"), growBars);
-    onShow.set($("race"), function(){ raceSeen = true; if(raceBuilt) runRace(); });
 
     if(reduce || !hasIO){
       revealEls.forEach(function(e){ e.classList.add("in"); });
