@@ -327,7 +327,7 @@
   <div class="land-inner">
     <div class="kicker">4 families · 20 travelers</div>
     <h1 id="title">Japan, Together</h1>
-    <div class="land-dates">May 31 – June 10, 2027</div>
+    <div class="land-dates">May 31 – June 11, 2027</div>
     <div class="cd"><span>🗾</span><b class="num" id="cdNum">—</b><span>days to go!</span></div>
     <div class="who">Who's going?</div>
     <div class="fam-btns" id="famBtns">
@@ -369,10 +369,10 @@
   <section style="padding-top:8px">
     <div class="wrap">
       <div class="sec-head"><h2>The trip got longer 🎉</h2></div>
-      <div class="sec-sub">We leave 2 days early and come home 1 day late.</div>
+      <div class="sec-sub">We leave 2 days early and come home 2 days late.</div>
       <div class="panel">
         <div class="tl" id="tl">
-          <div class="tl-labels"><span class="plus">⭐ +2 days</span><span class="plus">+1 day ⭐</span></div>
+          <div class="tl-labels"><span class="plus">⭐ +2 days</span><span class="plus">+2 days ⭐</span></div>
           <div class="tiles">
             <div class="tile o new"><b>31</b><i>May</i></div>
             <div class="tile o new"><b>1</b><i>Jun</i></div>
@@ -384,7 +384,8 @@
             <div class="tile t"><b>7</b><i>Jun</i></div>
             <div class="tile t"><b>8</b><i>Jun</i></div>
             <div class="tile t"><b>9</b><i>Jun</i></div>
-            <div class="tile x new"><b>10</b><i>Jun</i></div>
+            <div class="tile t new"><b>10</b><i>Jun</i></div>
+            <div class="tile x new"><b>11</b><i>Jun</i></div>
           </div>
           <div class="tl-key">
             <span style="--c:var(--osaka)">Osaka</span><span style="--c:var(--kyoto)">Kyoto</span>
@@ -394,7 +395,7 @@
         <div class="eq" id="eq">
           <div class="eq-chip eq-core"><span class="n num" id="eqCore">₱70,000</span><span class="l">🎒 main trip</span></div>
           <div class="eq-sign">+</div>
-          <div class="eq-chip eq-bonus"><span class="n num" id="eqBonus">₱15,000</span><span class="l" id="eqBonusL">⭐ 3 bonus days</span></div>
+          <div class="eq-chip eq-bonus"><span class="n num" id="eqBonus">₱15,000</span><span class="l" id="eqBonusL">⭐ 4 bonus days</span></div>
           <div class="eq-sign">=</div>
           <div class="eq-chip eq-total"><span class="n num" id="eqTotal">₱85,000</span><span class="l">your goal</span></div>
         </div>
@@ -412,7 +413,7 @@
         <div class="r-nodes">
           <div class="r-node" style="--c:var(--osaka)"><div class="jp">大阪</div><h3>Osaka</h3><div class="nt">May 31 – Jun 2</div></div>
           <div class="r-node" style="--c:var(--kyoto)"><div class="jp">京都</div><h3>Kyoto</h3><div class="nt">Jun 3 – 5</div></div>
-          <div class="r-node" style="--c:var(--tokyo)"><div class="jp">東京</div><h3>Tokyo</h3><div class="nt">Jun 6 – 10</div></div>
+          <div class="r-node" style="--c:var(--tokyo)"><div class="jp">東京</div><h3>Tokyo</h3><div class="nt">Jun 6 – 11</div></div>
         </div>
       </div>
     </div>
@@ -454,7 +455,7 @@
       <div class="city t bonus">
         <div class="city-top">
           <div class="city-badge">東京</div>
-          <div class="city-title"><h3><span class="c-emoji">🗼</span>Tokyo<span class="bonus-tag">⭐ 1 bonus day</span></h3><div class="place">Jun 6 – 10 · fly home from here 🛬</div></div>
+          <div class="city-title"><h3><span class="c-emoji">🗼</span>Tokyo<span class="bonus-tag">⭐ 2 bonus days</span></h3><div class="place">Jun 6 – 11 · fly home from here 🛬</div></div>
           <div class="city-count"><b>17</b><span>stops</span></div>
         </div>
         <div class="stops">
@@ -486,7 +487,7 @@
 
   <footer>
     <b>Japan, Together</b>
-    20 travelers · 4 families · May 31 – June 10, 2027<br>
+    20 travelers · 4 families · May 31 – June 11, 2027<br>
     Costs are per person and estimated. <a href="https://jnpkwan.github.io/Japan_Trip/budgettracker.html">Savings board →</a>
   </footer>
 </main>
@@ -501,7 +502,7 @@
   var DEPART     = new Date("2027-05-31T00:00:00");
   var USD_RATE   = 61.70;      // pesos per US$1 — keep in sync with budgettracker.html
   var MAIN_TRIP  = 70000;      // M3: the main trip, without bonus days
-  var BONUS_DAYS = 15000;      // the 3 bonus days (hotel, food, rides)
+  var BONUS_DAYS = 15000;      // the 4 bonus days (hotel, food, rides)
   var FAMILIES = {
     B: { name: "Bustamante", goal: 85000,  color: "var(--osaka)" },
     R: { name: "Romero",     goal: 85000,  color: "var(--tokyo)" },
@@ -645,7 +646,7 @@
 
     $("eqCore").dataset.v = MAIN_TRIP; $("eqBonus").dataset.v = fam.goal - MAIN_TRIP; $("eqTotal").dataset.v = fam.goal;
     ["eqCore","eqBonus","eqTotal"].forEach(function(id){ $(id).textContent = money(+$(id).dataset.v); });
-    $("eqBonusL").textContent = extra > 0 ? "⭐ bonus days + extras" : "⭐ 3 bonus days";
+    $("eqBonusL").textContent = extra > 0 ? "⭐ bonus days + extras" : "⭐ 4 bonus days";
 
     var max = COSTS[0].p, html = "";
     function row(cls, lbl, sm, p, c){
