@@ -719,22 +719,17 @@ const MILESTONES = [
 // Only affects families flagged currency:"USD" below.
 const USD_RATE = 61.70;
 
-// Families whose target differs from the default (e.g. flying from abroad).
+// Families that need special handling (e.g. saving in another currency).
 // Keyed by how the family name STARTS in savings-data.json (case-insensitive).
 // currency:"USD" means their `saved` values in the JSON are DOLLARS, not pesos.
 // Targets/milestones here stay in PESOS — the card converts them for display.
 // Each milestone only needs `amt`; label and deadline come from MILESTONES.
 const FAMILY_OVERRIDES = [
   {
-    match: "K",              // K Family — ₱100k goal
-    target: 100000,
-    milestones: [ { amt: 15000 }, { amt: 50000 }, { amt: 70000 }, { amt: 100000 } ],
-  },
-  {
     match: "C",              // C Family — flying from the US, tracked in dollars
     currency: "USD",
-    target: 100000,
-    milestones: [ { amt: 15000 }, { amt: 50000 }, { amt: 70000 }, { amt: 100000 } ],
+    target: 85000,
+    milestones: [ { amt: 15000 }, { amt: 50000 }, { amt: 70000 }, { amt: 85000 } ],
   },
 ];
 function famConfig(name) {

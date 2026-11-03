@@ -550,8 +550,8 @@
   var FAMILIES = {
     B: { name: "Bustamante", goal: 85000,  color: "var(--osaka)" },
     R: { name: "Romero",     goal: 85000,  color: "var(--tokyo)" },
-    K: { name: "Kwan",       goal: 100000, color: "var(--kyoto)" },
-    C: { name: "Chua",       goal: 100000, color: "var(--sun)", usd: true }
+    K: { name: "Kwan",       goal: 85000,  color: "var(--kyoto)" },
+    C: { name: "Chua",       goal: 85000,  color: "var(--sun)", usd: true }
   };
   // amt null = that family's goal
   var STEPS = [
@@ -573,7 +573,7 @@
     { lbl: "🚃 Transportation", sm: "trains & buses",                         p: 1886,  c: "var(--tokyo-d)" },
     { lbl: "📶 eSIM",           sm: "phone data",               p: 722,   c: "var(--dim)" }
   ];
-  var MAX_GOAL = 100000;
+  var MAX_GOAL = 85000;
 
   (function check(){
     var sum = COSTS.reduce(function(a, r){ return a + r.p; }, 0);
