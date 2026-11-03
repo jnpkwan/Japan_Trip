@@ -449,8 +449,6 @@
   .pc-body{flex:1;min-width:0}
   .pc-body h3{font-size:17px;font-weight:900;line-height:1.25;margin-top:5px}
   .pc-what{font-size:13.5px;color:var(--mut);font-weight:600;margin-top:3px;line-height:1.45}
-  .pc-mission{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:800;color:var(--sun-d);background:var(--sun-t);border:1px solid var(--sun);
-    border-radius:10px;padding:4px 9px;line-height:1.35}
   .pc-adult{font-size:12px;font-weight:700;color:var(--mut);margin-top:6px}
   .pc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
   .pc-add{border:1.5px solid var(--line);background:#fff;border-radius:999px;font-size:12px;font-weight:800;color:var(--ink);padding:4px 11px;cursor:pointer}
@@ -1267,23 +1265,17 @@
   // Change a date here and the card, the countdown and the calendar file all follow.
   var PREP = [
     { date: "2026-12-26", em: "🛂", t: "Passport check",
-      what: "Find your passport and check the date inside. It should be good until at least December 2027.",
-      mission: "Find your passport photo and rate it out of 10!", adult: "Renew any passport that runs out before Dec 2027." },
+      what: "Find your passport and check the date inside. It should be good until at least December 2027.", adult: "Renew any passport that runs out before Dec 2027." },
     { date: "2027-01-30", em: "💴", t: "Yen and GCash card",
-      what: "Meet Japan's coins and bills, the IC cards (Suica / ICOCA) you tap to ride trains and buy snacks, and set up a GCash card for paying.",
-      mission: "Guess what ¥1,000 buys at a Japanese convenience store.", adult: "" },
+      what: "Meet Japan's coins and bills, the IC cards (Suica / ICOCA) you tap to ride trains and buy snacks, and set up a GCash card for paying.", adult: "" },
     { date: "2027-02-27", em: "🗺️", t: "Google Maps like a pro",
-      what: "Find train routes, the right platform and exit, and save maps offline so they work without signal.",
-      mission: "Plan the route from Kyoto Station to Fushimi Inari.", adult: "" },
+      what: "Find train routes, the right platform and exit, and save maps offline so they work without signal.", adult: "" },
     { date: "2027-03-26", em: "🗣️", t: "Manners & Translator App",
-      what: "Shoes off indoors, quiet on trains, and no tipping. Then set up a translator app (like Google Translate) and download Japanese so it works offline, even with no signal.",
-      mission: "Point your translator at a Japanese menu photo and read it out loud!", adult: "Start the Japan visa applications this month." },
+      what: "Shoes off indoors, quiet on trains, and no tipping. Then set up a translator app (like Google Translate) and download Japanese so it works offline, even with no signal.", adult: "Start the Japan visa applications this month." },
     { date: "2027-04-24", em: "📶", t: "eSIM & Find My setup",
-      what: "Install your eSIM so your phone works in Japan, and turn on Find My so your family can always see where you are.",
-      mission: "Share your location with a grown-up, then find each other on the map!", adult: "Buy travel insurance for everyone." },
+      what: "Install your eSIM so your phone works in Japan, and turn on Find My so your family can always see where you are.", adult: "Buy travel insurance for everyone." },
     { date: "2027-05-28", em: "🎒", t: "Packing party",
-      what: "June is rainy season in Japan, so pack a small umbrella, light clothes, and comfy walking shoes.",
-      mission: "Pack your bag and weigh it. Who packs lightest?", adult: "Print bookings and visa papers." }
+      what: "June is rainy season in Japan, so pack a small umbrella, light clothes, and comfy walking shoes.", adult: "Print bookings and visa papers." }
   ];
   var PREP_COLS = ["var(--osaka)","var(--kyoto)","var(--tokyo)","var(--ajisai)","var(--osaka)","var(--tokyo)","var(--kyoto)"];
   var MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
@@ -1302,7 +1294,6 @@
         '<div class="cal" style="--c:' + PREP_COLS[i % PREP_COLS.length] + '"><div class="mo">' + MON[d.getMonth()] + '</div><div class="dy">' + d.getDate() +
         '</div><div class="wd">' + WD[d.getDay()] + '</div></div>' +
         '<div class="pc-body"><span class="pc-tag">' + tag + '</span><h3>' + e.em + " " + e.t + '</h3><div class="pc-what">' + e.what + '</div>' +
-        '<div class="pc-mission">🎯 Mission: ' + e.mission + '</div>' +
         (e.adult ? '<div class="pc-adult">👪 Grown-ups: ' + e.adult + '</div>' : "") +
         '<div class="pc-foot"><button type="button" class="pc-add" data-i="' + i + '">+ Add to calendar</button></div></div></div>';
     }).join("");
@@ -1317,7 +1308,7 @@
       L.push("BEGIN:VEVENT", "UID:jt-prep-" + e.date + "@japan-together", "DTSTAMP:" + stamp,
              "DTSTART;VALUE=DATE:" + icsDay(e.date), "DTEND;VALUE=DATE:" + icsDay(e.date, 1),
              "SUMMARY:" + icsEsc("Japan prep: " + e.t),
-             "DESCRIPTION:" + icsEsc(e.what + "\nMission: " + e.mission + (e.adult ? "\nGrown-ups: " + e.adult : "")),
+             "DESCRIPTION:" + icsEsc(e.what + (e.adult ? "\nGrown-ups: " + e.adult : "")),
              "END:VEVENT");
     });
     L.push("END:VCALENDAR");
