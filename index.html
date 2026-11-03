@@ -428,6 +428,38 @@
   .slot.got:hover{transform:scale(1.12) rotate(-6deg)}
   .slot.fresh{animation:slam .5s var(--spring) both}
 
+  /* prep calendar */
+  .prep-top{display:flex;justify-content:flex-start;margin:-8px 0 14px}
+  .prep-all{border:0;background:var(--ink);color:#fff;font-size:14px;font-weight:900;padding:11px 18px;border-radius:999px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(27,43,74,.2);transition:transform .2s var(--spring),background .2s}
+  .prep-all:hover{transform:translateY(-2px) scale(1.03);background:var(--osaka)}
+  .prep{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;perspective:900px}
+  @media(max-width:700px){.prep{grid-template-columns:1fr}}
+  .pcard{position:relative;display:flex;gap:14px;align-items:flex-start;background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:14px 14px 12px;
+    transform-origin:top center;opacity:0;transform:rotateX(-75deg);transition:opacity .4s,transform .7s var(--spring)}
+  .prep.in .pcard{opacity:1;transform:none}
+  .pcard.next{border:2px solid var(--ink);box-shadow:0 10px 26px rgba(27,43,74,.14)}
+  .pcard.done{background:var(--paper)}
+  .pcard.done .pc-body,.pcard.done .cal{opacity:.55}
+  .cal{flex-shrink:0;width:64px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 0 0 1.5px var(--line),0 3px 0 var(--line);text-align:center}
+  .cal .mo{background:var(--c);color:#fff;font-size:11px;font-weight:900;letter-spacing:1.5px;padding:3px 0}
+  .cal .dy{font-size:30px;font-weight:900;line-height:1.15}
+  .cal .wd{font-size:10px;font-weight:800;color:var(--dim);padding-bottom:5px;text-transform:uppercase;letter-spacing:.8px}
+  .pcard:hover .cal{animation:wiggle .5s ease}
+  .pc-body{flex:1;min-width:0}
+  .pc-body h3{font-size:17px;font-weight:900;line-height:1.25;margin-top:5px}
+  .pc-what{font-size:13.5px;color:var(--mut);font-weight:600;margin-top:3px;line-height:1.45}
+  .pc-mission{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:800;color:var(--sun-d);background:var(--sun-t);border:1px solid var(--sun);
+    border-radius:10px;padding:4px 9px;line-height:1.35}
+  .pc-adult{font-size:12px;font-weight:700;color:var(--mut);margin-top:6px}
+  .pc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+  .pc-add{border:1.5px solid var(--line);background:#fff;border-radius:999px;font-size:12px;font-weight:800;color:var(--ink);padding:4px 11px;cursor:pointer}
+  .pc-add:hover{border-color:var(--ink)}
+  .pc-tag{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;border-radius:999px;padding:2px 9px;
+    background:var(--paper);color:var(--dim);border:1px solid var(--line)}
+  .pcard.next .pc-tag{background:var(--ink);color:#fff;border-color:var(--ink);animation:bob2 1.6s ease-in-out infinite}
+  .pcard.done .pc-tag{background:var(--kyoto-t);color:var(--kyoto-d);border-color:var(--kyoto)}
+
   /* fun layer */
   .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
   .confetti{position:absolute;top:-14px;opacity:0;border-radius:2px;animation:confetti-fall linear forwards}
@@ -438,7 +470,7 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     .confetti-wrap,.train,.cloud,.r-ride{display:none}
-    .reveal,.plus,.stop,.mem,.me,.stampc,.g-prize,.capsule,.slot,.ticket,.stamp,.t-bonus,.t-dots i,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
+    .reveal,.plus,.stop,.mem,.me,.stampc,.g-prize,.capsule,.slot,.pcard,.ticket,.stamp,.t-bonus,.t-dots i,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
     .tile.new{flex-grow:1;opacity:1;margin:0;box-shadow:inset 0 0 0 3px var(--sun)}
   }
 </style>
@@ -669,6 +701,16 @@
           <span class="stop paid">Tokyo DisneySea<span class="amt" data-p="2725"></span></span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Prep calendar -->
+  <section style="padding-top:8px" id="prepSec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Get ready for Japan 📅</h2><span class="sub">one lesson a month</span></div>
+      <div class="sec-sub">Learn one travel skill each month, so by May you're a pro. Times and places to be announced.</div>
+      <div class="prep-top"><button type="button" class="prep-all" id="prepAll">📅 Add all <span id="prepN"></span> to my calendar</button></div>
+      <div class="panel prep" id="prep"></div>
     </div>
   </section>
 
@@ -1047,7 +1089,7 @@
     $("gTokens").innerHTML = "<b>" + n + "</b>" + (n === 1 ? "twist" : "twists") + " left";
     if(!gBusy && !pending){
       var msg;
-      if(n > 0) msg = "Twist the knob! 👉" + (bonusLeft() ? "<small>🎟️ " + bonusLeft() + " bonus twist" + (bonusLeft() > 1 ? "s" : "") + " from " + me.name.split(/\s+/)[0] + "'s stamps</small>" : "");
+      if(n > 0) msg = "Twist the knob! 👉" + (lucky() ? "<small>🍀 Lucky streak! Your next capsule is guaranteed to be a new one.</small>" : "") + (bonusLeft() ? "<small>🎟️ " + bonusLeft() + " bonus twist" + (bonusLeft() > 1 ? "s" : "") + " from " + me.name.split(/\s+/)[0] + "'s stamps</small>" : "");
       else {
         var mid = new Date(); mid.setHours(24, 0, 0, 0);
         var mins = Math.max(1, Math.round((mid - new Date())/60000));
@@ -1066,10 +1108,14 @@
     }).join("");
   }
   var lastNew = null;
+  // Lucky streak: after 2 doubles in a row, the next capsule is always one you don't have yet.
+  var streak = +(store("jt-gacha-streak") || 0);
+  function lucky(){ return streak >= 2 && TOYS.some(function(t){ return !col[t.id]; }); }
   function pickToy(){
-    var tot = TOYS.reduce(function(a, t){ return a + RAR[t.r].w; }, 0), x = Math.random() * tot;
-    for(var i = 0; i < TOYS.length; i++){ x -= RAR[TOYS[i].r].w; if(x <= 0) return TOYS[i]; }
-    return TOYS[0];
+    var pool = lucky() ? TOYS.filter(function(t){ return !col[t.id]; }) : TOYS;
+    var tot = pool.reduce(function(a, t){ return a + RAR[t.r].w; }, 0), x = Math.random() * tot;
+    for(var i = 0; i < pool.length; i++){ x -= RAR[pool[i].r].w; if(x <= 0) return pool[i]; }
+    return pool[pool.length - 1];
   }
   function spend(){
     if(dailyLeft()){ store("jt-gacha-day", todayKey()); memTwist.day = todayKey(); return; }
@@ -1102,6 +1148,7 @@
     pending = null;
     cap.classList.add("open");
     col[t.id] = (col[t.id] || 0) + 1; store("jt-gacha-col", JSON.stringify(col));
+    streak = isNew ? 0 : streak + 1; store("jt-gacha-streak", String(streak));
     lastNew = isNew ? t.id : null;
     setTimeout(function(){ cap.hidden = true; cap.classList.remove("open", "drop"); }, 600);
     showPrize(t, isNew);
@@ -1119,7 +1166,8 @@
       (!isNew && isNew !== null ? '<div class="jp" style="margin-top:8px">You already had this one. Now you have ' + col[t.id] + "!</div>" : "");
     box.hidden = false;
     box.style.animation = "none"; void box.offsetWidth; box.style.animation = "";
-    $("gMsg").innerHTML = isNew === null ? "From your collection 📒" : (isNew ? "You got a new one! 🎉" : "Ooh, a double! 🎁");
+    $("gMsg").innerHTML = isNew === null ? "From your collection 📒" : (isNew ? "You got a new one! 🎉" :
+      "Ooh, a double! 🎁" + (lucky() ? "<small>🍀 Two doubles in a row! Your next capsule is guaranteed new.</small>" : ""));
   }
   $("album").addEventListener("click", function(e){
     var b = e.target.closest(".slot.got"); if(!b) return;
@@ -1128,6 +1176,79 @@
   });
   renderGacha();
   setInterval(function(){ if(!gBusy && !pending) renderGacha(); }, 60000);
+
+  // ── Prep calendar: one lesson a month ─────────────────────────
+  // Change a date here and the card, the countdown and the calendar file all follow.
+  var PREP = [
+    { date: "2026-12-26", em: "🛂", t: "Passport check",
+      what: "Find your passport and check the date inside. It should be good until at least December 2027.",
+      mission: "Find your passport photo and rate it out of 10!", adult: "Renew any passport that runs out before Dec 2027." },
+    { date: "2027-01-30", em: "💴", t: "Yen & tap cards",
+      what: "Meet Japan's coins and bills, and the IC cards (Suica / ICOCA) you tap to ride trains and buy snacks.",
+      mission: "Guess what ¥1,000 buys at a Japanese convenience store.", adult: "" },
+    { date: "2027-02-27", em: "🗺️", t: "Google Maps like a pro",
+      what: "Find train routes, the right platform and exit, and save maps offline so they work without signal.",
+      mission: "Plan the route from Kyoto Station to Fushimi Inari.", adult: "" },
+    { date: "2027-03-26", em: "🗣️", t: "Japanese phrases & manners",
+      what: "Say arigatō (thank you) and sumimasen (excuse me). Shoes off indoors, quiet on trains, and no tipping.",
+      mission: "Order your dream bowl of ramen in Japanese.", adult: "Start the Japan visa applications this month." },
+    { date: "2027-04-24", em: "📶", t: "eSIM setup",
+      what: "Check your phone can use an eSIM, install it at home, and learn the one switch to flip when we land.",
+      mission: "Find the eSIM menu in your phone's Settings.", adult: "Buy travel insurance for everyone." },
+    { date: "2027-05-28", em: "🎒", t: "Packing party",
+      what: "June is rainy season in Japan, so pack a small umbrella, light clothes, and comfy walking shoes.",
+      mission: "Pack your bag and weigh it. Who packs lightest?", adult: "Print bookings and visa papers." }
+  ];
+  var PREP_COLS = ["var(--osaka)","var(--kyoto)","var(--tokyo)","var(--ajisai)","var(--osaka)","var(--tokyo)","var(--kyoto)"];
+  var MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  var WD  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  function pDate(iso){ var a = iso.split("-"); return new Date(+a[0], +a[1]-1, +a[2]); }
+  function renderPrep(){
+    var today = new Date(); today.setHours(0,0,0,0);
+    var nextI = -1;
+    PREP.forEach(function(e, i){ if(nextI < 0 && pDate(e.date) >= today) nextI = i; });
+    $("prepN").textContent = PREP.length;
+    $("prep").innerHTML = PREP.map(function(e, i){
+      var d = pDate(e.date), days = Math.round((d - today)/86400000);
+      var state = days < 0 ? "done" : i === nextI ? "next" : "";
+      var tag = days < 0 ? "Done ✓" : days === 0 ? "Today!" : (i === nextI ? "Up next · " : "") + (days === 1 ? "tomorrow" : "in " + days + " days");
+      return '<div class="pcard ' + state + '" style="transition-delay:' + (i*0.09) + 's">' +
+        '<div class="cal" style="--c:' + PREP_COLS[i % PREP_COLS.length] + '"><div class="mo">' + MON[d.getMonth()] + '</div><div class="dy">' + d.getDate() +
+        '</div><div class="wd">' + WD[d.getDay()] + '</div></div>' +
+        '<div class="pc-body"><span class="pc-tag">' + tag + '</span><h3>' + e.em + " " + e.t + '</h3><div class="pc-what">' + e.what + '</div>' +
+        '<div class="pc-mission">🎯 Mission: ' + e.mission + '</div>' +
+        (e.adult ? '<div class="pc-adult">👪 Grown-ups: ' + e.adult + '</div>' : "") +
+        '<div class="pc-foot"><button type="button" class="pc-add" data-i="' + i + '">+ Add to calendar</button></div></div></div>';
+    }).join("");
+  }
+  function icsEsc(t){ return String(t).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\n/g, "\\n"); }
+  function icsDay(iso, add){ var d = pDate(iso); d.setDate(d.getDate() + (add || 0));
+    return d.getFullYear() + String(d.getMonth()+1).padStart(2, "0") + String(d.getDate()).padStart(2, "0"); }
+  function downloadIcs(list, filename){
+    var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+    var L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Japan Together//Prep calendar//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+    list.forEach(function(e){
+      L.push("BEGIN:VEVENT", "UID:jt-prep-" + e.date + "@japan-together", "DTSTAMP:" + stamp,
+             "DTSTART;VALUE=DATE:" + icsDay(e.date), "DTEND;VALUE=DATE:" + icsDay(e.date, 1),
+             "SUMMARY:" + icsEsc("Japan prep: " + e.t),
+             "DESCRIPTION:" + icsEsc(e.what + "\nMission: " + e.mission + (e.adult ? "\nGrown-ups: " + e.adult : "")),
+             "END:VEVENT");
+    });
+    L.push("END:VCALENDAR");
+    var blob = new Blob([L.join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    blip(3);
+  }
+  $("prepAll").addEventListener("click", function(){ downloadIcs(PREP, "japan-prep-calendar.ics"); });
+  $("prep").addEventListener("click", function(e){
+    var b = e.target.closest(".pc-add"); if(!b) return;
+    var ev = PREP[+b.dataset.i];
+    downloadIcs([ev], "japan-prep-" + ev.date + ".ics");
+    b.textContent = "✓ Added"; setTimeout(function(){ b.textContent = "+ Add to calendar"; }, 2500);
+  });
+  renderPrep();
 
   // ── Fill the page for one family ──────────────────────────────
   function fill(){
