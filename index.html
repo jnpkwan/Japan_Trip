@@ -123,12 +123,19 @@
   .nextup b{color:var(--sun)}
   .nextup .nd{background:rgba(255,255,255,.14);border-radius:10px;padding:4px 9px;font-weight:900;white-space:nowrap}
 
-  .stairs{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end;padding-top:58px;margin-top:18px}
-  .st{display:flex;flex-direction:column;text-align:center;min-width:0}
+  .stairs{position:relative;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(6,auto);column-gap:10px;row-gap:0;align-items:start;padding-top:58px;margin-top:18px}
+  .st{display:grid;grid-row:span 6;grid-template-rows:subgrid;text-align:center;min-width:0}
+  .st .bar{align-self:end}
+  .st .nx,.st .go{justify-self:center;align-self:start}
   .st .bar{height:0;border-radius:14px 14px 5px 5px;color:#fff;position:relative;padding-top:9px;
     display:flex;flex-direction:column;align-items:center;transition:height .9s var(--spring)}
   .st .bar .ic{font-size:24px;line-height:1}
   .st .bar .ml{font-size:11px;font-weight:900;letter-spacing:1px;margin-top:4px}
+  .st .bar{overflow:hidden}
+  .bd-big{font-size:34px;font-weight:900;line-height:1;margin-top:12px}
+  .bd-sm{font-size:11px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
+  .bd-pill{font-size:11.5px;font-weight:900;background:rgba(255,255,255,.9);color:var(--ink);border-radius:999px;padding:2px 9px;margin-top:6px;white-space:nowrap}
+  @media(max-width:560px){.bd-big{font-size:24px;margin-top:8px}.bd-sm{font-size:9px;letter-spacing:.3px}.bd-pill{font-size:9.5px;padding:2px 6px;margin-top:4px}}
   .st:nth-child(1) .bar{background:var(--osaka)}
   .st:nth-child(2) .bar{background:var(--kyoto)}
   .st:nth-child(3) .bar{background:var(--tokyo)}
@@ -150,20 +157,20 @@
 
   /* two tickets */
   .tix{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
-  .ticket{position:relative;border-radius:22px;padding:22px 22px 20px;color:#fff;overflow:hidden;
+  .ticket{position:relative;display:flex;flex-direction:column;border-radius:22px;padding:22px 22px 20px;color:#fff;overflow:hidden;
     opacity:0;transform:translateY(24px) rotate(-1.5deg);transition:opacity .5s,transform .7s var(--spring)}
   .ticket.whole{color:var(--ink);transform:translateY(24px) rotate(1.5deg)}
   .tix.in .ticket{opacity:1;transform:none} .tix.in .ticket.whole{transition-delay:.25s}
   .ticket.main{background:linear-gradient(150deg,#35AEE6,var(--tokyo-d))}
   .ticket.whole{background:linear-gradient(150deg,var(--sun),#FF9A3D)}
-  .ticket::before,.ticket::after{content:"";position:absolute;top:58%;width:26px;height:26px;border-radius:50%;background:var(--paper)}
+  .ticket::before,.ticket::after{content:"";position:absolute;bottom:68px;width:26px;height:26px;border-radius:50%;background:var(--paper)}
   .ticket::before{left:-13px} .ticket::after{right:-13px}
-  .t-perf{position:absolute;left:18px;right:18px;top:calc(58% + 12px);border-top:2.5px dashed rgba(255,255,255,.55)}
+  .t-perf{position:absolute;left:18px;right:18px;bottom:80px;border-top:2.5px dashed rgba(255,255,255,.55)}
   .ticket.whole .t-perf{border-color:rgba(27,43,74,.25)}
   .t-lbl{font-size:11.5px;font-weight:900;letter-spacing:2px;text-transform:uppercase;opacity:.9}
   .t-amt{font-size:clamp(36px,7vw,46px);font-weight:900;line-height:1.05;margin-top:4px;letter-spacing:-.5px}
   .t-big{font-size:18px;font-weight:900;margin-top:4px;line-height:1.25}
-  .t-low{margin-top:40px}
+  .t-low{margin-top:auto;padding-top:46px}
   .t-when{font-size:14px;font-weight:800}
   .t-dots{display:flex;gap:4px;margin-top:9px;flex-wrap:wrap}
   .t-dots i{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.28);transform:scale(.4);transition:transform .35s var(--spring),background .3s}
@@ -177,6 +184,8 @@
   .t-bonus{position:absolute;top:18px;right:16px;background:#fff;color:var(--osaka-d);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:900;
     transform:scale(0);transition:transform .45s var(--spring)}
   .tix.in .t-bonus{transform:none;transition-delay:1.3s}
+  .t-where{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .t-where span{background:#fff;color:var(--osaka-d);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:900}
   .tix-or{display:none}
   .tix-note{text-align:center;margin-top:16px;font-size:15px;font-weight:800;color:var(--ink)}
   .tix-note span{color:var(--mut);font-weight:700}
@@ -190,7 +199,7 @@
   .flag.party span{animation:party .8s ease-in-out 2}
   @keyframes hop{0%{transform:translateY(0)}45%{transform:translateY(-38px) rotate(-10deg)}75%{transform:translateY(0) rotate(8deg)}100%{transform:none}}
   @keyframes party{0%,100%{transform:rotate(0) scale(1)}25%{transform:rotate(-16deg) scale(1.25)}75%{transform:rotate(16deg) scale(1.25)}}
-  @media(max-width:560px){.stairs{gap:6px}.st .amt{font-size:15px}.st .what{font-size:12px}.st .when{font-size:10px}.st .bar .ic{font-size:19px}
+  @media(max-width:560px){.stairs{column-gap:6px}.st .amt{font-size:15px}.st .what{font-size:12px}.st .when{font-size:10px}.st .bar .ic{font-size:19px}
     .nextup{font-size:13px}}
 
   /* timeline */
@@ -380,8 +389,8 @@
         <div class="stairs" id="stairs">
           <div class="st"><div class="bar"><span class="ic">🏨</span><span class="ml">M1</span></div><div class="amt num"></div><div class="what">Hotels</div><div class="when">End of Sep</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
           <div class="st"><div class="bar"><span class="ic">✈️</span><span class="ml">M2</span></div><div class="amt num"></div><div class="what">Flights</div><div class="when">End of Dec</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
-          <div class="st"><div class="bar"><span class="ic">🎒</span><span class="ml">M3</span></div><div class="amt num"></div><div class="what">Main trip</div><div class="when">End of Feb</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
-          <div class="st"><div class="bar"><span class="ic">🌟</span><span class="ml">M4</span></div><div class="amt num"></div><div class="what">Bonus days</div><div class="when">End of Apr</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
+          <div class="st"><div class="bar"><span class="ic">🎒</span><span class="ml">M3</span><span class="bd-big">8</span><span class="bd-sm">days</span><span class="bd-pill">Jun 2–9</span></div><div class="amt num"></div><div class="what">Main trip</div><div class="when">End of Feb</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
+          <div class="st"><div class="bar"><span class="ic">🌟</span><span class="ml">M4</span><span class="bd-big">+4</span><span class="bd-sm">bonus days</span><span class="bd-pill">🏯 Osaka +2</span><span class="bd-pill">🗼 Tokyo +2</span></div><div class="amt num"></div><div class="what">4 bonus days</div><div class="when">End of Apr</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
           <div class="flag" id="flag" aria-hidden="true"><span>🇯🇵</span></div>
         </div>
       </div>
@@ -408,6 +417,7 @@
           <div class="t-lbl">Whole trip</div>
           <div class="t-amt num" id="tixWhole"></div>
           <div class="t-big">Even more Japan!</div>
+          <div class="t-where"><span>⭐ +2 days Osaka</span><span>⭐ +2 days Tokyo</span></div>
           <div class="t-perf"></div>
           <div class="t-low"><div class="t-when">May 31 – June 11 · 12 days</div><div class="t-dots"><i class="b"></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i class="b"></i></div></div>
         </div>
@@ -423,7 +433,7 @@
       <div class="sec-sub">We leave 2 days early and come home 2 days late.</div>
       <div class="panel">
         <div class="tl" id="tl">
-          <div class="tl-labels"><span class="plus">⭐ +2 days</span><span class="plus">+2 days ⭐</span></div>
+          <div class="tl-labels"><span class="plus">⭐ +2 Osaka days</span><span class="plus">+2 Tokyo days ⭐</span></div>
           <div class="tiles">
             <div class="tile o new"><b>31</b><i>May</i></div>
             <div class="tile o new"><b>1</b><i>Jun</i></div>
@@ -558,7 +568,7 @@
     { amt: 15000, what: "Hotels",     date: "2026-09-30", due: "Sep 30" },
     { amt: 50000, what: "Flights",    date: "2026-12-31", due: "Dec 31" },
     { amt: 70000, what: "Main trip",  date: "2027-02-28", due: "Feb 28" },
-    { amt: null,  what: "Bonus days", date: "2027-04-30", due: "Apr 30" }
+    { amt: null,  what: "4 bonus days", date: "2027-04-30", due: "Apr 30" }
   ];
   // Per-person cost of the main trip — must add up to MAIN_TRIP
   var COSTS = [
@@ -705,7 +715,7 @@
     }
     COSTS.forEach(function(r){ html += row("", r.lbl, r.sm, r.p, r.c); });
     html += row(" sub", "🎒 Main trip", "", MAIN_TRIP, null);
-    html += row(" hl bonus", "⭐ Bonus days", "🏨 hotel", BONUS_DAYS, "var(--sun)");
+    html += row(" hl bonus", "⭐ 4 bonus days", "+2 Osaka · +2 Tokyo · 🏨 hotel", BONUS_DAYS, "var(--sun)");
     if(extra > 0) html += row(" hl extra", "➕ Your family extra", "", extra, "var(--kyoto)");
     html += '<div class="total-row"><span>Your goal</span><b class="num">' + money(fam.goal) + '</b></div>';
     var bd = $("breakdown"); bd.innerHTML = html;
