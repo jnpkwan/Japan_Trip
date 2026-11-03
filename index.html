@@ -14,6 +14,7 @@
     --kyoto:#3FA36B; --kyoto-d:#23683F; --kyoto-t:#E3F4EA;   /* melon soda */
     --tokyo:#1E9BD7; --tokyo-d:#12628A; --tokyo-t:#E1F3FB;   /* ramune */
     --sun:#FFC531;   --sun-d:#8A6400;   --sun-t:#FFF6D6;     /* sunflower */
+    --ajisai:#7B6CD9;                                         /* hydrangea */
     --hinomaru:#E8303A;
     --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", system-ui, -apple-system, "Segoe UI", sans-serif;
     --spring: cubic-bezier(.34,1.56,.64,1);
@@ -143,6 +144,43 @@
   .st.next .nx{visibility:visible}
   .st.next .bar{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--ink)}
   .st.past .when::after{content:" ✓";color:var(--kyoto)}
+  .st .go{display:inline-block;visibility:hidden;margin:6px auto 0;font-size:10px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;
+    background:var(--kyoto);color:#fff;border-radius:999px;padding:2px 9px}
+  .st.cango .go{visibility:visible;animation:pop .5s var(--spring) both 1.2s}
+
+  /* two tickets */
+  .tix{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
+  .ticket{position:relative;border-radius:22px;padding:22px 22px 20px;color:#fff;overflow:hidden;
+    opacity:0;transform:translateY(24px) rotate(-1.5deg);transition:opacity .5s,transform .7s var(--spring)}
+  .ticket.whole{color:var(--ink);transform:translateY(24px) rotate(1.5deg)}
+  .tix.in .ticket{opacity:1;transform:none} .tix.in .ticket.whole{transition-delay:.25s}
+  .ticket.main{background:linear-gradient(150deg,#35AEE6,var(--tokyo-d))}
+  .ticket.whole{background:linear-gradient(150deg,var(--sun),#FF9A3D)}
+  .ticket::before,.ticket::after{content:"";position:absolute;top:58%;width:26px;height:26px;border-radius:50%;background:var(--paper)}
+  .ticket::before{left:-13px} .ticket::after{right:-13px}
+  .t-perf{position:absolute;left:18px;right:18px;top:calc(58% + 12px);border-top:2.5px dashed rgba(255,255,255,.55)}
+  .ticket.whole .t-perf{border-color:rgba(27,43,74,.25)}
+  .t-lbl{font-size:11.5px;font-weight:900;letter-spacing:2px;text-transform:uppercase;opacity:.9}
+  .t-amt{font-size:clamp(36px,7vw,46px);font-weight:900;line-height:1.05;margin-top:4px;letter-spacing:-.5px}
+  .t-big{font-size:18px;font-weight:900;margin-top:4px;line-height:1.25}
+  .t-low{margin-top:40px}
+  .t-when{font-size:14px;font-weight:800}
+  .t-dots{display:flex;gap:4px;margin-top:9px;flex-wrap:wrap}
+  .t-dots i{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.28);transform:scale(.4);transition:transform .35s var(--spring),background .3s}
+  .ticket.whole .t-dots i{background:rgba(27,43,74,.15)}
+  .tix.in .t-dots i{transform:none;background:#fff}
+  .tix.in .ticket.whole .t-dots i{background:var(--ink)}
+  .tix.in .ticket.whole .t-dots i.b{background:#fff;box-shadow:inset 0 0 0 3px var(--osaka)}
+  .stamp{position:absolute;top:18px;right:16px;border:3px solid #fff;border-radius:10px;padding:4px 10px;font-size:15px;font-weight:900;
+    letter-spacing:1px;text-transform:uppercase;transform:rotate(-12deg) scale(2.4);opacity:0;transition:transform .45s var(--spring),opacity .2s}
+  .tix.in .stamp{transform:rotate(-12deg);opacity:1;transition-delay:.9s}
+  .t-bonus{position:absolute;top:18px;right:16px;background:#fff;color:var(--osaka-d);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:900;
+    transform:scale(0);transition:transform .45s var(--spring)}
+  .tix.in .t-bonus{transform:none;transition-delay:1.3s}
+  .tix-or{display:none}
+  .tix-note{text-align:center;margin-top:16px;font-size:15px;font-weight:800;color:var(--ink)}
+  .tix-note span{color:var(--mut);font-weight:700}
+  @media(max-width:620px){.tix{grid-template-columns:1fr;gap:10px}.tix-or{display:block;text-align:center;font-size:13px;font-weight:900;color:var(--dim);letter-spacing:2px}}
   @keyframes bob2{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
   .flag{position:absolute;left:0;top:0;width:40px;height:40px;font-size:34px;line-height:40px;text-align:center;
     z-index:4;opacity:0;pointer-events:none;transition:left .55s ease-in-out,top .55s cubic-bezier(.5,0,.5,1),opacity .3s}
@@ -174,21 +212,6 @@
   .tl-key span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
   @media(max-width:520px){.tiles{gap:3px}.tile{border-radius:8px}.tile b{font-size:15px}.tile i{font-size:8px;letter-spacing:.3px}}
 
-  .eq{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
-  .eq-chip{border-radius:18px;padding:14px 20px;text-align:center;min-width:150px}
-  .eq-chip .n{display:block;font-size:30px;font-weight:900;line-height:1}
-  .eq-chip .l{display:block;font-size:12.5px;margin-top:5px;font-weight:800}
-  .eq-core{background:var(--tokyo-t);border:1.5px solid var(--tokyo)} .eq-core .n,.eq-core .l{color:var(--tokyo-d)}
-  .eq-bonus{background:var(--sun-t);border:1.5px solid var(--sun)} .eq-bonus .n,.eq-bonus .l{color:var(--sun-d)}
-  .eq-total{background:var(--osaka);color:#fff;box-shadow:0 10px 26px rgba(255,90,95,.32)}
-  .eq-sign{font-size:30px;font-weight:900;color:var(--dim)}
-  .eq > *{opacity:0;transform:translateY(14px) scale(.9);transition:opacity .45s,transform .55s var(--spring)}
-  .eq.in > *{opacity:1;transform:none}
-  .eq.in > *:nth-child(2){transition-delay:.15s} .eq.in > *:nth-child(3){transition-delay:.3s}
-  .eq.in > *:nth-child(4){transition-delay:.45s} .eq.in > *:nth-child(5){transition-delay:.6s}
-  .eq.in .eq-total{animation:wobble .7s ease 1.4s}
-  @keyframes wobble{0%,100%{transform:none}30%{transform:scale(1.08) rotate(-2deg)}60%{transform:scale(1.04) rotate(2deg)}}
-  @media(max-width:560px){.eq{flex-direction:column;gap:6px}.eq-chip{width:100%}.eq-sign{font-size:24px;line-height:1}}
 
   /* route */
   .route{position:relative;padding:4px 6px 0}
@@ -292,7 +315,7 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     .confetti-wrap,.train,.cloud,.r-ride{display:none}
-    .reveal,.eq > *,.plus,.stop,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
+    .reveal,.plus,.stop,.ticket,.stamp,.t-bonus,.t-dots i,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
     .tile.new{flex-grow:1;opacity:1;margin:0;box-shadow:inset 0 0 0 3px var(--sun)}
   }
 </style>
@@ -355,13 +378,41 @@
           <div class="nextup" id="nextBox"></div>
         </div>
         <div class="stairs" id="stairs">
-          <div class="st"><div class="bar"><span class="ic">🏨</span><span class="ml">M1</span></div><div class="amt num"></div><div class="what">Hotels</div><div class="when">End of Sep</div><div class="nx">Up next</div></div>
-          <div class="st"><div class="bar"><span class="ic">✈️</span><span class="ml">M2</span></div><div class="amt num"></div><div class="what">Flights</div><div class="when">End of Dec</div><div class="nx">Up next</div></div>
-          <div class="st"><div class="bar"><span class="ic">🎒</span><span class="ml">M3</span></div><div class="amt num"></div><div class="what">Main trip</div><div class="when">End of Feb</div><div class="nx">Up next</div></div>
-          <div class="st"><div class="bar"><span class="ic">🌟</span><span class="ml">M4</span></div><div class="amt num"></div><div class="what">Bonus days</div><div class="when">End of Apr</div><div class="nx">Up next</div></div>
+          <div class="st"><div class="bar"><span class="ic">🏨</span><span class="ml">M1</span></div><div class="amt num"></div><div class="what">Hotels</div><div class="when">End of Sep</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
+          <div class="st"><div class="bar"><span class="ic">✈️</span><span class="ml">M2</span></div><div class="amt num"></div><div class="what">Flights</div><div class="when">End of Dec</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
+          <div class="st"><div class="bar"><span class="ic">🎒</span><span class="ml">M3</span></div><div class="amt num"></div><div class="what">Main trip</div><div class="when">End of Feb</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
+          <div class="st"><div class="bar"><span class="ic">🌟</span><span class="ml">M4</span></div><div class="amt num"></div><div class="what">Bonus days</div><div class="when">End of Apr</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
           <div class="flag" id="flag" aria-hidden="true"><span>🇯🇵</span></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Two tickets — every family -->
+  <section style="padding-top:8px" id="twoWays">
+    <div class="wrap">
+      <div class="sec-head"><h2>Saved <span data-p="70000"></span>? You're going! ✈️</h2></div>
+      <div class="sec-sub"><span id="tixAdd"></span> more adds 4 bonus days.</div>
+      <div class="tix" id="tix">
+        <div class="ticket main">
+          <div class="stamp">Going ✓</div>
+          <div class="t-lbl">Main trip</div>
+          <div class="t-amt num" data-p="70000"></div>
+          <div class="t-big">You're going to Japan!</div>
+          <div class="t-perf"></div>
+          <div class="t-low"><div class="t-when">June 2 – 9 · 8 days</div><div class="t-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="tix-or">— or —</div>
+        <div class="ticket whole">
+          <div class="t-bonus">+4 days ⭐</div>
+          <div class="t-lbl">Whole trip</div>
+          <div class="t-amt num" id="tixWhole"></div>
+          <div class="t-big">Even more Japan!</div>
+          <div class="t-perf"></div>
+          <div class="t-low"><div class="t-when">May 31 – June 11 · 12 days</div><div class="t-dots"><i class="b"></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i class="b"></i></div></div>
+        </div>
+      </div>
+      <div class="tix-note">Both tickets go to Japan. <span>The bigger one just stays longer.</span></div>
     </div>
   </section>
 
@@ -391,13 +442,6 @@
             <span style="--c:var(--osaka)">Osaka</span><span style="--c:var(--kyoto)">Kyoto</span>
             <span style="--c:var(--tokyo)">Tokyo</span><span style="--c:var(--ink)">Fly home</span>
           </div>
-        </div>
-        <div class="eq" id="eq">
-          <div class="eq-chip eq-core"><span class="n num" id="eqCore">₱70,000</span><span class="l">🎒 main trip</span></div>
-          <div class="eq-sign">+</div>
-          <div class="eq-chip eq-bonus"><span class="n num" id="eqBonus">₱15,000</span><span class="l" id="eqBonusL">⭐ 4 bonus days</span></div>
-          <div class="eq-sign">=</div>
-          <div class="eq-chip eq-total"><span class="n num" id="eqTotal">₱85,000</span><span class="l">your goal</span></div>
         </div>
       </div>
     </div>
@@ -502,7 +546,7 @@
   var DEPART     = new Date("2027-05-31T00:00:00");
   var USD_RATE   = 61.70;      // pesos per US$1 — keep in sync with budgettracker.html
   var MAIN_TRIP  = 70000;      // M3: the main trip, without bonus days
-  var BONUS_DAYS = 15000;      // the 4 bonus days (hotel, food, rides)
+  var BONUS_DAYS = 15000;      // the 4 bonus days
   var FAMILIES = {
     B: { name: "Bustamante", goal: 85000,  color: "var(--osaka)" },
     R: { name: "Romero",     goal: 85000,  color: "var(--tokyo)" },
@@ -519,11 +563,14 @@
   // Per-person cost of the main trip — must add up to MAIN_TRIP
   var COSTS = [
     { lbl: "✈️ Flight",         sm: "round trip",               p: 25000, c: "var(--osaka)" },
-    { lbl: "🛍️ Pocket money",   sm: "souvenirs & snacks",       p: 17227, c: "var(--osaka-d)" },
     { lbl: "🏨 Hotels",         sm: "6 nights",                 p: 15000, c: "var(--kyoto)" },
+    { lbl: "🛍️ Pocket money",   sm: "souvenirs & snacks",       p: 11749, c: "var(--osaka-d)" },
     { lbl: "🍙 Food",           sm: "7 days",                   p: 7000,  c: "var(--kyoto-d)" },
-    { lbl: "🎟️ Tickets",        sm: "temple · zoo · DisneySea", p: 3165,  c: "var(--tokyo)" },
-    { lbl: "🚃 Trains & buses", sm: "",                         p: 1886,  c: "var(--tokyo-d)" },
+    // Quotes, Nov 2026: Japan visa ₱2,750 (agency ₱1,950 + VFS ₱800; the visa itself is free)
+    // · Pacific Cross insurance, Asia up to 15 days ₱1,108 · PH travel tax ₱1,620 (kids 2–12 pay ₱810)
+    { lbl: "🛂 Visa & papers", sm: "visa · insurance · travel tax", p: 5478, c: "var(--ajisai)" },
+    { lbl: "🎟️ Attraction tickets", sm: "temple · zoo · DisneySea", p: 3165,  c: "var(--tokyo)" },
+    { lbl: "🚃 Transportation", sm: "trains & buses",                         p: 1886,  c: "var(--tokyo-d)" },
     { lbl: "📶 eSIM",           sm: "phone data",               p: 722,   c: "var(--dim)" }
   ];
   var MAX_GOAL = 100000;
@@ -644,9 +691,11 @@
 
     STEPS.forEach(function(s, i){ steps[i].querySelector(".amt").textContent = money(s.amt == null ? fam.goal : s.amt); });
 
-    $("eqCore").dataset.v = MAIN_TRIP; $("eqBonus").dataset.v = fam.goal - MAIN_TRIP; $("eqTotal").dataset.v = fam.goal;
-    ["eqCore","eqBonus","eqTotal"].forEach(function(id){ $(id).textContent = money(+$(id).dataset.v); });
-    $("eqBonusL").textContent = extra > 0 ? "⭐ bonus days + extras" : "⭐ 4 bonus days";
+
+    // ₱70k is enough to go — every family; the whole-trip ticket is their own goal
+    $("tixAdd").textContent = money(fam.goal - MAIN_TRIP);
+    $("tixWhole").textContent = money(fam.goal);
+    steps[2].classList.add("cango");
 
     var max = COSTS[0].p, html = "";
     function row(cls, lbl, sm, p, c){
@@ -656,7 +705,7 @@
     }
     COSTS.forEach(function(r){ html += row("", r.lbl, r.sm, r.p, r.c); });
     html += row(" sub", "🎒 Main trip", "", MAIN_TRIP, null);
-    html += row(" hl bonus", "⭐ Bonus days", "🏨 hotel · 🍙 food · 🚃 rides", BONUS_DAYS, "var(--sun)");
+    html += row(" hl bonus", "⭐ Bonus days", "🏨 hotel", BONUS_DAYS, "var(--sun)");
     if(extra > 0) html += row(" hl extra", "➕ Your family extra", "", extra, "var(--kyoto)");
     html += '<div class="total-row"><span>Your goal</span><b class="num">' + money(fam.goal) + '</b></div>';
     var bd = $("breakdown"); bd.innerHTML = html;
@@ -680,16 +729,14 @@
   var revealEls = document.querySelectorAll("#view section .panel, .city, .vote-banner, .cta");
   var onShow = new Map();
   function setupReveals(){
-    var tl = $("tl"), eq = $("eq"), route = $("route");
+    var tl = $("tl"), route = $("route");
     onShow.set(tl, function(){ setTimeout(function(){ tl.classList.add("grow"); }, reduce ? 0 : 400); });
-    onShow.set(eq, function(){
-      eq.classList.add("in");
-      ["eqCore","eqBonus","eqTotal"].forEach(function(id, i){
-        var el = $(id);
-        setTimeout(function(){ countTo(el, inCur(+el.dataset.v), fmtCur, 900); }, reduce ? 0 : 200 + i*180);
-      });
-    });
     onShow.set(route, function(){ route.classList.add("in"); });
+    var tix = $("tix");
+    tix.querySelectorAll(".ticket").forEach(function(tk, ti){
+      tk.querySelectorAll(".t-dots i").forEach(function(d, i){ d.style.transitionDelay = (0.5 + ti*0.25 + i*0.06) + "s"; });
+    });
+    onShow.set(tix, function(){ tix.classList.add("in"); });
     onShow.set($("breakdown"), growBars);
 
     if(reduce || !hasIO){
