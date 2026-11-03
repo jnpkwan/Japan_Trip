@@ -4,29 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Japan Trip 2027 — Savings Tracker</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23DA5327'/%3E%3Crect x='7' y='10' width='18' height='2.6' rx='1' fill='%23fff'/%3E%3Crect x='9' y='14' width='14' height='2' rx='1' fill='%23fff'/%3E%3Crect x='11' y='16' width='2.4' height='9' fill='%23fff'/%3E%3Crect x='18.6' y='16' width='2.4' height='9' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23FF5A5F'/%3E%3Crect x='7' y='10' width='18' height='2.6' rx='1' fill='%23fff'/%3E%3Crect x='9' y='14' width='14' height='2' rx='1' fill='%23fff'/%3E%3Crect x='11' y='16' width='2.4' height='9' fill='%23fff'/%3E%3Crect x='18.6' y='16' width='2.4' height='9' fill='%23fff'/%3E%3C/svg%3E">
 <style>
   :root {
-    --bg:           #FAF6F0;
+    --bg:           #F6FAFB;
     --card:         #FFFFFF;
-    --border:       #E6DED4;
-    --border-hover: rgba(218,83,39,0.4);
-    --text:         #231A16;
-    --text-muted:   #6E655C;
-    --text-dim:     #9A928A;
+    --border:       #DCE7EC;
+    --border-hover: rgba(255,90,95,0.4);
+    --text:         #1B2B4A;
+    --text-muted:   #55657A;
+    --text-dim:     #8C9AAB;
+    --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", system-ui, -apple-system, "Segoe UI", sans-serif;
 
     /* wafū palette — matches the trip deck */
-    --coral:       #DA5327;   /* 朱 vermilion — Osaka */
-    --coral-light: #FBEAE1;
-    --sky:         #2E77A6;   /* 藍 indigo — Tokyo */
-    --sky-light:   #E9EEF3;
-    --lime:        #6E9142;   /* 抹茶 matcha — day trips */
-    --lime-light:  #EBF0E6;
-    --gold:        #B28E2B;   /* 金茶 kincha — Kyoto */
-    --gold-light:  #EFEAF0;
+    --coral:       #FF5A5F;   /* 朱 vermilion — Osaka */
+    --coral-light: #FFE8E9;
+    --sky:         #1E9BD7;   /* 藍 indigo — Tokyo */
+    --sky-light:   #E1F3FB;
+    --lime:        #3FA36B;   /* 抹茶 matcha — day trips */
+    --lime-light:  #E3F4EA;
+    --gold:        #D69E00;   /* 金茶 kincha — Kyoto */
+    --gold-light:  #FFF6D6;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +32,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font);
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -84,7 +82,7 @@
     display: inline-block;
   }
   h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: clamp(40px, 5.5vw, 64px);
     font-weight: 900;
     line-height: 1.0;
@@ -116,12 +114,12 @@
     padding: 14px 22px;
     color: #fff;
     text-align: center;
-    box-shadow: 0 6px 24px rgba(218,83,39,0.35);
+    box-shadow: 0 6px 24px rgba(255,90,95,0.35);
     flex-shrink: 0;
     min-width: 130px;
   }
   .countdown-badge .cd-num {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: 36px;
     font-weight: 900;
     line-height: 1;
@@ -160,7 +158,7 @@
   }
   .stat-card.card-saved    { background: var(--coral); }
   .stat-card.card-needed   { background: var(--sky); }
-  .stat-card.card-target   { background: #fff; border: 1.5px solid var(--border); box-shadow: 0 2px 12px rgba(110,101,92,0.08); }
+  .stat-card.card-target   { background: #fff; border: 1.5px solid var(--border); box-shadow: 0 2px 12px rgba(27,43,74,0.08); }
 
   .stat-card-label {
     font-size: 10px;
@@ -174,7 +172,7 @@
   .stat-card.card-target .stat-card-label { color: var(--text-dim); }
 
   .stat-card-value {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: 32px;
     font-weight: 900;
     line-height: 1;
@@ -205,7 +203,7 @@
   .stat-card-bar-fill {
     height: 100%;
     border-radius: 100px;
-    background: linear-gradient(90deg, #F2D4C4, #fff);
+    background: linear-gradient(90deg, #FFC9CB, #fff);
     transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 0 8px rgba(255,255,255,0.5);
   }
@@ -243,11 +241,11 @@
     border-radius: 24px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 16px rgba(110,101,92,0.08);
+    box-shadow: 0 2px 16px rgba(27,43,74,0.08);
   }
   .family-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(110,101,92,0.15);
+    box-shadow: 0 12px 40px rgba(27,43,74,0.15);
   }
 
   .family-header {
@@ -278,7 +276,7 @@
   .family-icon svg { width: 26px; height: 26px; }
   .family-title-block { flex: 1; position: relative; z-index: 1; }
   .family-name {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: 22px;
     font-weight: 800;
     color: var(--text);
@@ -291,7 +289,7 @@
     font-weight: 500;
   }
   .family-pct-badge {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: 28px;
     font-weight: 900;
     line-height: 1;
@@ -309,16 +307,16 @@
     gap: 14px;
     padding: 10px 8px;
     border-radius: 16px;
-    border-bottom: 1px solid rgba(154,146,138,0.18);
+    border-bottom: 1px solid rgba(140,154,171,0.18);
     transition: background 0.2s;
   }
   .member-row:last-child { border-bottom: none; }
-  .member-row:hover { background: #FAF6F0; }
+  .member-row:hover { background: #F6FAFB; }
 
   /* Name — large and prominent */
   .member-info { min-width: 0; }
   .member-name {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: 19px;
     font-weight: 800;
     color: var(--text);
@@ -367,7 +365,7 @@
   }
   .member-bar-track {
     height: 12px;
-    background: rgba(154,146,138,0.16);
+    background: rgba(140,154,171,0.16);
     border-radius: 100px;
     overflow: visible;
     position: relative;
@@ -391,7 +389,7 @@
     top: -4px;
     width: 2px;
     height: 20px;
-    background: #9A928A;
+    background: #8C9AAB;
     opacity: 0.55;
     border-radius: 1px;
     transform: translateX(-50%);
@@ -405,7 +403,7 @@
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #9A928A;
+    color: #8C9AAB;
   }
   .ms-chips { display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: 1px; }
   .ms-chip {
@@ -414,13 +412,11 @@
     letter-spacing: 0.3px;
     padding: 1px 6px;
     border-radius: 999px;
-    border: 1px solid #D9D2C7;
-    color: #9A928A;
+    border: 1px solid #CFDCE3;
+    color: #8C9AAB;
     background: #fff;
   }
-  .ms-chip.hit { background: #B28E2B; border-color: #B28E2B; color: #fff; }
-  .ms-chip.won { background: #8C2318; border-color: #8C2318; color: #fff; box-shadow: 0 0 0 2px #FBEAE1; }
-  .ms-prize { font-size: 10.5px; font-weight: 700; color: #8C2318; margin-left: 4px; }
+  .ms-chip.hit { background: #FFC531; border-color: #FFC531; color: #1B2B4A; }
 
   .ms-legend {
     display: flex;
@@ -429,12 +425,12 @@
     flex-wrap: wrap;
     margin: -8px 0 18px;
     font-size: 12.5px;
-    color: #6E655C;
+    color: #55657A;
   }
-  .ms-legend b { color: #231A16; }
+  .ms-legend b { color: #1B2B4A; }
   .ms-legend .ms-key {
     font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px;
-    background: #B28E2B; color: #fff; margin-right: 5px; vertical-align: 1px;
+    background: #FFC531; color: #1B2B4A; margin-right: 5px; vertical-align: 1px;
   }
 
   /* Photo marker — floats gently at bar tip */
@@ -481,7 +477,7 @@
 
   /* Stat card bar fill shimmer */
   .stat-card-bar-fill {
-    background: linear-gradient(90deg, #F2D4C4 0%, #fff 40%, #F2D4C4 60%, #fff 100%);
+    background: linear-gradient(90deg, #FFC9CB 0%, #fff 40%, #FFC9CB 60%, #fff 100%);
     background-size: 200% auto;
     animation: shimmer 3s linear infinite;
   }
@@ -502,7 +498,7 @@
 
   .member-right { text-align: right; flex-shrink: 0; }
   .member-saved {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font);
     font-size: 18px;
     font-weight: 800;
     line-height: 1.2;
@@ -532,6 +528,8 @@
     .hero { flex-direction: column; align-items: flex-start; }
     h1 { font-size: 36px; }
     .member-name { font-size: 15px; }
+    .member-row { grid-template-columns: 1fr; gap: 0; }
+    .member-right { text-align: left; margin-top: 6px; }
   }
 </style>
 </head>
@@ -543,15 +541,15 @@
     <defs>
       <radialGradient id="skyGrad" cx="70%" cy="0%" r="60%">
         <stop offset="0%" stop-color="#D4E0EC" stop-opacity="0.5"/>
-        <stop offset="100%" stop-color="#FAF6F0" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#F6FAFB" stop-opacity="0"/>
       </radialGradient>
       <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E3CD8F" stop-opacity="0.5"/>
-        <stop offset="100%" stop-color="#E3CD8F" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#FFE08A" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#FFE08A" stop-opacity="0"/>
       </radialGradient>
       <radialGradient id="peachGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E8C4AE" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#E8C4AE" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#FFC9CB" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#FFC9CB" stop-opacity="0"/>
       </radialGradient>
     </defs>
     <ellipse cx="1100" cy="-60" rx="700" ry="500" fill="url(#skyGrad)"/>
@@ -559,11 +557,11 @@
     <ellipse cx="200" cy="950" rx="500" ry="300" fill="url(#peachGrad)"/>
     <!-- Fuji -->
     <g opacity="0.07">
-      <polygon points="1200,600 1320,200 1440,600" fill="#2E77A6"/>
+      <polygon points="1200,600 1320,200 1440,600" fill="#1E9BD7"/>
       <polygon points="1240,600 1320,260 1400,600" fill="#fff"/>
     </g>
     <!-- Torii -->
-    <g opacity="0.06" fill="#DA5327">
+    <g opacity="0.06" fill="#FF5A5F">
       <rect x="60" y="300" width="14" height="320" rx="4"/>
       <rect x="160" y="300" width="14" height="320" rx="4"/>
       <rect x="30" y="295" width="174" height="18" rx="5"/>
@@ -602,21 +600,21 @@
     </g>
     <!-- Sunflower -->
     <g transform="translate(1390,30)" opacity="0.13">
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(0)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(30)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(60)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(90)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(120)"/>
-      <ellipse rx="8" ry="22" fill="#B28E2B" transform="rotate(150)"/>
+      <ellipse rx="8" ry="22" fill="#D69E00" transform="rotate(0)"/>
+      <ellipse rx="8" ry="22" fill="#D69E00" transform="rotate(30)"/>
+      <ellipse rx="8" ry="22" fill="#D69E00" transform="rotate(60)"/>
+      <ellipse rx="8" ry="22" fill="#D69E00" transform="rotate(90)"/>
+      <ellipse rx="8" ry="22" fill="#D69E00" transform="rotate(120)"/>
+      <ellipse rx="8" ry="22" fill="#D69E00" transform="rotate(150)"/>
       <circle r="12" fill="#6B4E14"/>
     </g>
     <!-- Waves -->
     <g opacity="0.06">
-      <path d="M0,820 Q180,780 360,820 Q540,860 720,820 Q900,780 1080,820 Q1260,860 1440,820 L1440,900 L0,900 Z" fill="#2E77A6"/>
-      <path d="M0,850 Q180,820 360,850 Q540,880 720,850 Q900,820 1080,850 Q1260,880 1440,850 L1440,900 L0,900 Z" fill="#2E77A6" opacity="0.6"/>
+      <path d="M0,820 Q180,780 360,820 Q540,860 720,820 Q900,780 1080,820 Q1260,860 1440,820 L1440,900 L0,900 Z" fill="#1E9BD7"/>
+      <path d="M0,850 Q180,820 360,850 Q540,880 720,850 Q900,820 1080,850 Q1260,880 1440,850 L1440,900 L0,900 Z" fill="#1E9BD7" opacity="0.6"/>
     </g>
     <!-- Bamboo -->
-    <g opacity="0.07" fill="#6E9142">
+    <g opacity="0.07" fill="#3FA36B">
       <rect x="0" y="400" width="8" height="500" rx="4"/>
       <rect x="22" y="350" width="8" height="550" rx="4"/>
       <rect x="44" y="420" width="6" height="480" rx="3"/>
@@ -640,7 +638,7 @@
         <span class="accent">2027</span>
       </h1>
       <div class="hero-meta">
-        <div class="meta-pill">🗓 June 2–9, 2027</div>
+        <div class="meta-pill">🗓 May 31 – June 10, 2027</div>
         <div class="meta-pill">👨‍👩‍👧‍👦 4 Families · <span id="totalMembers">—</span> Travelers</div>
         <div class="meta-pill">🎯 <span id="pillTarget">₱70,000</span> per person</div>
       </div>
@@ -667,7 +665,7 @@
       <div class="stat-card-value" id="grandRemaining">₱0</div>
       <div class="stat-card-sub" id="totalMembersSub">across <span id="totalMembers2">—</span> travelers</div>
     </div>
-    <div class="stat-card card-target"><span style="position:absolute;top:18px;right:20px;width:30px;height:30px;opacity:.5;color:#B28E2B;opacity:.35;"><svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="M255.967 23.386c19.704 15.157 49.792 21.65 82.52 27.105 21.419 3.57 43.864 6.501 65.163 9.832-7.28 1.686-14.641 3.4-21.609 4.97-21.25 4.789-41 8.38-45.967 8.321H175.8l-.168.006c-4.61.172-24.44-3.34-45.662-8.181-7.035-1.605-14.48-3.364-21.842-5.09 21.346-3.342 43.848-6.279 65.32-9.858 32.727-5.454 62.815-11.948 82.52-27.105zm55 67.228v16h-110v-16zm3.394 34a24.977 24.977 0 0 0 4.563 4.28c3.799 2.763 8.317 4.922 13.701 7.076 10.768 4.307 24.987 8.332 41.158 12.375 18.612 4.653 39.434 9.269 60.069 13.865l-50.182 8.404H128.71l-50.54-8.424c20.606-4.59 41.396-9.2 59.98-13.845 16.172-4.043 30.39-8.068 41.159-12.375 5.384-2.154 9.902-4.313 13.7-7.076a24.977 24.977 0 0 0 4.563-4.28zm28.606 62v30h-46v-30zm-64 0v30h-46v-30zm-64 0v30h-46v-30zm131.123 48c1.246 1.65 2.68 3.113 4.156 4.422 3.592 3.184 8.04 6.026 13.383 8.965 10.686 5.877 24.947 11.954 41.178 18.041 20.082 7.531 43.024 14.894 65.33 21.42l-54.914 9.152H96.263l-54.533-9.133c22.327-6.53 45.294-13.9 65.397-21.439 16.23-6.087 30.492-12.164 41.178-18.041 5.343-2.939 9.79-5.781 13.382-8.965 1.477-1.309 2.91-2.772 4.157-4.422zm28.877 80v30h-238v-30zm3.123 48c1.246 1.65 2.68 3.113 4.156 4.422 3.592 3.184 8.04 6.026 13.383 8.965 10.686 5.877 24.947 11.954 41.178 18.041 20.102 7.539 43.07 14.909 65.396 21.44l-54.533 9.132H64.71l-54.913-9.152c22.305-6.526 45.247-13.889 65.33-21.42 16.23-6.087 30.492-12.164 41.178-18.041 5.343-2.939 9.79-5.781 13.382-8.965 1.477-1.309 2.91-2.772 4.157-4.422zm60.877 80v46h-142v-46zm-160 0v46h-46v-46zm-64 0v46h-142v-46z"></path></svg></span>
+    <div class="stat-card card-target"><span style="position:absolute;top:18px;right:20px;width:30px;height:30px;opacity:.5;color:#D69E00;opacity:.35;"><svg  fill="currentColor" stroke-width="0" viewBox="0 0 512 512"   xmlns="http://www.w3.org/2000/svg"><path d="M255.967 23.386c19.704 15.157 49.792 21.65 82.52 27.105 21.419 3.57 43.864 6.501 65.163 9.832-7.28 1.686-14.641 3.4-21.609 4.97-21.25 4.789-41 8.38-45.967 8.321H175.8l-.168.006c-4.61.172-24.44-3.34-45.662-8.181-7.035-1.605-14.48-3.364-21.842-5.09 21.346-3.342 43.848-6.279 65.32-9.858 32.727-5.454 62.815-11.948 82.52-27.105zm55 67.228v16h-110v-16zm3.394 34a24.977 24.977 0 0 0 4.563 4.28c3.799 2.763 8.317 4.922 13.701 7.076 10.768 4.307 24.987 8.332 41.158 12.375 18.612 4.653 39.434 9.269 60.069 13.865l-50.182 8.404H128.71l-50.54-8.424c20.606-4.59 41.396-9.2 59.98-13.845 16.172-4.043 30.39-8.068 41.159-12.375 5.384-2.154 9.902-4.313 13.7-7.076a24.977 24.977 0 0 0 4.563-4.28zm28.606 62v30h-46v-30zm-64 0v30h-46v-30zm-64 0v30h-46v-30zm131.123 48c1.246 1.65 2.68 3.113 4.156 4.422 3.592 3.184 8.04 6.026 13.383 8.965 10.686 5.877 24.947 11.954 41.178 18.041 20.082 7.531 43.024 14.894 65.33 21.42l-54.914 9.152H96.263l-54.533-9.133c22.327-6.53 45.294-13.9 65.397-21.439 16.23-6.087 30.492-12.164 41.178-18.041 5.343-2.939 9.79-5.781 13.382-8.965 1.477-1.309 2.91-2.772 4.157-4.422zm28.877 80v30h-238v-30zm3.123 48c1.246 1.65 2.68 3.113 4.156 4.422 3.592 3.184 8.04 6.026 13.383 8.965 10.686 5.877 24.947 11.954 41.178 18.041 20.102 7.539 43.07 14.909 65.396 21.44l-54.533 9.132H64.71l-54.913-9.152c22.305-6.526 45.247-13.889 65.33-21.42 16.23-6.087 30.492-12.164 41.178-18.041 5.343-2.939 9.79-5.781 13.382-8.965 1.477-1.309 2.91-2.772 4.157-4.422zm60.877 80v46h-142v-46zm-160 0v46h-46v-46zm-64 0v46h-142v-46z"></path></svg></span>
       <div class="stat-card-label">Grand Target</div>
       <div class="stat-card-value" id="grandTarget">₱0</div>
       <div class="stat-card-sub"><span id="subTarget">₱70,000</span> per person</div>
@@ -685,12 +683,14 @@
 
 // Per-person savings target. Overrides trip.targetPerPerson in savings-data.json;
 // set to null to use the JSON value instead.
-const TARGET_OVERRIDE = 70000;
+const TARGET_OVERRIDE = 85000;
 
+// Default ladder (B & R families).
 const MILESTONES = [
-  { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30", prize: 1000, winner: "" },
-  { label: "M2", amt: 50000,  due: "end of December",  date: "2026-12-31", prize: 2000, winner: "" },
-  { label: "M3", amt: 70000,  due: "end of April",     date: "2027-04-30", prize: 2000, winner: "" },
+  { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
+  { label: "M2", amt: 50000,  due: "end of December",  date: "2026-12-31" },
+  { label: "M3", amt: 70000,  due: "end of February",  date: "2027-02-28" },
+  { label: "M4", amt: 85000,  due: "end of April",     date: "2027-04-30" },
 ];
 
 // FX: pesos per 1 US dollar. Mid-market, 16 Jul 2026 — nudge this when it drifts.
@@ -701,16 +701,18 @@ const USD_RATE = 61.70;
 // Keyed by how the family name STARTS in savings-data.json (case-insensitive).
 // currency:"USD" means their `saved` values in the JSON are DOLLARS, not pesos.
 // Targets/milestones here stay in PESOS — the card converts them for display.
+// Each milestone only needs `amt`; label and deadline come from MILESTONES.
 const FAMILY_OVERRIDES = [
   {
-    match: "C",              // C Family — flying from the US, higher airfare
+    match: "K",              // K Family — ₱100k goal
+    target: 100000,
+    milestones: [ { amt: 15000 }, { amt: 50000 }, { amt: 70000 }, { amt: 100000 } ],
+  },
+  {
+    match: "C",              // C Family — flying from the US, tracked in dollars
     currency: "USD",
     target: 100000,
-    milestones: [
-      { label: "M1", amt: 15000,  due: "end of September", date: "2026-09-30" },
-      { label: "M2", amt: 75000,  due: "end of December",  date: "2026-12-31" },
-      { label: "M3", amt: 100000, due: "end of April",     date: "2027-04-30" },
-    ],
+    milestones: [ { amt: 15000 }, { amt: 50000 }, { amt: 70000 }, { amt: 100000 } ],
   },
 ];
 function famConfig(name) {
@@ -739,19 +741,19 @@ const FAMILY_ICONS = [
 
 // wafū city palettes — one per family, matching the trip deck
 const CITY_PALS = [
-  { accent:'#DA5327', tint:'#FBEAE1', name:'Osaka' },
-  { accent:'#B28E2B', tint:'#EFEAF0', name:'Kyoto' },
-  { accent:'#2E77A6', tint:'#E9EEF3', name:'Tokyo' },
-  { accent:'#6E9142', tint:'#EBF0E6', name:'Day trips' },
+  { accent:'#FF5A5F', tint:'#FFE8E9', name:'Strawberry' },
+  { accent:'#7B6CD9', tint:'#EEEBFB', name:'Hydrangea' },
+  { accent:'#1E9BD7', tint:'#E1F3FB', name:'Ramune' },
+  { accent:'#3FA36B', tint:'#E3F4EA', name:'Melon' },
 ];
 
 const AVATAR_PALETTES = [
-  { bg: '#FBEAE1', text: '#8C2318' },
-  { bg: '#E9EEF3', text: '#1B3A5C' },
-  { bg: '#EBF0E6', text: '#3B5A34' },
-  { bg: '#EFEAF0', text: '#43304E' },
-  { bg: '#F2D4C4', text: '#B03A1E' },
-  { bg: '#E7E0D2', text: '#6E655C' },
+  { bg: '#FFE8E9', text: '#C2303A' },
+  { bg: '#E1F3FB', text: '#12628A' },
+  { bg: '#E3F4EA', text: '#23683F' },
+  { bg: '#FFF6D6', text: '#4B3FA0' },
+  { bg: '#FFC9CB', text: '#C2303A' },
+  { bg: '#E6EEF2', text: '#55657A' },
 ];
 
 function initials(name) {
@@ -763,7 +765,7 @@ function updateCountdown() {
   const now = new Date();
   const targets = MILESTONES
     .map(ms => ({ label: "to " + ms.label + " · " + ms.due, date: new Date(ms.date + "T23:59:59") }))
-    .concat([{ label: "to the trip!", date: new Date('2027-06-02T00:00:00') }])
+    .concat([{ label: "to the trip!", date: new Date('2027-05-31T00:00:00') }])
     .sort((a, b) => a.date - b.date);
   const next = targets.find(t => t.date > now) || targets[targets.length - 1];
   const diff = next.date - now;
@@ -784,7 +786,7 @@ function pct(saved, target) {
 function barColor(p, familyColor) {
   return familyColor;   /* color = family, always; completion shown by badge */
 }
-const STAR = `<svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;fill:#B28E2B;vertical-align:-1px;margin-right:3px"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>`;
+const STAR = `<svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;fill:#D69E00;vertical-align:-1px;margin-right:3px"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>`;
 
 // ── Build avatar HTML ─────────────────────────────────────────────────
 // Shows photo if available, initials as fallback (the img onerror handles missing files gracefully)
@@ -832,16 +834,15 @@ function render() {
 
   document.getElementById('msLegend').innerHTML = MILESTONES.map(ms =>
     `<span><span class="ms-key">${ms.label}</span><b>${fmt(ms.amt)}</b> by ${ms.due}` +
-    (ms.prize ? ` <span class="ms-prize">🏆 ${fmt(ms.prize)} ${ms.winner ? 'won by ' + ms.winner : 'reward — first to reach ' + fmt(ms.amt)}</span>` : '') +
     `</span>`
   ).join('') +
   FAMILY_OVERRIDES.map(o => {
     const fam = DATA.families.find(f => f.name.trim().toLowerCase().startsWith(o.match.toLowerCase()));
     if (!fam) return '';
     const c = famConfig(fam.name);
-    return `<span style="color:#9A928A">— ${fam.name}: ${o.milestones.map(m => fmtFam(m.amt, c)).join(' / ')} (${fmtFam(o.target, c)} goal)</span>`;
+    return `<span style="color:#8C9AAB">— ${fam.name}: ${o.milestones.map(m => fmtFam(m.amt, c)).join(' / ')} (${fmtFam(o.target, c)} goal)</span>`;
   }).join('') +
-  `<span style="color:#9A928A">— others per traveler, of the ${fmt(defaultTarget)} goal</span>`;
+  `<span style="color:#8C9AAB">— others per traveler, of the ${fmt(defaultTarget)} goal</span>`;
 
   // palette index per family (default: JSON order), with K↔R swap
   const palIdx = DATA.families.map((_, i) => i % CITY_PALS.length);
@@ -883,8 +884,7 @@ function render() {
           const ticks = msList.map(ms =>
             `<div class="ms-tick" data-ms="${ms.label}" style="left:${Math.min(100, ms.amt / target * 100)}%"></div>`).join('');
           const chips = `<span class="ms-chips">${msList.map(ms => {
-            const won = ms.winner && ms.winner === m.name;
-            return `<span class="ms-chip${savedP >= ms.amt ? ' hit' : ''}${won ? ' won' : ''}">${won ? '🏆 ' : ''}${ms.label}${savedP >= ms.amt ? ' ✓' : ''}</span>`;
+            return `<span class="ms-chip${savedP >= ms.amt ? ' hit' : ''}">${ms.label}${savedP >= ms.amt ? ' ✓' : ''}</span>`;
           }).join('')}</span>`;
 
           return `
@@ -904,7 +904,7 @@ function render() {
             </div>
             <div class="member-right">
               <div class="member-saved" style="color:${col2}">${fmtFam(savedP, cfg)}${chips}</div>
-              <div class="member-remaining">${reached ? STAR + '<span style="color:#B28E2B;font-weight:700">Goal reached!</span>' : fmtFam(rem, cfg) + ' to go'}</div>
+              <div class="member-remaining">${reached ? STAR + '<span style="color:#D69E00;font-weight:700">Goal reached!</span>' : fmtFam(rem, cfg) + ' to go'}</div>
             </div>
           </div>`;
         }).join('')}
@@ -940,8 +940,8 @@ fetch('savings-data.json')
     document.getElementById('familiesGrid').innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
         <div style="font-size:40px;margin-bottom:16px">⚠️</div>
-        <div style="font-family:'Playfair Display',serif;font-size:20px;color:#231A16;margin-bottom:8px">Could not load savings-data.json</div>
-        <div style="font-size:14px;color:#6E655C;line-height:1.7">Make sure <strong>savings-data.json</strong> is in the same folder as this HTML file<br>and open via a local server (e.g. <code>python3 -m http.server</code>).</div>
+        <div style="font-family:var(--font);font-size:20px;color:#1B2B4A;margin-bottom:8px">Could not load savings-data.json</div>
+        <div style="font-size:14px;color:#55657A;line-height:1.7">Make sure <strong>savings-data.json</strong> is in the same folder as this HTML file<br>and open via a local server (e.g. <code>python3 -m http.server</code>).</div>
       </div>`;
   });
 </script>
