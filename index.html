@@ -789,6 +789,7 @@
 
   // ── Confetti ──────────────────────────────────────────────────
   var cols = ["#FF5A5F","#3FA36B","#1E9BD7","#FFC531","#1B2B4A","#FF9A3D"];
+  // Confetti is only for a real M3 or M4 (see personalClimb)
   function burst(n){
     if(reduce) return;
     var wrap = document.createElement("div"); wrap.className = "confetti-wrap"; document.body.appendChild(wrap);
@@ -868,7 +869,7 @@
     flag.style.transition = "none"; flag.style.opacity = 0; placeFlag(0, hs); void flag.offsetWidth; flag.style.transition = "";
     timers.push(setTimeout(function(){ flag.style.opacity = 1; hopTo(0, hs); }, 700));
     [1,2,3].forEach(function(i){ timers.push(setTimeout(function(){ hopTo(i, hs); }, 700 + i*750)); });
-    timers.push(setTimeout(function(){ flag.classList.remove("hop"); flag.classList.add("party"); burst(36); }, 700 + 3*750 + 600));
+    timers.push(setTimeout(function(){ flag.classList.remove("hop"); flag.classList.add("party"); }, 700 + 3*750 + 600));
   }
   window.addEventListener("resize", function(){
     if(!fam) return;
@@ -1154,7 +1155,6 @@
     showPrize(t, isNew);
     if(t.r === "common") [784, 1047].forEach(function(f, i){ tone(f, i*0.1, 0.18, "triangle", 0.08); });
     else fanfare();
-    if(t.r !== "common") burst(t.r === "superr" ? 90 : 40);
     renderGacha(); lastNew = null;
   });
   function showPrize(t, isNew){
@@ -1350,7 +1350,7 @@
       if(!revealsReady){ revealsReady = true; setupReveals(); }
       requestAnimationFrame(function(){ setTimeout(function(){ if(me) personalClimb(me, true); else climb(); }, 150); });
     }
-    if(animate && !reduce){ burst(50); landing.classList.add("out"); setTimeout(go, 520); }
+    if(animate && !reduce){ landing.classList.add("out"); setTimeout(go, 520); }
     else go();
   }
   $("famBtns").addEventListener("click", function(e){
