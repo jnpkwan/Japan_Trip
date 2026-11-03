@@ -314,6 +314,149 @@
   footer b{display:block;font-size:18px;color:var(--ink);font-weight:900;margin-bottom:4px}
   footer a{color:var(--osaka-d);text-decoration:none;font-weight:800}
 
+  /* who-am-i + personal card */
+  .wai{margin-top:22px}
+  .wai-row{display:flex;align-items:center;justify-content:center;gap:10px}
+  .wai-lbl{font-size:16px;font-weight:900}
+  .snd{border:1.5px solid var(--line);background:#fff;border-radius:999px;width:34px;height:34px;font-size:15px;cursor:pointer;transition:transform .2s var(--spring)}
+  .snd:hover{transform:scale(1.1)}
+  .mem-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:10px}
+  .mem{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px 4px 4px;
+    font-size:14px;font-weight:800;color:var(--ink);cursor:pointer;transition:transform .2s var(--spring),border-color .2s,background .2s,color .2s;
+    animation:pop .45s var(--spring) both}
+  .mem:hover{transform:translateY(-2px) scale(1.04);border-color:var(--ink)}
+  .mem.on{background:var(--ink);color:#fff;border-color:var(--ink);transform:scale(1.08)}
+  .av{width:30px;height:30px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:900;color:#fff;flex-shrink:0;position:relative}
+  .av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+  .data-note[hidden],.wai[hidden],.me[hidden]{display:none}
+  .data-note{margin-top:16px;font-size:13px;color:var(--mut);font-weight:700;background:var(--paper);border:1px dashed var(--dim);border-radius:12px;padding:8px 12px;display:inline-block}
+  .me{margin:16px auto 0;max-width:560px;background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px;text-align:left;animation:pop .5s var(--spring) both}
+  .me-top{display:flex;align-items:center;gap:12px}
+  .me-top .av{width:54px;height:54px;font-size:19px;border:3px solid #fff;box-shadow:0 4px 12px rgba(27,43,74,.18)}
+  .me-name{font-size:21px;font-weight:900;line-height:1.1}
+  .me-saved{font-size:13.5px;color:var(--mut);font-weight:700}
+  .me-pct{margin-left:auto;font-size:36px;font-weight:900;color:var(--osaka-d);line-height:1}
+  .me-pct small{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);text-align:right}
+  .me-bar{position:relative;height:16px;border-radius:999px;background:#fff;border:1.5px solid var(--line);margin-top:12px;overflow:hidden}
+  .me-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--osaka),var(--sun));border-radius:999px;transition:width 1.3s var(--spring)}
+  .me-bar .mk{position:absolute;top:0;bottom:0;width:2px;background:rgba(27,43,74,.18)}
+  .stamps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;justify-items:center}
+  .stampc{width:100%;max-width:74px;aspect-ratio:1;border-radius:50%;border:2.5px dashed var(--line);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;font-weight:900;color:var(--dim);font-size:10px;letter-spacing:.5px;text-transform:uppercase;background:#fff}
+  .stampc b{font-size:19px;letter-spacing:0}
+  .stampc.got{border:3px double var(--c);color:var(--c);animation:slam .45s var(--spring) both}
+  @keyframes slam{0%{transform:scale(2.6) rotate(-30deg);opacity:0}100%{transform:rotate(-10deg);opacity:1}}
+  .stampc.got{transform:rotate(-10deg)}
+  .me-next{margin-top:14px;background:var(--ink);color:#fff;border-radius:14px;padding:11px 14px;font-size:14px;font-weight:700;line-height:1.4}
+  .me-next b{color:var(--sun)}
+  .me-going{margin-top:8px;font-size:14px;font-weight:900;color:var(--kyoto-d)}
+
+  /* ladder in "me" mode: bars become glasses that fill up */
+  .st:nth-child(1) .bar{--c:var(--osaka)} .st:nth-child(2) .bar{--c:var(--kyoto)}
+  .st:nth-child(3) .bar{--c:var(--tokyo)} .st:nth-child(4) .bar{--c:var(--sun)}
+  .liq{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--c);transition:height 1s var(--spring);z-index:0}
+  .st:nth-child(4) .liq{background:linear-gradient(170deg,var(--sun),#FF9A3D)}
+  .stairs:not(.personal) .liq{display:none}
+  .st .bar > span:not(.liq){position:relative;z-index:1}
+  .stairs.personal .st .bar{background:color-mix(in srgb,var(--c) 18%,#fff);color:var(--ink);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--c) 45%,#fff)}
+  .stairs.personal .st.next .bar{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--c) 45%,#fff),0 0 0 3px var(--card),0 0 0 5px var(--ink)}
+  .stairs.personal .st .bar .bd-pill{background:#fff}
+
+  /* race */
+  .race{padding:16px 14px}
+  .r-scale{display:grid;grid-template-columns:22px 96px 1fr 46px;gap:8px;margin-bottom:4px}
+  .r-scale .sc{position:relative;height:14px}
+  .r-scale .sc span{position:absolute;transform:translateX(-50%);font-size:10px;font-weight:900;color:var(--dim)}
+  .lane{display:grid;grid-template-columns:22px 96px 1fr 46px;align-items:center;gap:8px;padding:4px 6px;margin:0 -6px;border-radius:14px;cursor:pointer;
+    transition:background .2s}
+  .lane:hover{background:var(--paper)}
+  .lane.me-lane{background:var(--sun-t);box-shadow:0 0 0 2px var(--sun)}
+  .lane .rk{font-size:13px;font-weight:900;color:var(--dim);text-align:right}
+  .lane .ln{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lane .tr{position:relative;height:32px;border-radius:999px;background:repeating-linear-gradient(90deg,var(--paper) 0 14px,#EAF2F6 14px 28px)}
+  .lane .tick{position:absolute;top:4px;bottom:4px;width:2px;margin-left:-1px;background:rgba(27,43,74,.12)}
+  .lane .fin{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:17px}
+  .runner{position:absolute;top:50%;left:4%;transform:translate(-50%,-50%);transition:left 1.8s cubic-bezier(.2,.8,.2,1);z-index:2}
+  .runner .av{width:28px;height:28px;border:2px solid #fff;box-shadow:0 2px 6px rgba(27,43,74,.25)}
+  .race.go .runner .av{animation:runbob .25s ease-in-out 7}
+  @keyframes runbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) rotate(-6deg)}}
+  .lane.lead .runner::after{content:"👑";position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:14px}
+  .runner.wig .av{animation:wiggle .5s ease}
+  .lane .pc{font-size:13px;font-weight:900;text-align:right}
+  .race-key{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;font-weight:800;color:var(--mut)}
+  .race-key span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--c)}
+  @media(max-width:560px){
+    .r-scale,.lane{grid-template-columns:18px 64px 1fr 38px;gap:6px}
+    .lane .ln,.lane .pc{font-size:11.5px}
+    .me-pct{font-size:30px}.me-name{font-size:18px}
+  }
+
+  /* gachapon */
+  .gacha{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:start}
+  @media(max-width:700px){.gacha{grid-template-columns:1fr}}
+  .machine{position:relative;width:220px;margin:0 auto}
+  .dome{position:relative;width:220px;height:190px;border-radius:110px 110px 26px 26px;overflow:hidden;border:4px solid #fff;
+    background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.95),rgba(225,243,251,.6) 38%,rgba(190,231,250,.55));
+    box-shadow:inset 0 -12px 22px rgba(30,155,215,.18),0 8px 22px rgba(27,43,74,.12);z-index:1}
+  .cap{position:absolute;width:42px;height:42px;border-radius:50%;background:linear-gradient(180deg,var(--c) 50%,#fff 50%);
+    box-shadow:inset 0 0 0 2px rgba(27,43,74,.08),inset -4px -4px 8px rgba(27,43,74,.08)}
+  .machine.shake .cap{animation:jig .12s ease-in-out 6 alternate}
+  @keyframes jig{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r))}}
+  .shine{position:absolute;left:26px;top:20px;width:40px;height:70px;border-radius:50%;background:rgba(255,255,255,.55);transform:rotate(18deg)}
+  .g-body{position:relative;margin-top:-14px;height:176px;border-radius:16px 16px 24px 24px;background:linear-gradient(180deg,var(--osaka) 0%,var(--osaka-d) 100%);
+    box-shadow:0 12px 26px rgba(194,48,58,.3)}
+  .g-label{position:absolute;top:20px;left:0;right:0;text-align:center;color:#fff;font-size:15px;font-weight:900;letter-spacing:4px}
+  .knob{position:absolute;left:24px;top:54px;width:66px;height:66px;border-radius:50%;background:#fff;border:5px solid var(--sun);cursor:pointer;
+    box-shadow:0 4px 0 rgba(0,0,0,.18);transition:transform .2s var(--spring)}
+  .knob .handle{position:absolute;left:6px;right:6px;top:50%;height:13px;margin-top:-6.5px;background:var(--ink);border-radius:7px}
+  .knob:hover:not(:disabled){transform:scale(1.07)}
+  .knob.ready{animation:knobcall 1.6s ease-in-out infinite}
+  @keyframes knobcall{0%,100%{box-shadow:0 4px 0 rgba(0,0,0,.18),0 0 0 0 rgba(255,197,49,.7)}50%{box-shadow:0 4px 0 rgba(0,0,0,.18),0 0 0 10px rgba(255,197,49,0)}}
+  .knob.turn{animation:turn 1s cubic-bezier(.5,0,.3,1)}
+  @keyframes turn{to{transform:rotate(360deg)}}
+  .knob:disabled{cursor:not-allowed;filter:grayscale(.6);opacity:.75}
+  .g-tokens{position:absolute;left:100px;top:62px;right:12px;color:#fff;font-size:12px;font-weight:900;line-height:1.3}
+  .g-tokens b{display:block;font-size:24px;line-height:1}
+  .chute{position:absolute;left:50%;bottom:14px;width:88px;height:42px;margin-left:-44px;background:var(--ink);border-radius:12px 12px 6px 6px}
+  .capsule{position:absolute;left:50%;bottom:20px;width:58px;height:58px;margin-left:-29px;border:0;background:none;padding:0;cursor:pointer;z-index:3;
+    --c:var(--tokyo)}
+  .capsule[hidden]{display:none}
+  .capsule i{position:absolute;left:0;right:0;height:50%;transition:transform .55s var(--spring),opacity .4s}
+  .capsule .top{top:0;border-radius:29px 29px 0 0;background:var(--c);box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)}
+  .capsule .bot{bottom:0;border-radius:0 0 29px 29px;background:#fff;box-shadow:inset 0 0 0 2px rgba(27,43,74,.08)}
+  .capsule.drop{animation:capdrop .9s cubic-bezier(.3,0,.3,1) both,tapme 1.2s ease-in-out .9s infinite}
+  @keyframes capdrop{0%{transform:translateY(-110px) scale(.6);opacity:0}55%{transform:translateY(0) scale(1);opacity:1}72%{transform:translateY(-16px)}86%{transform:none}93%{transform:translateY(-5px)}100%{transform:none}}
+  @keyframes tapme{0%,100%{transform:none}50%{transform:scale(1.1) rotate(-6deg)}}
+  .capsule.open{animation:none}
+  .capsule.open .top{transform:translate(-26px,-48px) rotate(-40deg);opacity:0}
+  .capsule.open .bot{transform:translate(22px,22px) rotate(30deg);opacity:0}
+  .g-msg{font-size:17px;font-weight:900;min-height:26px}
+  .g-msg small{display:block;font-size:13px;color:var(--mut);font-weight:700}
+  .g-prize{margin-top:12px;border-radius:20px;border:3px solid var(--rc);background:linear-gradient(180deg,var(--rt) 0%,#fff 70%);padding:16px 18px;
+    text-align:center;position:relative;animation:prizein .6s var(--spring) both}
+  .g-prize.super{background:linear-gradient(135deg,#FFE8E9,#FFF6D6,#E3F4EA,#E1F3FB,#EEEBFB);animation:prizein .6s var(--spring) both,rainbow 3s linear infinite}
+  @keyframes rainbow{0%,100%{border-color:var(--osaka)}25%{border-color:var(--sun)}50%{border-color:var(--kyoto)}75%{border-color:var(--tokyo)}}
+  @keyframes prizein{0%{transform:scale(.3) rotate(-8deg);opacity:0}100%{transform:none;opacity:1}}
+  .g-prize .em{font-size:64px;line-height:1.1;display:inline-block;animation:spinin .8s var(--spring) both .1s}
+  @keyframes spinin{0%{transform:scale(0) rotate(-200deg)}100%{transform:none}}
+  .g-prize .nm{font-size:22px;font-weight:900;margin-top:4px}
+  .g-prize .jp{font-size:14px;color:var(--mut);font-weight:800}
+  .g-prize .fact{font-size:14.5px;font-weight:700;margin-top:8px;line-height:1.45}
+  .g-prize .rar{position:absolute;top:10px;left:10px;font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;
+    background:var(--rc);color:#fff;border-radius:999px;padding:2px 9px}
+  .g-prize .new{position:absolute;top:10px;right:10px;font-size:10px;font-weight:900;letter-spacing:1px;background:var(--osaka);color:#fff;border-radius:999px;padding:2px 9px;animation:bob2 1.4s ease-in-out infinite}
+  .album{margin-top:16px}
+  .album-h{display:flex;justify-content:space-between;font-size:13px;font-weight:900;color:var(--mut);letter-spacing:.5px;text-transform:uppercase}
+  .album-h b{color:var(--ink)}
+  .album-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:8px}
+  @media(max-width:520px){.album-grid{grid-template-columns:repeat(4,1fr)}}
+  .slot{aspect-ratio:1;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:24px;
+    color:var(--line);font-weight:900;background:var(--paper);cursor:default;padding:0}
+  .slot.got{border:2px solid var(--rc);background:var(--rt);cursor:pointer;transition:transform .2s var(--spring)}
+  .slot.got:hover{transform:scale(1.12) rotate(-6deg)}
+  .slot.fresh{animation:slam .5s var(--spring) both}
+
   /* fun layer */
   .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
   .confetti{position:absolute;top:-14px;opacity:0;border-radius:2px;animation:confetti-fall linear forwards}
@@ -324,7 +467,7 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     .confetti-wrap,.train,.cloud,.r-ride{display:none}
-    .reveal,.plus,.stop,.ticket,.stamp,.t-bonus,.t-dots i,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
+    .reveal,.plus,.stop,.mem,.me,.stampc,.g-prize,.capsule,.slot,.ticket,.stamp,.t-bonus,.t-dots i,.fl,.cd,.who,.fam-btn,.tap,h1 .ch,.sun{opacity:1!important;transform:none!important}
     .tile.new{flex-grow:1;opacity:1;margin:0;box-shadow:inset 0 0 0 3px var(--sun)}
   }
 </style>
@@ -385,6 +528,12 @@
           <div class="gn num" id="goalNum">₱0</div>
           <div class="gs" id="goalSub">by end of April 2027</div>
           <div class="nextup" id="nextBox"></div>
+          <div class="wai" id="wai" hidden>
+            <div class="wai-row"><span class="wai-lbl">Which one is you? 👇</span><button type="button" class="snd" id="sndBtn" aria-label="Sound on or off">🔊</button></div>
+            <div class="mem-chips" id="memChips"></div>
+          </div>
+          <div class="data-note" id="dataNote" hidden>Live savings didn't load, so this shows the plan. Open the page from the website to see everyone's progress.</div>
+          <div class="me" id="meCard" hidden></div>
         </div>
         <div class="stairs" id="stairs">
           <div class="st"><div class="bar"><span class="ic">🏨</span><span class="ml">M1</span></div><div class="amt num"></div><div class="what">Hotels</div><div class="when">End of Sep</div><div class="nx">Up next</div><div class="go">✈️ You can go!</div></div>
@@ -423,6 +572,43 @@
         </div>
       </div>
       <div class="tix-note">Both tickets go to Japan. <span>The bigger one just stays longer.</span></div>
+    </div>
+  </section>
+
+  <!-- Race to Japan -->
+  <section style="padding-top:8px" id="raceSec" hidden>
+    <div class="wrap">
+      <div class="sec-head"><h2>Race to Japan 🏁</h2><span class="sub">all <span id="raceCount"></span> travelers</span></div>
+      <div class="sec-sub">Everyone's racing to the full trip. Tap your own lane.</div>
+      <div class="panel race" id="race"></div>
+    </div>
+  </section>
+
+  <!-- Gachapon -->
+  <section style="padding-top:8px" id="gachaSec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Gacha Gacha! 🎰</h2><span class="sub">collect all 16</span></div>
+      <div class="sec-sub">One free twist every day. Every savings stamp you earn gives you a bonus twist!</div>
+      <div class="panel gacha">
+        <div class="machine" id="machine">
+          <div class="dome"><span class="cap" style="--c:var(--osaka);left:18px;top:120px;--dx:4px;--dy:-6px;--r:20deg"></span><span class="cap" style="--c:var(--tokyo);left:62px;top:132px;--dx:-5px;--dy:-8px;--r:-25deg"></span><span class="cap" style="--c:var(--sun);left:106px;top:124px;--dx:6px;--dy:-5px;--r:30deg"></span><span class="cap" style="--c:var(--kyoto);left:150px;top:128px;--dx:-4px;--dy:-7px;--r:-20deg"></span><span class="cap" style="--c:var(--ajisai);left:36px;top:82px;--dx:5px;--dy:-9px;--r:-30deg"></span><span class="cap" style="--c:var(--osaka);left:84px;top:90px;--dx:-6px;--dy:-6px;--r:25deg"></span><span class="cap" style="--c:var(--kyoto);left:128px;top:84px;--dx:4px;--dy:-8px;--r:-15deg"></span><span class="cap" style="--c:var(--tokyo);left:168px;top:92px;--dx:-5px;--dy:-5px;--r:35deg"></span><span class="cap" style="--c:var(--sun);left:58px;top:46px;--dx:6px;--dy:-7px;--r:-20deg"></span><span class="cap" style="--c:var(--ajisai);left:110px;top:50px;--dx:-4px;--dy:-9px;--r:20deg"></span><span class="shine"></span></div>
+          <div class="g-body">
+            <div class="g-label">ガチャ</div>
+            <button type="button" class="knob" id="knob" aria-label="Twist the knob"><span class="handle"></span></button>
+            <div class="g-tokens" id="gTokens"></div>
+            <div class="chute"></div>
+            <button type="button" class="capsule" id="capsule" hidden aria-label="Open the capsule"><i class="top"></i><i class="bot"></i></button>
+          </div>
+        </div>
+        <div class="g-side">
+          <div class="g-msg" id="gMsg">Twist the knob! 👉</div>
+          <div class="g-prize" id="gPrize" hidden></div>
+          <div class="album">
+            <div class="album-h">Your collection <b class="num" id="gCount">0 / 16</b></div>
+            <div class="album-grid" id="album"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -659,15 +845,19 @@
   var timers = [];
   function barH(amt){ return Math.round(30 + (amt / MAX_GOAL) * 190); }
   function heights(){ return STEPS.map(function(s){ return barH(s.amt == null ? fam.goal : s.amt); }); }
-  function placeFlag(i, hs){
+  var flagAt = { i: 3, f: 1 };
+  function placeFlag(i, hs, f){
+    if(f == null) f = 1;
+    flagAt = { i: i, f: f };
     var sr = stairs.getBoundingClientRect(), br = steps[i].querySelector(".bar").getBoundingClientRect();
     flag.style.left = (br.left - sr.left + br.width/2 - 20) + "px";
-    flag.style.top  = (br.bottom - sr.top - hs[i] - 36) + "px";
+    flag.style.top  = (br.bottom - sr.top - hs[i]*f - 36) + "px";
   }
-  function hopTo(i, hs){ placeFlag(i, hs); flag.classList.remove("hop"); void flag.offsetWidth; flag.classList.add("hop"); }
+  function hopTo(i, hs, f){ placeFlag(i, hs, f); flag.classList.remove("hop"); void flag.offsetWidth; flag.classList.add("hop"); blip(i); }
   function climb(){
     timers.forEach(clearTimeout); timers = [];
     flag.classList.remove("party");
+    stairs.classList.remove("personal");
     var hs = heights();
     steps.forEach(function(st, i){ st.querySelector(".bar").style.height = hs[i] + "px"; });
     if(reduce){ flag.style.opacity = 1; placeFlag(3, hs); return; }
@@ -678,8 +868,357 @@
   }
   window.addEventListener("resize", function(){
     if(!fam) return;
-    flag.style.transition = "none"; placeFlag(3, heights()); void flag.offsetWidth; flag.style.transition = "";
+    flag.style.transition = "none"; placeFlag(flagAt.i, heights(), flagAt.f); void flag.offsetWidth; flag.style.transition = "";
   });
+  steps.forEach(function(st){ var l = document.createElement("span"); l.className = "liq"; st.querySelector(".bar").appendChild(l); });
+
+  // ── Sound (tiny synth beeps, no files) ────────────────────────
+  var sndOn = true, actx = null;
+  try { sndOn = localStorage.getItem("jt-sound") !== "off"; } catch(e){}
+  function tone(freq, start, dur, type, vol){
+    if(!sndOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var o = actx.createOscillator(), g = actx.createGain(), t0 = actx.currentTime + (start || 0);
+      o.type = type || "triangle"; o.frequency.setValueAtTime(freq, t0);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol || 0.08, t0 + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0 + dur + 0.02);
+    } catch(e){}
+  }
+  function blip(i){ tone(523 * Math.pow(1.26, i || 0), 0, 0.14, "triangle", 0.07); }
+  function thud(){ tone(150, 0, 0.18, "square", 0.04); tone(90, 0.02, 0.2, "sine", 0.08); }
+  function fanfare(){ [523, 659, 784, 1047].forEach(function(f, i){ tone(f, i*0.12, 0.25, "triangle", 0.08); }); }
+  function setSndBtn(){ $("sndBtn").textContent = sndOn ? "🔊" : "🔈"; }
+  $("sndBtn").addEventListener("click", function(){
+    sndOn = !sndOn; setSndBtn();
+    try { localStorage.setItem("jt-sound", sndOn ? "on" : "off"); } catch(e){}
+    if(sndOn) blip(2);
+  });
+  setSndBtn();
+
+  // ── Live savings (same savings-data.json the tracker uses) ────
+  var people = [], dataState = "loading", me = null;
+  function famKeyOf(name){ var k = String(name || "").trim().charAt(0).toUpperCase(); return FAMILIES[k] ? k : null; }
+  function initials(n){ return String(n).split(/\s+/).map(function(w){ return w.charAt(0); }).join("").slice(0, 2).toUpperCase(); }
+  function avatar(p){
+    var F = FAMILIES[p.fk], bg = F.color, fg = p.fk === "C" ? "var(--ink)" : "#fff";
+    return '<span class="av" style="background:' + bg + ';color:' + fg + '">' + initials(p.name) +
+      (p.photo ? '<img src="' + p.photo + '" alt="" onerror="this.remove()">' : "") + "</span>";
+  }
+  fetch("savings-data.json", { cache: "no-store" })
+    .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function(json){
+      (json.families || []).forEach(function(f){
+        var k = famKeyOf(f.name); if(!k) return;
+        (f.members || []).forEach(function(m){
+          var blank = m.saved === null || m.saved === undefined || m.saved === "";
+          var n = blank ? null : Number(m.saved);
+          people.push({ name: m.name, fk: k, photo: m.photo || "",
+                        p: (n === null || isNaN(n)) ? null : n * (FAMILIES[k].usd ? USD_RATE : 1) });
+        });
+      });
+      dataState = people.length ? "ok" : "empty";
+      if(fam) renderWho();
+      buildRace();
+    })
+    .catch(function(err){
+      dataState = "fail";
+      console.warn("savings-data.json not loaded:", err);
+      if(fam) renderWho();
+    });
+
+  function amtOf(i){ return STEPS[i].amt == null ? fam.goal : STEPS[i].amt; }
+  function daysTo(dateStr){ return Math.ceil((new Date(dateStr + "T23:59:59") - now)/86400000); }
+
+  function renderWho(){
+    $("dataNote").hidden = dataState !== "fail";
+    var mine = people.filter(function(p){ return p.fk === famKey; });
+    $("wai").hidden = !mine.length;
+    if(!mine.length){ $("meCard").hidden = true; return; }
+    $("memChips").innerHTML = mine.map(function(p, i){
+      return '<button type="button" class="mem" data-n="' + encodeURIComponent(p.name) + '" style="animation-delay:' + (i*0.07) + 's">' +
+             avatar(p) + p.name.split(/\s+/)[0] + "</button>";
+    }).join("");
+    var saved = null;
+    try { saved = localStorage.getItem("jt-me-" + famKey); } catch(e){}
+    var pick = mine.filter(function(p){ return p.name === saved; })[0];
+    if(pick) selectMe(pick, true); else { me = null; $("meCard").hidden = true; markLanes(); }
+  }
+  $("memChips").addEventListener("click", function(e){
+    var b = e.target.closest(".mem"); if(!b) return;
+    var name = decodeURIComponent(b.dataset.n);
+    if(me && me.name === name){ deselectMe(); return; }
+    selectMe(people.filter(function(p){ return p.fk === famKey && p.name === name; })[0], false);
+  });
+
+  function deselectMe(){
+    me = null;
+    try { localStorage.removeItem("jt-me-" + famKey); } catch(e){}
+    document.querySelectorAll(".mem").forEach(function(x){ x.classList.remove("on"); });
+    $("meCard").hidden = true; markLanes(); renderGacha(); climb();
+  }
+
+  function selectMe(p, quiet){
+    if(!p) return;
+    me = p;
+    try { localStorage.setItem("jt-me-" + famKey, p.name); } catch(e){}
+    document.querySelectorAll(".mem").forEach(function(x){ x.classList.toggle("on", decodeURIComponent(x.dataset.n) === p.name); });
+    renderMeCard(p);
+    markLanes(); renderGacha();
+    if(!quiet) thud();
+    personalClimb(p, quiet);
+  }
+
+  function renderMeCard(p){
+    var c = $("meCard"), html, has = p.p !== null;
+    var pct = has ? Math.min(100, Math.round(p.p / fam.goal * 100)) : 0;
+    html = '<div class="me-top">' + avatar(p) + '<div><div class="me-name">' + p.name + '</div><div class="me-saved">' +
+           (has ? money(p.p) + " saved" : "Nothing logged yet") + '</div></div>' +
+           '<div class="me-pct num">' + pct + '%<small>of goal</small></div></div>';
+    html += '<div class="me-bar"><i id="meFill"></i>' + STEPS.slice(0, 3).map(function(s, i){
+              return '<span class="mk" style="left:' + (amtOf(i)/fam.goal*100) + '%"></span>'; }).join("") + '</div>';
+    var cols = ["var(--osaka)","var(--kyoto)","var(--tokyo)","var(--sun-d)"];
+    html += '<div class="stamps">' + STEPS.map(function(s, i){
+      var got = has && p.p >= amtOf(i);
+      return '<div class="stampc' + (got ? " got" : "") + '" style="--c:' + cols[i] + ';animation-delay:' + (0.5 + i*0.25) + 's">' +
+             '<b>' + (got ? "✓" : "M" + (i+1)) + '</b>' + (got ? "M" + (i+1) : s.what.replace("4 bonus days","Bonus")) + '</div>';
+    }).join("") + '</div>';
+    html += '<div class="me-next">' + nextMessage(p) + '</div>';
+    if(has && p.p >= MAIN_TRIP && p.p < fam.goal) html += '<div class="me-going">✈️ You already saved enough to go to Japan!</div>';
+    c.innerHTML = html; c.hidden = false;
+    c.style.animation = "none"; void c.offsetWidth; c.style.animation = "";
+    setTimeout(function(){ var f = $("meFill"); if(f) f.style.width = pct + "%"; }, reduce ? 0 : 120);
+    if(!reduce) c.querySelectorAll(".stampc.got").forEach(function(st, i){ setTimeout(thud, 500 + i*250); });
+  }
+
+  function nextMessage(p){
+    if(p.p === null) return "📝 No savings logged for " + p.name.split(/\s+/)[0] + " yet. Ask a grown-up to update the tracker!";
+    if(p.p >= fam.goal) return "🎉 <b>You did it!</b> Every step is saved. See you in Japan!";
+    var first = -1;
+    for(var i = 0; i < STEPS.length; i++){ if(p.p < amtOf(i)){ first = i; break; } }
+    function perWeek(rem, dateStr){
+      var weeks = Math.max(1, Math.ceil(daysTo(dateStr) / 7)), w = rem / weeks;
+      return money(fam.usd ? Math.ceil(w / USD_RATE) * USD_RATE : Math.ceil(w / 10) * 10);
+    }
+    if(nextIdx >= 0 && first < nextIdx){
+      var r2 = amtOf(nextIdx) - p.p, s2 = STEPS[nextIdx];
+      return "⏰ <b>Catch up!</b> You're " + money(amtOf(first) - p.p) + " short of M" + (first+1) + ". Save about <b>" +
+             perWeek(r2, s2.date) + " a week</b> to reach M" + (nextIdx+1) + " (" + money(amtOf(nextIdx)) + ") by " + s2.due + ".";
+    }
+    var s = STEPS[first], rem = amtOf(first) - p.p, d = daysTo(s.date);
+    var ahead = nextIdx >= 0 && first > nextIdx ? "🚀 <b>You're ahead of schedule!</b> " : "🎯 ";
+    if(d <= 0) return "🎯 <b>" + money(rem) + " more</b> to reach M" + (first+1) + " (" + s.what.toLowerCase() + ").";
+    return ahead + "<b>" + money(rem) + " more</b> to reach M" + (first+1) + " (" + s.what.toLowerCase() + ") by " + s.due +
+           ". That's about <b>" + perWeek(rem, s.date) + " a week</b> for " + d + " days.";
+  }
+
+  function personalClimb(p, quiet){
+    timers.forEach(clearTimeout); timers = [];
+    flag.classList.remove("party");
+    stairs.classList.add("personal");
+    var hs = heights(), v = p.p || 0;
+    steps.forEach(function(st, i){ st.querySelector(".bar").style.height = hs[i] + "px"; });
+    var fr = STEPS.map(function(s, i){ return Math.min(1, v / amtOf(i)); });
+    var liqs = stairs.querySelectorAll(".liq");
+    liqs.forEach(function(l){ l.style.transition = "none"; l.style.height = "0"; void l.offsetWidth; l.style.transition = ""; });
+    liqs.forEach(function(l, i){ timers.push(setTimeout(function(){ l.style.height = (fr[i]*100) + "%"; }, reduce ? 0 : 250 + i*220)); });
+    var reached = fr.filter(function(f){ return f >= 1; }).length;
+    var target = Math.min(reached, 3), tf = reached >= 4 ? 1 : fr[target];
+    if(reduce){ flag.style.opacity = 1; placeFlag(target, hs, tf); return; }
+    flag.style.transition = "none"; flag.style.opacity = 0; placeFlag(0, hs, reached ? 1 : fr[0]); void flag.offsetWidth; flag.style.transition = "";
+    var t = 900;
+    timers.push(setTimeout(function(){ flag.style.opacity = 1; hopTo(0, hs, reached ? 1 : fr[0]); }, t));
+    for(var i = 1; i <= target; i++){
+      (function(i){ t += 650; timers.push(setTimeout(function(){ hopTo(i, hs, i < reached ? 1 : tf); }, t)); })(i);
+    }
+    timers.push(setTimeout(function(){
+      if(reached >= 4){ flag.classList.remove("hop"); flag.classList.add("party"); burst(60); fanfare(); }
+      else if(v >= MAIN_TRIP){ burst(24); fanfare(); }
+    }, t + 650));
+  }
+
+  // ── Race to Japan ─────────────────────────────────────────────
+  var raceBuilt = false, raceSeen = false;
+  function lanePos(pct){ return 4 + Math.min(100, pct) * 0.84; }   // keep runners inside the track, 🗾 at the end
+  function buildRace(){
+    if(!people.length) return;
+    $("raceSec").hidden = false;
+    $("raceCount").textContent = people.length;
+    var goalOf = function(p){ return FAMILIES[p.fk].goal; };
+    var rows = people.map(function(p){ return { p: p, pct: p.p === null ? -1 : Math.min(100, p.p / goalOf(p) * 100) }; })
+                     .sort(function(a, b){ return b.pct - a.pct; });
+    var ticks = [15000, 50000, 70000].map(function(a){ return a / 85000 * 100; });
+    var html = '<div class="r-scale"><span></span><span></span><div class="sc">' +
+               ticks.map(function(t, i){ return '<span style="left:' + lanePos(t) + '%">M' + (i+1) + '</span>'; }).join("") +
+               '<span style="left:' + lanePos(100) + '%">M4</span></div><span></span></div>';
+    var lastPct = null, lastRank = 0;
+    rows.forEach(function(r, i){
+      var rank = r.pct === lastPct ? lastRank : i + 1; lastPct = r.pct; lastRank = rank;
+      html += '<div class="lane' + (rank === 1 && r.pct > 0 ? " lead" : "") + '" data-n="' + encodeURIComponent(r.p.name) + '" data-f="' + r.p.fk + '">' +
+              '<span class="rk num">' + rank + '</span><span class="ln">' + r.p.name + '</span>' +
+              '<div class="tr">' + ticks.map(function(t){ return '<i class="tick" style="left:' + lanePos(t) + '%"></i>'; }).join("") +
+              '<span class="fin">🗾</span><span class="runner" data-x="' + lanePos(Math.max(0, r.pct)) + '">' + avatar(r.p) + '</span></div>' +
+              '<span class="pc num">' + (r.pct < 0 ? "—" : r.pct >= 100 ? "🎉" : Math.round(r.pct) + "%") + '</span></div>';
+    });
+    html += '<div class="race-key">' + Object.keys(FAMILIES).map(function(k){
+      return '<span style="--c:' + FAMILIES[k].color + '">' + FAMILIES[k].name + '</span>'; }).join("") + '</div>';
+    $("race").innerHTML = html;
+    raceBuilt = true; markLanes();
+    if(raceSeen) runRace();
+  }
+  function runRace(){
+    var race = $("race");
+    race.classList.add("go");
+    race.querySelectorAll(".runner").forEach(function(r, i){
+      setTimeout(function(){ r.style.left = r.dataset.x + "%"; }, reduce ? 0 : 200 + i*70);
+    });
+  }
+  function markLanes(){
+    document.querySelectorAll(".lane").forEach(function(l){
+      l.classList.toggle("me-lane", !!me && decodeURIComponent(l.dataset.n) === me.name && l.dataset.f === me.fk);
+    });
+  }
+  $("race").addEventListener("click", function(e){
+    var l = e.target.closest(".lane"); if(!l) return;
+    var name = decodeURIComponent(l.dataset.n), fk = l.dataset.f;
+    var r = l.querySelector(".runner"); r.classList.remove("wig"); void r.offsetWidth; r.classList.add("wig");
+    if(fk === famKey){
+      var p = people.filter(function(x){ return x.fk === fk && x.name === name; })[0];
+      selectMe(p, false);
+      $("stairs").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    } else blip(0);
+  });
+
+  // ── Gachapon ─────────────────────────────────────────────────
+  var RAR = {
+    common: { lbl: "Common",     c: "var(--tokyo)",  t: "var(--tokyo-t)",  w: 10 },
+    rare:   { lbl: "Rare ★",     c: "var(--sun-d)",  t: "var(--sun-t)",    w: 3.5 },
+    superr: { lbl: "Super rare ✨", c: "var(--ajisai)", t: "#EEEBFB",      w: 1 }
+  };
+  var TOYS = [
+    { id: "onigiri",  em: "🍙", nm: "Onigiri",     jp: "おにぎり",     r: "common", fact: "A rice ball wrapped in seaweed. Every konbini (convenience store) sells them, and they're the perfect train snack." },
+    { id: "ramen",    em: "🍜", nm: "Ramen",       jp: "ラーメン",     r: "common", fact: "In Japan it's polite to slurp your noodles. Loud slurping means \"this is delicious!\"" },
+    { id: "dango",    em: "🍡", nm: "Dango",       jp: "だんご",       r: "common", fact: "Sweet, chewy rice dumplings on a stick. Look for them on Kyoto's old streets." },
+    { id: "kakigori", em: "🍧", nm: "Kakigōri",    jp: "かきごおり",   r: "common", fact: "Fluffy shaved ice with sweet syrup on top. Japan's favorite summer treat." },
+    { id: "sushi",    em: "🍣", nm: "Sushi train", jp: "かいてんずし", r: "common", fact: "At conveyor-belt sushi, little plates ride past your table. Grab the ones you want!" },
+    { id: "torii",    em: "⛩️", nm: "Torii gate",  jp: "とりい",       r: "common", fact: "These gates mark the way into a shrine. Fushimi Inari has thousands of them, and we're walking through!" },
+    { id: "furin",    em: "🎐", nm: "Fūrin",       jp: "ふうりん",     r: "common", fact: "A glass wind chime. People hang them in summer because the tinkling sound makes it feel cooler." },
+    { id: "koi",      em: "🎏", nm: "Koinobori",   jp: "こいのぼり",   r: "common", fact: "Carp-shaped flags fly for Children's Day on May 5, wishing kids grow up strong." },
+    { id: "train",    em: "🚄", nm: "Shinkansen",  jp: "しんかんせん", r: "common", fact: "Japan's bullet trains can zoom faster than 300 km an hour, and they're almost never late." },
+    { id: "neko",     em: "🐱", nm: "Maneki-neko", jp: "まねきねこ",   r: "common", fact: "The lucky waving cat. Shops put one by the door to wave customers (and good luck) inside." },
+    { id: "fuji",     em: "🗻", nm: "Mt. Fuji",    jp: "ふじさん",     r: "rare",   fact: "Japan's tallest mountain is 3,776 m high. On a clear day you can spot it from the bullet train!" },
+    { id: "kitsune",  em: "🦊", nm: "Kitsune",     jp: "きつね",       r: "rare",   fact: "Foxes are the messengers of Inari shrines. Look for fox statues guarding Fushimi Inari." },
+    { id: "shiro",    em: "🏯", nm: "Shiro",       jp: "しろ",         r: "rare",   fact: "Japanese castles have curvy roofs and huge stone walls. Osaka Castle was first built in 1583." },
+    { id: "godzilla", em: "🦖", nm: "Godzilla",    jp: "ゴジラ",       r: "rare",   fact: "A giant Godzilla head peeks over a building in Shinjuku, and it's one of our stops!" },
+    { id: "gamer",    em: "🎮", nm: "Akihabara",   jp: "あきはばら",   r: "rare",   fact: "Tokyo's \"Electric Town\" is packed with games, anime, and claw machines. Bring your yen!" },
+    { id: "goldneko", em: "🌟", nm: "Golden Lucky Cat", jp: "きんのまねきねこ", r: "superr", fact: "The rarest capsule of all! Legend says a golden lucky cat brings super-sized luck. You're one in a million!" }
+  ];
+  $("gCount").textContent = "0 / " + TOYS.length;
+
+  function store(k, v){ try { if(v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  var col = {}; try { col = JSON.parse(store("jt-gacha-col") || "{}") || {}; } catch(e){ col = {}; }
+  var memTwist = {};   // fallback when storage is blocked
+  function todayKey(){ var d = new Date(); return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate(); }
+  function dailyLeft(){ var last = store("jt-gacha-day") || memTwist.day; return last === todayKey() ? 0 : 1; }
+  function stampsOf(p){ if(!p || p.p === null) return 0; var n = 0; for(var i = 0; i < STEPS.length; i++) if(p.p >= amtOf(i)) n++; return n; }
+  function bonusKey(){ return me ? "jt-gacha-bonus-" + me.fk + "-" + me.name : null; }
+  function bonusLeft(){
+    if(!me) return 0;
+    var used = +(store(bonusKey()) || memTwist[bonusKey()] || 0);
+    return Math.max(0, stampsOf(me) - used);
+  }
+  function twistsLeft(){ return dailyLeft() + bonusLeft(); }
+
+  var gBusy = false, pending = null;
+  function renderGacha(){
+    var n = twistsLeft(), knob = $("knob");
+    knob.disabled = n === 0 || gBusy || !!pending;
+    knob.classList.toggle("ready", n > 0 && !gBusy && !pending);
+    $("gTokens").innerHTML = "<b>" + n + "</b>" + (n === 1 ? "twist" : "twists") + " left";
+    if(!gBusy && !pending){
+      var msg;
+      if(n > 0) msg = "Twist the knob! 👉" + (bonusLeft() ? "<small>🎟️ " + bonusLeft() + " bonus twist" + (bonusLeft() > 1 ? "s" : "") + " from " + me.name.split(/\s+/)[0] + "'s stamps</small>" : "");
+      else {
+        var mid = new Date(); mid.setHours(24, 0, 0, 0);
+        var mins = Math.max(1, Math.round((mid - new Date())/60000));
+        msg = "Come back tomorrow for another twist! 🌙<small>Next free twist in " + Math.floor(mins/60) + "h " + (mins%60) + "m" +
+              (me ? "" : " · Pick your name up top to unlock bonus twists for your stamps") + "</small>";
+      }
+      $("gMsg").innerHTML = msg;
+    }
+    var got = TOYS.filter(function(t){ return col[t.id]; }).length;
+    $("gCount").textContent = got + " / " + TOYS.length;
+    $("album").innerHTML = TOYS.map(function(t){
+      var R = RAR[t.r];
+      return col[t.id] ? '<button type="button" class="slot got' + (pending === null && t.id === lastNew ? " fresh" : "") + '" data-id="' + t.id +
+               '" style="--rc:' + R.c + ';--rt:' + R.t + '" title="' + t.nm + '">' + t.em + "</button>"
+             : '<span class="slot">?</span>';
+    }).join("");
+  }
+  var lastNew = null;
+  function pickToy(){
+    var tot = TOYS.reduce(function(a, t){ return a + RAR[t.r].w; }, 0), x = Math.random() * tot;
+    for(var i = 0; i < TOYS.length; i++){ x -= RAR[TOYS[i].r].w; if(x <= 0) return TOYS[i]; }
+    return TOYS[0];
+  }
+  function spend(){
+    if(dailyLeft()){ store("jt-gacha-day", todayKey()); memTwist.day = todayKey(); return; }
+    var k = bonusKey(), used = +(store(k) || memTwist[k] || 0) + 1;
+    store(k, String(used)); memTwist[k] = used;
+  }
+  $("knob").addEventListener("click", function(){
+    if(gBusy || pending || twistsLeft() === 0) return;
+    gBusy = true; spend();
+    $("gPrize").hidden = true;
+    $("gMsg").innerHTML = "Gacha… gacha… 🌀";
+    var knob = $("knob"), mach = $("machine"), cap = $("capsule");
+    knob.classList.remove("ready", "turn"); void knob.offsetWidth; knob.classList.add("turn");
+    mach.classList.remove("shake"); void mach.offsetWidth; mach.classList.add("shake");
+    for(var i = 0; i < 6; i++) tone(1400 - i*80, i*0.14, 0.035, "square", 0.025);
+    pending = pickToy();
+    var R = RAR[pending.r];
+    setTimeout(function(){
+      cap.style.setProperty("--c", R.c);
+      cap.classList.remove("open", "drop"); cap.hidden = false; void cap.offsetWidth; cap.classList.add("drop");
+      setTimeout(thud, reduce ? 0 : 480);
+      gBusy = false;
+      $("gMsg").innerHTML = "A capsule dropped! Tap it to open 👇";
+      renderGacha();
+    }, reduce ? 0 : 1000);
+  });
+  $("capsule").addEventListener("click", function(){
+    if(!pending) return;
+    var t = pending, R = RAR[t.r], cap = $("capsule"), isNew = !col[t.id];
+    pending = null;
+    cap.classList.add("open");
+    col[t.id] = (col[t.id] || 0) + 1; store("jt-gacha-col", JSON.stringify(col));
+    lastNew = isNew ? t.id : null;
+    setTimeout(function(){ cap.hidden = true; cap.classList.remove("open", "drop"); }, 600);
+    showPrize(t, isNew);
+    if(t.r === "common") [784, 1047].forEach(function(f, i){ tone(f, i*0.1, 0.18, "triangle", 0.08); });
+    else fanfare();
+    if(t.r !== "common") burst(t.r === "superr" ? 90 : 40);
+    renderGacha(); lastNew = null;
+  });
+  function showPrize(t, isNew){
+    var R = RAR[t.r], box = $("gPrize");
+    box.className = "g-prize" + (t.r === "superr" ? " super" : "");
+    box.style.setProperty("--rc", R.c); box.style.setProperty("--rt", R.t);
+    box.innerHTML = '<span class="rar">' + R.lbl + "</span>" + (isNew ? '<span class="new">NEW!</span>' : "") +
+      '<div class="em">' + t.em + '</div><div class="nm">' + t.nm + '</div><div class="jp">' + t.jp + '</div><div class="fact">' + t.fact + "</div>" +
+      (!isNew && isNew !== null ? '<div class="jp" style="margin-top:8px">You already had this one. Now you have ' + col[t.id] + "!</div>" : "");
+    box.hidden = false;
+    box.style.animation = "none"; void box.offsetWidth; box.style.animation = "";
+    $("gMsg").innerHTML = isNew === null ? "From your collection 📒" : (isNew ? "You got a new one! 🎉" : "Ooh, a double! 🎁");
+  }
+  $("album").addEventListener("click", function(e){
+    var b = e.target.closest(".slot.got"); if(!b) return;
+    showPrize(TOYS.filter(function(t){ return t.id === b.dataset.id; })[0], null);
+    blip(1);
+  });
+  renderGacha();
+  setInterval(function(){ if(!gBusy && !pending) renderGacha(); }, 60000);
 
   // ── Fill the page for one family ──────────────────────────────
   function fill(){
@@ -724,6 +1263,7 @@
 
     document.querySelectorAll("[data-p]").forEach(function(el){ el.textContent = money(+el.dataset.p); });
 
+    renderWho();
     $("switchDot").style.background = fam.color;
     $("switchTxt").textContent = fam.name;
     $("ctaTxt").textContent = "See how the " + fam.name + " family is saving";
@@ -748,6 +1288,7 @@
     });
     onShow.set(tix, function(){ tix.classList.add("in"); });
     onShow.set($("breakdown"), growBars);
+    onShow.set($("race"), function(){ raceSeen = true; if(raceBuilt) runRace(); });
 
     if(reduce || !hasIO){
       revealEls.forEach(function(e){ e.classList.add("in"); });
@@ -770,7 +1311,7 @@
   // ── Choose / switch family ────────────────────────────────────
   var landing = $("landing"), view = $("view"), revealsReady = false;
   function choose(key, animate){
-    famKey = key; fam = FAMILIES[key];
+    famKey = key; fam = FAMILIES[key]; me = null;
     try { history.replaceState(null, "", "#" + key); } catch(e){}
     function go(){
       landing.hidden = true; landing.classList.remove("out");
@@ -778,7 +1319,7 @@
       window.scrollTo(0, 0);
       fill();
       if(!revealsReady){ revealsReady = true; setupReveals(); }
-      requestAnimationFrame(function(){ setTimeout(climb, 150); });
+      requestAnimationFrame(function(){ setTimeout(function(){ if(me) personalClimb(me, true); else climb(); }, 150); });
     }
     if(animate && !reduce){ burst(50); landing.classList.add("out"); setTimeout(go, 520); }
     else go();
